@@ -16,13 +16,15 @@ class Migration_create_roles extends CI_Migration {
             )
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table($this->tableName);
+        if (!$this->db->table_exists($this->tableName)) {
+            $this->dbforge->create_table($this->tableName);
 
-        $data_dummies = array(
-            array('name' => "admin"),
-            array('name' => "user"),
-        );
-        $this->db->insert_batch($this->tableName, $data_dummies);
+            $data_dummies = array(
+                array('name' => "admin"),
+                array('name' => "user"),
+            );
+            $this->db->insert_batch($this->tableName, $data_dummies);
+        }
     }
 
     public function down()

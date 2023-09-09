@@ -14,6 +14,10 @@ class Migration_create_permohonan extends CI_Migration {
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
+            'layanan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
             'tgl_permohonan' => array(
                 'type' => 'timestamp',
             ),
@@ -26,6 +30,14 @@ class Migration_create_permohonan extends CI_Migration {
                 'constraint' => '255'
             ),
             'kategori' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
+            'kasus_posisi' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
+            'dokumen' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
