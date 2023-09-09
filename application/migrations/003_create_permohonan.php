@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 
-class Migration_create_users extends CI_Migration {
-    private $tableName = 'users';
+class Migration_create_permohonan extends CI_Migration {
+    private $tableName = 'epak_permohonan';
     public function up() { 
             $this->dbforge->add_field(array(
             'id' => array(
@@ -10,37 +10,33 @@ class Migration_create_users extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'name' => array(
+            'instansi' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
-            'email' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'unique' => TRUE,
+            'tgl_permohonan' => array(
+                'type' => 'timestamp',
             ),
-            'password' => array(
+            'no_registrasi' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
-            'role_id' => array(
+            'subject' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
+            'kategori' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
+            'status' => array(
                 'type' => 'INT',
                 'constraint' => '20'
             ),
-            // 'CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles(id)'
+            'created_at' => array('type' => 'timestamp')
         ));
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table($this->tableName, FALSE, array('ENGINE' => 'InnoDB'));
-
-        $data_dummies = array(
-            array(
-                'name' => "Admin",
-                'email' => "admin@mail.com",
-                'password' => "5f4dcc3b5aa765d61d8327deb882cf99",
-                'role_id' => "1"
-            ),
-        );
-        $this->db->insert_batch($this->tableName, $data_dummies);
     }
 
     public function down()

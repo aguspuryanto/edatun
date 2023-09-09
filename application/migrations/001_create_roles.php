@@ -19,10 +19,10 @@ class Migration_create_roles extends CI_Migration {
         $this->dbforge->create_table($this->tableName);
 
         $data_dummies = array(
-            array('1' => "admin"),
-            array('2' => "user"),
+            array('name' => "admin"),
+            array('name' => "user"),
         );
-        $this->db->insert_batch($this->table_name, $data_dummies);
+        $this->db->insert_batch($this->tableName, $data_dummies);
     }
 
     public function down()
