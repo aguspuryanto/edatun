@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 
-class Migration_create_permohonan extends CI_Migration {
-    private $tableName = 'epak_permohonan';
+class Migration_create_meeting extends CI_Migration {
+    private $tableName = 'epak_meeting';
     public function up() { 
             $this->dbforge->add_field(array(
             'id' => array(
@@ -12,14 +12,7 @@ class Migration_create_permohonan extends CI_Migration {
             ),
             'instansi' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '255'
-            ),
-            'tgl_permohonan' => array(
-                'type' => 'timestamp',
-            ),
-            'no_registrasi' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255'
+                'constraint' => '20'
             ),
             'subject' => array(
                 'type' => 'VARCHAR',
@@ -29,17 +22,16 @@ class Migration_create_permohonan extends CI_Migration {
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
-            'kasus_posisi' => array(
+            'tgl_permohonan' => array(
+                'type' => 'timestamp',
+            ),
+            'lokasi' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
-            'dokumen' => array(
+            'agenda' => array(
                 'type' => 'TEXT',
                 'null' => TRUE
-            ),
-            'status' => array(
-                'type' => 'INT',
-                'constraint' => '20'
             ),
             'created_at' => array('type' => 'timestamp')
         ));

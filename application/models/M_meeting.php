@@ -1,20 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class M_permohonan extends CI_Model {
-    public $table_name = "epak_permohonan";
+class M_meeting extends CI_Model {
+    public $table_name = "epak_meeting";
 
     public function rules()
     {
         return [
-            ['field' => 'instansi', 'label' => 'Instansi', 'rules' => 'required'],
-            ['field' => 'tgl_permohonan', 'label' => 'Tanggal','rules' => 'required'],
-            ['field' => 'no_registrasi', 'label' => 'No Registrasi','rules' => 'required'],
+            ['field' => 'instansi', 'label' => 'Instansi'],
             ['field' => 'subject', 'label' => 'Subject Permohonan','rules' => 'required'],
             ['field' => 'kategori', 'label' => 'Kategori', 'rules' => 'required'],
-            ['field' => 'kasus_posisi', 'label' => 'Kasus Posisi','rules' => 'required'],
-            ['field' => 'dokumen', 'label' => 'Dokumen'],
-            ['field' => 'status', 'label' => 'Status'],
+            ['field' => 'tgl_permohonan', 'label' => 'Tanggal','rules' => 'required'],
+            ['field' => 'lokasi', 'label' => 'Lokasi', 'rules' => 'required'],
+            ['field' => 'agenda', 'label' => 'Agenda'],
         ];
     }
 

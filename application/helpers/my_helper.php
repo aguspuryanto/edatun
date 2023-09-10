@@ -30,6 +30,44 @@ function check_access($role_id, $menu_id)
     }
 }
 
+function get_header_table($model, $extra="") {
+    if(empty($extra)) $extra = '<th>AKSI</th>';
+
+    $header_tag = '<tr><th>NO</th>';
+    foreach ($model->rules() as $key => $val) {
+        $header_tag .= '<th>' . $val['label'] . '</th>';
+    }
+
+    if($extra) $header_tag .= $extra;
+
+    $header_tag .= '</tr>';
+
+    return $header_tag;
+}
+
+function get_header_table_custom($model, $field=[], $extra="") {
+    // echo json_encode($field);
+    if(!$field || empty($field)) {
+        // $field = array('jenis_module');
+    }
+
+    foreach ($model->rules() as $key => $object) {
+        if (!in_array($object['field'], $field)) {
+            $newmodel[] = $object;
+        }
+    }
+
+    $header_tag = '<tr><th>NO</th>';
+    foreach ($newmodel as $key => $val) {
+        $header_tag .= '<th>' . $val['label'] . '</th>';
+    }
+    
+    $header_tag .= ($extra) ? $extra : '<th>#</th>';    
+    $header_tag .= '</tr>';
+
+    return $header_tag;
+}
+
 function get_form_input($model, $field="", $options=array()) {
     $attributes = array('class' => 'form-control', 'id' => 'input-' .  $field);
 
@@ -50,9 +88,11 @@ function get_form_input($model, $field="", $options=array()) {
             $form .= form_textarea($attributes);
 
         } elseif(isset($attributes['type']) && $attributes['type'] === 'password') {
+            if ($field) $attributes['name'] = $field;
             $form .= form_input($attributes);
 
         } elseif(isset($attributes['type']) && $attributes['type'] === 'file') {
+            if ($field) $attributes['name'] = $field;
             $form .= form_input($attributes);
 
         } else {

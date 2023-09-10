@@ -19,6 +19,8 @@ class Permohonan extends CI_Controller {
 
 	public function ph() {
 		$data['title'] = "Pertimbangan Hukum";
+		$data['model'] = $this->M_permohonan;
+		$data['listData'] = $this->M_permohonan->select_all();		
 		
 		$this->template->views('page/permohonan/index', $data);
 	}
@@ -33,6 +35,16 @@ class Permohonan extends CI_Controller {
 			$this->load->library('form_validation');
 			$model = $this->M_permohonan;
 
+			if (!file_exists('./uploads')) {
+				mkdir('./uploads', 0777, true);
+			}
+
+			$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
+			$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
+			$config['encrypt_name'] = TRUE; //enkripsi file name upload
+			
+			$this->load->library('upload',$config); //call library upload 
+
 			$json = array();
 			$this->form_validation->set_rules($model->rules());	
 			$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
@@ -44,19 +56,40 @@ class Permohonan extends CI_Controller {
 					));
 				}
 			} else {
+
+				$nextStep = true;
 				$data = array(
 					'instansi' => $this->input->post('instansi'),
-					'layanan' => $this->input->post('layanan'),
+					'kategori' => $this->input->post('kategori'),
 					'no_registrasi' => $this->input->post('no_registrasi'),
 					'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
 					'subject' => $this->input->post('subject'),
 					'kasus_posisi' => $this->input->post('kasus_posisi'),
 					'status' => $this->input->post('status'),
 				);
+
+				if (!$this->upload->do_upload('dokumen')) {
+					$nextStep = false;
+					$json = array(
+						'success' => false,
+						'message' => $this->upload->display_errors()
+					);
+				}
+				else {
+					//upload file
+					$upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+					$dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
 	
-				$model->save($data);
-				$this->session->set_flashdata('success', 'Berhasil disimpan');
-				$json = array('success' => true, 'message' => 'Berhasil disimpan');
+					$data = array_merge($data, array(
+						'dokumen' => $dokumen,
+					));
+				}
+	
+				if($nextStep) {
+					$model->save($data);
+					$this->session->set_flashdata('success', 'Berhasil disimpan');
+					$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+				}
 			}
 	
 			$this->output

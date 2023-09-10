@@ -7,7 +7,7 @@
                 <h6 class="m-0 font-weight-bold text-primary"><?=@$title; ?></h6>
             </div>
             <div class="card-body">
-                <?=form_open('permohonan/create_ph', array('id' => 'form', 'role' => 'form'));?>
+                <?=form_open_multipart('permohonan/create_ph', array('id' => 'form', 'role' => 'form'));?>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -41,7 +41,7 @@
                                     'PH' => 'Pelayanan Hukum',
                                     'THL' => 'Tindakan Hukum Lain',
                                 ); ?>
-                                <?=form_dropdown('layanan', $options, '', array('class' => 'form-control', 'id' => 'input-layanan'));?>
+                                <?=form_dropdown('kategori', $options, '', array('class' => 'form-control', 'id' => 'input-kategori'));?>
                                 <div id="error"></div>
                             </div>
                         </div>
@@ -73,23 +73,40 @@
 
 <script type="text/javascript">
 $( document ).ready(function() {
-    $(".datepicker").datepicker();
+    // $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+    $(".datepicker").datepicker({
+      format:'dd/mm/yyyy',
+    }).datepicker("setDate",'now');
     $('#error').html(" ");
 
-    $('#form-submit').on('click', function (e) {
+    // $('form#form-submit').on('click', function (e) {
+    $('form#form').submit(function (e) {
         e.preventDefault();
+
+        var fd = new FormData();
+        var files = $('#input-dokumen')[0].files[0];
+        fd.append('file',files);
+
+        if(files?.length){
+            alert("Please select a file.");
+            // return;
+        }
 
         $.ajax({
             type: "POST",
             url: "<?=site_url('permohonan/create_ph');?>", 
-            data: $("#form").serialize(),
+            // data: $("#form").serialize(),
+            data: fd,
+            processData: false,
+            contentType: false,
+            cache: false,
             dataType: "json",  
             success: function(data){
                 console.log(data, "data");
                 if(data.success == true){
-                    setTimeout(function(){
-                        window.location.reload();
-                    }, 3000);
+                    // setTimeout(function(){
+                    //     window.location.reload();
+                    // }, 3000);
                 } else {
                     $.each(data, function(key, value) {
                         $('#input-' + key).addClass('is-invalid');
@@ -116,6 +133,6 @@ $loadjs = <<<EOF
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 EOF;
 
-$this->load->vars('_loadcss', $loadcss);
-$this->load->vars('_loadjs', $loadjs);
+// $this->load->vars('_loadcss', $loadcss);
+// $this->load->vars('_loadjs', $loadjs);
 ?>
