@@ -19,6 +19,10 @@ class Migration_create_users extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
+            'instansi' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
             'username' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
@@ -31,6 +35,10 @@ class Migration_create_users extends CI_Migration {
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => TRUE
+            ),
+            'role_id' => array(
+                'type' => 'INT',
+                'constraint' => '20'
             ),
             'email' => array(
                 'type' => 'VARCHAR',
@@ -46,11 +54,7 @@ class Migration_create_users extends CI_Migration {
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
-            'role_id' => array(
-                'type' => 'INT',
-                'constraint' => '20'
-            ),
-            // 'CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles(id)'
+            'created_at' => array('type' => 'timestamp')
         ));
         $this->dbforge->add_key('id', TRUE);
 

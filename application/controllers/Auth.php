@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth extends CI_Controller
 {
-
+	protected $tableUser = 'epak_users';
 	protected $title = "Your App";
 
 	public function __construct()
@@ -51,7 +51,7 @@ class Auth extends CI_Controller
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
 
-		$user = $this->db->get_where('users', ['email' => $email])->row_array();
+		$user = $this->db->get_where($this->tableUser, ['email' => $email])->row_array();
 
 		// jika usernya ada
 		if ($user) {
@@ -104,7 +104,7 @@ class Auth extends CI_Controller
                 'role_id' => 2
 
             ];
-            $this->db->insert('users', $data);
+            $this->db->insert($this->tableUser, $data);
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" 
             role="alert"> Congratulation! your account has been created. Please Login</div>');

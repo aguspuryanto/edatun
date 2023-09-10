@@ -7,6 +7,7 @@ class User extends CI_Controller {
     {
         parent::__construct();
         is_logged_in();
+		$this->load->model('M_user');
     }
 
 	public function index()
@@ -14,5 +15,57 @@ class User extends CI_Controller {
 		$data['title'] = "User";
 		
 		$this->template->views('page/user/index', $data);
+	}
+
+	public function setting()
+	{
+		$data['title'] = "User";
+		$data['model'] = $this->M_user;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+
+		$_POST = $this->input->post();
+		if($_POST) {
+			// echo json_encode($_POST); die();
+			$this->load->library('form_validation');
+			$model = $this->M_user;
+
+			$json = array();
+			$this->form_validation->set_rules($model->rules());	
+			$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
+	
+			if (!$this->form_validation->run()) {			
+				foreach($model->rules() as $key => $val) {
+					$json = array_merge($json, array(
+						$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
+					));
+				}
+			} else {
+				$data = array(
+					'instansi' => $this->input->post('instansi'),
+					'kategori' => $this->input->post('kategori'),
+					'no_registrasi' => $this->input->post('no_registrasi'),
+					'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
+					'subject' => $this->input->post('subject'),
+					'kasus_posisi' => $this->input->post('kasus_posisi'),
+					'status' => $this->input->post('status'),
+				);
+
+				$model->save($data);
+				$this->session->set_flashdata('success', 'Berhasil disimpan');
+				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+			}
+	
+			$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($json));
+		}
+		else {
+		
+			$this->template->views('page/user/setting', $data);
+		}
+	}
+
+	public function update() {
+
 	}
 }
