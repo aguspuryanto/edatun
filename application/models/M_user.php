@@ -9,13 +9,13 @@ class M_user extends CI_Model {
         return [
             ['field' => 'instansi', 'label' => 'Instansi'],
             ['field' => 'username', 'label' => 'Username','rules' => 'required'],
+            ['field' => 'role_id', 'label' => 'Role'],
             ['field' => 'nama', 'label' => 'Nama Lengkap','rules' => 'required'],
-            ['field' => 'divisi', 'label' => 'Intansi'],
             ['field' => 'email', 'label' => 'Email','rules' => 'required'],
             ['field' => 'nohape', 'label' => 'No Hape', 'rules' => 'required'],
             ['field' => 'password', 'label' => 'Password', 'rules' => 'required'],
             ['field' => 'picture_img', 'label' => 'Profile Picture'],
-            ['field' => 'role_id', 'label' => 'Role']
+            ['field' => 'divisi', 'label' => 'Divisi'],
         ];
     }    
 

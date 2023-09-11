@@ -13,6 +13,8 @@ class User extends CI_Controller {
 	public function index()
 	{
 		$data['title'] = "User";
+		$data['model'] = $this->M_user;
+		$data['listData'] = $this->M_user->select_all();	
 		
 		$this->template->views('page/user/index', $data);
 	}
@@ -73,12 +75,13 @@ class User extends CI_Controller {
 
 		$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
 		$config['allowed_types']='gif|jpg|png'; //type file yang boleh di upload
+		$config['max_size'] = 5000;
 		$config['encrypt_name'] = TRUE; //enkripsi file name upload
 		
 		$this->load->library('upload',$config); //call library upload 
 
 		$json = array();
-		if (!$this->upload->do_upload('picture')) {
+		if (!$this->upload->do_upload('picture_img')) {
 			$json = array(
 				'success' => false,
 				'message' => $this->upload->display_errors()
@@ -89,13 +92,17 @@ class User extends CI_Controller {
 			$upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
 			$dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
 
-			$model = $this->M_permohonan;
+			$model = $this->M_user;
 			$data = array(
 				'picture_img' => $dokumen,
 			);
-			$model->update($this->session->userdata('id'), $data);
-			// $this->session->set_flashdata('success', 'Berhasil disimpan');
-			$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+
+			if($this->input->post('id')) {
+				$id = $this->input->post('id');
+				$model->update($id, $data);
+				// $this->session->set_flashdata('success', 'Berhasil disimpan');
+				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+			}
 		}
 	
 		$this->output

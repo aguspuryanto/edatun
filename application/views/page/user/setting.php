@@ -11,10 +11,10 @@
             <div class="card-body text-center">                
                 <?=form_open_multipart('', array('id' => 'formProfile', 'role' => 'form'));?>
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="<?=($dataUser->picture) ?? base_url() . 'assets/img/undraw_profile_1.svg'; ?>" alt="">
+                    <img class="img-account-profile rounded-circle mb-2" src="<?=($dataUser->picture_img) ? base_url() . 'uploads/' . $dataUser->picture_img : base_url() . 'assets/img/undraw_profile_1.svg'; ?>" alt="">
                     
                     <div class="form-group">
-                        <input type="file" name="picture" id="input-picture" class="form-control" accept="image/*"/>
+                        <input type="file" name="picture_img" id="input-picture_img" class="form-control" accept="image/*"/>
                         <div id="error"></div>
                     </div>
 
