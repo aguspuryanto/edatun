@@ -14,6 +14,7 @@ class M_user extends CI_Model {
             ['field' => 'email', 'label' => 'Email','rules' => 'required'],
             ['field' => 'nohape', 'label' => 'No Hape', 'rules' => 'required'],
             ['field' => 'password', 'label' => 'Password', 'rules' => 'required'],
+            ['field' => 'picture_img', 'label' => 'Profile Picture'],
             ['field' => 'role_id', 'label' => 'Role']
         ];
     }    

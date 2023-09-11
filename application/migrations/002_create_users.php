@@ -54,6 +54,10 @@ class Migration_create_users extends CI_Migration {
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
+            'picture_img' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
             'created_at' => array('type' => 'timestamp')
         ));
         $this->dbforge->add_key('id', TRUE);

@@ -14,12 +14,13 @@
                     <img class="img-account-profile rounded-circle mb-2" src="<?=($dataUser->picture) ?? base_url() . 'assets/img/undraw_profile_1.svg'; ?>" alt="">
                     
                     <div class="form-group">
-                        <input type="file" name="picture" id="input-picture" class="form-control" />
+                        <input type="file" name="picture" id="input-picture" class="form-control" accept="image/*"/>
                         <div id="error"></div>
                     </div>
 
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <div id="formError" class="text-danger"></div>
                     <!-- Profile picture upload button-->
                     <button type="submit" class="btn btn-primary" id="form-upload">Upload new image</button>
 
@@ -124,6 +125,16 @@ $( document ).ready(function() {
         $(this).parents('.form-group').find('#error').html(" ");
     });
 
+    $("#input-picture").on("change",function(e){
+        /* Current this object refer to input element */         
+        var $input = $(this);
+        var reader = new FileReader(); 
+        reader.onload = function(){
+            $("img.img-account-profile").attr("src", reader.result).removeClass('rounded-circle');
+        } 
+        reader.readAsDataURL($input[0].files[0]);
+    });
+
     $('form#formProfile').submit(function (e) {
         e.preventDefault();
 
@@ -151,7 +162,7 @@ $( document ).ready(function() {
                         window.location.reload();
                     }, 1000);
                 } else {
-                    $('<p class="text-danger">' + data.message + '</p>').insertBefore('#formDokumen');
+                    $('#formError').html(data.message);
                 }
             }
         });

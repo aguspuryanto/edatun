@@ -65,6 +65,45 @@ class User extends CI_Controller {
 		}
 	}
 
+	public function picture() {
+
+		if (!file_exists('./uploads')) {
+			mkdir('./uploads', 0777, true);
+		}
+
+		$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
+		$config['allowed_types']='gif|jpg|png'; //type file yang boleh di upload
+		$config['encrypt_name'] = TRUE; //enkripsi file name upload
+		
+		$this->load->library('upload',$config); //call library upload 
+
+		$json = array();
+		if (!$this->upload->do_upload('picture')) {
+			$json = array(
+				'success' => false,
+				'message' => $this->upload->display_errors()
+			);
+		}
+		else {
+			//upload file
+			$upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+			$dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
+
+			$model = $this->M_permohonan;
+			$data = array(
+				'picture_img' => $dokumen,
+			);
+			$model->update($this->session->userdata('id'), $data);
+			// $this->session->set_flashdata('success', 'Berhasil disimpan');
+			$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+		}
+	
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
+		
+	}
+
 	public function update() {
 
 	}
