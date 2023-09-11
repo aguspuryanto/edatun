@@ -13,7 +13,7 @@ class M_user extends CI_Model {
             ['field' => 'nama', 'label' => 'Nama Lengkap','rules' => 'required'],
             ['field' => 'email', 'label' => 'Email','rules' => 'required'],
             ['field' => 'nohape', 'label' => 'No Hape', 'rules' => 'required'],
-            ['field' => 'password', 'label' => 'Password', 'rules' => 'required'],
+            ['field' => 'password', 'label' => 'Password'],
             ['field' => 'picture_img', 'label' => 'Profile Picture'],
             ['field' => 'divisi', 'label' => 'Divisi'],
         ];

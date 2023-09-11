@@ -111,7 +111,46 @@ class User extends CI_Controller {
 		
 	}
 
-	public function update() {
+	public function create() {
+		$this->load->library('form_validation');
+		$model = $this->M_user;
 
+		$json = array();
+		$this->form_validation->set_rules($model->rules());	
+		$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
+
+		if (!$this->form_validation->run()) {			
+			foreach($model->rules() as $key => $val) {
+				$json = array_merge($json, array(
+					$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
+				));
+			}
+		} else {
+			$data = array(
+				'instansi' => $this->input->post('instansi'),
+				'username' => $this->input->post('username'),
+				'nama' => $this->input->post('nama'),
+				'divisi' => $this->input->post('divisi'),
+				'role_id' => $this->input->post('role_id'),
+				'email' => $this->input->post('email'),
+				'nohape' => $this->input->post('nohape'),
+				'password' => $this->input->post('nohape'),
+			);
+
+			if($this->input->post('id')) {
+				$id = $this->input->post('id');
+				$model->update($id, $data);
+			}
+			else {
+				$model->save($data);
+			}
+
+			$this->session->set_flashdata('success', 'Berhasil disimpan');
+			$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+		}
+
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
 	}
 }
