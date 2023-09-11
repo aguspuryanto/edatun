@@ -2,10 +2,10 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/simm9899/public_html/
-    - /bin/cp -r * $DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH
     - /bin/cp -R application/controllers $DEPLOYPATH
     - /bin/cp -R application/models $DEPLOYPATH
     - /bin/cp -R application/views $DEPLOYPATH
     - /bin/cp -R application/migrations $DEPLOYPATH    
     - /bin/cp -R application/helpers $DEPLOYPATH
-    - /bin/cp -r application/config/migration.php $DEPLOYPATH
+    - /bin/cp -R application/config/migration.php $DEPLOYPATH
