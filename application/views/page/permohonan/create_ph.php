@@ -58,6 +58,9 @@
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
                     <?=form_hidden('status', '1'); ?>
 
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
