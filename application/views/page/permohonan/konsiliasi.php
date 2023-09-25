@@ -10,13 +10,13 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <h6 class="mb-4">Apa itu Pertimbangan Hukum?</h6>
-                        <p class="text-xs font-weight-bold mb-4">Pertimbangan Hukum adalah Jasa Hukum yang diberikan oleh Jaksa Pengacara Negara Kepada Negara atau Pemerintah, dalam bentuk Pendapat Hukum (Legal/Opinion/LO) dan/atau Pendampingan Hukum (Legal Asistance/LA) di Bidang Perdata dan Tata Usaha Negara dan/atau Audit Hukum (Legal Audit) di Bidang Perdata.</p>
+                        <h6 class="mb-4">Apa itu <?=@$title; ?>?</h6>
+                        <p class="text-xs font-weight-bold mb-4"><?=@$title; ?> adalah Jasa Hukum yang diberikan oleh Jaksa Pengacara Negara Kepada Negara atau Pemerintah, dalam bentuk Pendapat Hukum (Legal/Opinion/LO) dan/atau Pendampingan Hukum (Legal Asistance/LA) di Bidang Perdata dan Tata Usaha Negara dan/atau Audit Hukum (Legal Audit) di Bidang Perdata.</p>
                         <a href="create_ph" class="btn btn-primary btn-icon-split btn-lg">
                             <span class="icon text-white-50">
                                 <i class="fas fa-arrow-right"></i>
                             </span>
-                            <span class="text">Submit Permohonan</span>
+                            <span class="text">Submit <?=@$title; ?></span>
                         </a>
                     </div>
                     <div class="col-auto">
@@ -37,16 +37,6 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <!-- <tr>
-                                <th>No</th>
-                                <th>Instansi</th>
-                                <th>Tanggal</th>
-                                <th>No Registrasi</th>
-                                <th>Subject Permohonan</th>
-                                <th>Kategori</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr> -->
                             <?=get_header_table_custom($model, array('kasus_posisi', 'dokumen'));?>
                         </thead>
                         <tbody>
