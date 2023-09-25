@@ -11,6 +11,9 @@ class Template {
 	function views($template = NULL, $data = NULL) {
 		if ($template != NULL) {
             // echo json_encode($data);
+			// $data['dataUser']	= $this->_ci->session->get_userdata('dataUser');
+			// echo json_encode($data['dataUser']->dataUser);
+			
 			$data['_content']		= $this->_ci->load->view($template, $data, TRUE);
 			
 			//JS

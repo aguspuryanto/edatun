@@ -63,4 +63,19 @@ class M_user extends CI_Model {
         $data = $this->db->get($this->table_name);
         return $data->num_rows();
     }
+    public function login($user, $pass) {
+		$this->db->select('*');
+		$this->db->from($this->table_name);
+		$this->db->where('email', $user);
+		$this->db->where('password', md5($pass));
+
+		$data = $this->db->get();
+        // print_r($this->db->last_query());
+
+		if ($data->num_rows() == 1) {
+			return $data->row();
+		} else {
+			return false;
+		}
+	}
 }

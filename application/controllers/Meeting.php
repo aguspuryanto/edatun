@@ -7,6 +7,7 @@ class Meeting extends CI_Controller {
     {
         parent::__construct();
         is_logged_in();
+		$this->load->model('M_user');
 		$this->load->model('M_meeting');
     }
 
@@ -14,6 +15,7 @@ class Meeting extends CI_Controller {
 	{
 		$data['title'] = "Permohonan Rapat";
 		$data['model'] = $this->M_meeting;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		
 		$this->template->views('page/meeting/index', $data);
 	}
@@ -22,6 +24,8 @@ class Meeting extends CI_Controller {
 	{
 		$data['title'] = "Permohonan Rapat";
 		$data['model'] = $this->M_meeting;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['listData'] = $this->M_meeting->select_all();	
 		
 		$this->template->views('page/meeting/jadwal', $data);
 	}
@@ -42,6 +46,7 @@ class Meeting extends CI_Controller {
 			}
 		} else {
 			$data = array(
+				'instansi' => $this->input->post('instansi'),
 				'subject' => $this->input->post('subject'),
 				'kategori' => $this->input->post('kategori'),
 				'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),

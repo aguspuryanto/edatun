@@ -10,6 +10,7 @@ class Auth extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
+		$this->load->model('M_user');
 	}
 
 	/**
@@ -51,18 +52,21 @@ class Auth extends CI_Controller
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
 
-		$user = $this->db->get_where($this->tableUser, ['email' => $email])->row_array();
-
+		// $user = $this->db->get_where($this->tableUser, ['email' => $email])->row_array();
+		$user = $this->M_user->login($email, $password);
+		// echo json_encode($user);
 		// jika usernya ada
 		if ($user) {
 
 			//cek password
 			// if (password_verify($password, $user['password'])) {
-
+				$dataUser = $this->db->get_where($this->tableUser, ['email' => $email])->row_array();
 				$data = [
-					'id' => $user['id'],
-					'email' => $user['email'],
-					'role_id' => $user['role_id']
+					'dataUser' => $dataUser,
+					'id' => $user->id,
+					'email' => $user->email,
+					'picture_img' => $user->picture_img,
+					'role_id' => $user->role_id
 				];
 				$this->session->set_userdata($data);
 				redirect('dashboard');
@@ -73,8 +77,8 @@ class Auth extends CI_Controller
 			// }
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" 
-            role="alert"> Email is not registered </div>');
-			redirect('auth');
+            role="alert"> Username / Password Anda Salah. </div>');
+			// redirect('auth');
 		}
 	}
 

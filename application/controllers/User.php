@@ -14,9 +14,20 @@ class User extends CI_Controller {
 	{
 		$data['title'] = "User";
 		$data['model'] = $this->M_user;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_user->select_all();	
 		
 		$this->template->views('page/user/index', $data);
+	}
+
+	public function jpn()
+	{
+		$data['title'] = "User JPN";
+		$data['model'] = $this->M_user;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['listData'] = $this->M_user->select_all(['role_id' => 5]);	
+		
+		$this->template->views('page/user/jpn', $data);
 	}
 
 	public function setting()
@@ -44,15 +55,21 @@ class User extends CI_Controller {
 			} else {
 				$data = array(
 					'instansi' => $this->input->post('instansi'),
-					'kategori' => $this->input->post('kategori'),
-					'no_registrasi' => $this->input->post('no_registrasi'),
-					'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
-					'subject' => $this->input->post('subject'),
-					'kasus_posisi' => $this->input->post('kasus_posisi'),
-					'status' => $this->input->post('status'),
+					'username' => $this->input->post('username'),
+					'nama' => $this->input->post('nama'),
+					'divisi' => $this->input->post('divisi'),
+					'role_id' => $this->input->post('role_id'),
+					'email' => $this->input->post('email'),
+					'nohape' => $this->input->post('nohape'),
 				);
+				
+				if($this->input->post('id')) {
+					$id = $this->input->post('id');
+					$model->update($id, $data);
+				} else {
+					$model->save($data);
+				}
 
-				$model->save($data);
 				$this->session->set_flashdata('success', 'Berhasil disimpan');
 				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
 			}
@@ -133,9 +150,12 @@ class User extends CI_Controller {
 				'divisi' => $this->input->post('divisi'),
 				'role_id' => $this->input->post('role_id'),
 				'email' => $this->input->post('email'),
-				'nohape' => $this->input->post('nohape'),
-				'password' => $this->input->post('nohape'),
+				'nohape' => $this->input->post('nohape')
 			);
+
+			if($this->input->post('role_id') == '5') {
+				$data = array_merge($data, array('password' => md5('123456')));
+			}
 
 			if($this->input->post('id')) {
 				$id = $this->input->post('id');

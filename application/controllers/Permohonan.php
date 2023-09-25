@@ -7,6 +7,7 @@ class Permohonan extends CI_Controller {
     {
         parent::__construct();
         is_logged_in();
+		$this->load->model('M_user');
 		$this->load->model('M_permohonan');
     }
 
@@ -118,6 +119,7 @@ class Permohonan extends CI_Controller {
 	public function konsiliasi() {
 		$data['title'] = "Konsiliasi";
 		$data['model'] = $this->M_permohonan;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_permohonan->select_all();		
 		
 		$this->template->views('page/permohonan/konsiliasi', $data);
@@ -126,6 +128,7 @@ class Permohonan extends CI_Controller {
 	public function mediasi() {
 		$data['title'] = "Mediasi";
 		$data['model'] = $this->M_permohonan;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_permohonan->select_all();		
 		
 		$this->template->views('page/permohonan/mediasi', $data);
@@ -134,6 +137,7 @@ class Permohonan extends CI_Controller {
 	public function fasilitasi() {
 		$data['title'] = "Fasilitasi";
 		$data['model'] = $this->M_permohonan;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_permohonan->select_all();		
 		
 		$this->template->views('page/permohonan/fasilitasi', $data);

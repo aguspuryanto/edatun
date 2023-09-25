@@ -22,7 +22,7 @@
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <div id="formError" class="text-danger"></div>
                     <!-- Profile picture upload button-->
-                    <button type="submit" class="btn btn-primary" id="form-upload">Upload new image</button>
+                    <button type="submit" class="btn btn-primary" id="form-upload">Upload</button>
 
                     <?=form_hidden('id', $dataUser->id); ?>
                 
@@ -31,55 +31,20 @@
         </div>
     </div>
     <div class="col-lg-8">
-        <div class="card mb-4">
-            <div class="card-header">Account Details</div>
-            <div class="card-body">
-                <?=form_open('', array('id' => 'formUser', 'role' => 'form'));?>
-
-                    <?//=get_form_input($model, 'instansi'); ?>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <?=get_form_input($model, 'username', array('value' => $dataUser->username)); ?>
-                        </div>
-                        <div class="col-md-6">
-                            <?=get_form_input($model, 'nama', array('value' => $dataUser->nama)); ?>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <?=get_form_input($model, 'divisi', array('value' => $dataUser->divisi)); ?>
-                        </div>
-                        <div class="col-md-6">
-                            <?//=get_form_input($model, 'role_id'); ?>
-                            <div class="form-group">
-                                <label>Role</label>
-                                <?php $options = array(
-                                    '1' => 'Administrator',
-                                    '2' => 'User',
-                                ); ?>
-                                <?=form_dropdown('kategori', $options, $dataUser->role_id, array('class' => 'form-control', 'id' => 'input-kategori'));?>
-                                <div id="error"></div>
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <?=get_form_input($model, 'email', array('value' => $dataUser->email)); ?>
-                        </div>
-                        <div class="col-md-6">
-                            <?=get_form_input($model, 'nohape', array('value' => $dataUser->nohape)); ?>
-                        </div>
-                    </div>
-
-                    <?=form_hidden('id', $dataUser->id); ?>
-
-                    <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
-
-                <?=form_close();?>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Account Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Ubah Password</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <?php include_once('_account.php'); ?>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <?php include_once('_pwd.php'); ?>
             </div>
         </div>
     </div>
@@ -107,9 +72,10 @@ $( document ).ready(function() {
             success: function(data){
                 console.log(data, "data");
                 if(data.success == true){
-                    setTimeout(function(){
-                        window.location.reload();
-                    }, 3000);
+                    // setTimeout(function(){
+                    //     window.location.reload();
+                    // }, 3000);
+                    $('<div class="alert alert-success">' + data.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"<span aria-hidden="true">&times;</span></button></div>').insertBefore('#formUser');
                 } else {
                     $.each(data, function(key, value) {
                         $('#input-' + key).addClass('is-invalid');
@@ -125,7 +91,7 @@ $( document ).ready(function() {
         $(this).parents('.form-group').find('#error').html(" ");
     });
 
-    $("#input-picture").on("change",function(e){
+    $("#input-picture_img").on("change",function(e){
         /* Current this object refer to input element */         
         var $input = $(this);
         var reader = new FileReader(); 
@@ -139,7 +105,7 @@ $( document ).ready(function() {
         e.preventDefault();
 
         var fd = new FormData();
-        var files = $(this).find('#input-picture')[0].files[0];
+        var files = $(this).find('#input-picture_img')[0].files[0];
         fd.append('file',files);
 
         $.ajax({
@@ -152,7 +118,7 @@ $( document ).ready(function() {
             cache: false,
             async: false,
             beforeSend : function(xhr, opts){
-                // $(formDokumen).text('Loading...').prop("disabled", true);
+                $('#form-upload').text('Loading...').prop("disabled", true);
             },
             success: function(data){
                 console.log(data, "data");

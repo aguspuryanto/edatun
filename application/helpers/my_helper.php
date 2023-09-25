@@ -80,8 +80,7 @@ function get_form_input($model, $field="", $options=array()) {
 
     $key = array_search($field, array_column($model->rules(), 'field'));
     if($key >= 0) {
-        $form = '<div class="form-group">
-        <label>' . form_label($model->rules()[$key]['label']) . '</label>';
+        $form = '<div class="form-group">' . form_label($model->rules()[$key]['label']);
 
         if(isset($attributes['type']) && $attributes['type'] === 'textarea') {
             if ($field) $attributes['name'] = $field;

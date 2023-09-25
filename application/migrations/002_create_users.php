@@ -72,7 +72,7 @@ class Migration_create_users extends CI_Migration {
                     'divisi' => NULL,
                     'email' => "admin@mail.com",
                     'nohape' => null,
-                    'password' => "5f4dcc3b5aa765d61d8327deb882cf99",
+                    'password' => md5('admin'),
                     'role_id' => "1"
                 ),
             );

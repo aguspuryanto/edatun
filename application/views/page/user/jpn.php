@@ -1,32 +1,5 @@
-<!-- Page Heading -->
-<!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800"><?=@$title; ?></h1>
-</div> -->
-
 <!-- Content Row -->
 <div class="row">
-    <!-- <div class="col-lg-12 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <h6 class="mb-4">Daftar user pada instansi Anda</h6>
-                        <p class="text-xs font-weight-bold mb-4">Tambahkan user pada instansi Anda sesuai dengan kebutuhan.</p>
-                        <a href="#" class="btn btn-primary btn-icon-split btn-lg" data-toggle="modal" data-target="#myModalUser">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-arrow-right"></i>
-                            </span>
-                            <span class="text">User Baru</span>
-                        </a>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <div class="col-lg-12">
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -45,7 +18,14 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <?=get_header_table_custom($model, array('divisi', 'password', 'picture_img'));?>
+                            <?//=get_header_table_custom($model, array('instansi', 'username', 'role_id', 'password', 'picture_img'));?>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Pangkat</th>
+                                <th>NIP</th>
+                                <th>#</th>
+                            </tr>
                         </thead>
                         <tbody>
                         <?php
@@ -55,11 +35,8 @@
                                 $user = ($row->role_id=='1') ? 'Administrator' : 'User';
                                 echo '<tr>
                                     <td>'.$id.'</td>
-                                    <td>'.$row->instansi.'</td>
-                                    <td>'.$row->username.'</td>
-                                    <td>'.$user.'</td>
                                     <td>'.$row->nama.'</td>
-                                    <td>'.$row->email.'</td>
+                                    <td>'.$row->divisi.'</td>
                                     <td>'.$row->nohape.'</td>
                                     <td>#</td>
                                 </tr>';
@@ -88,43 +65,24 @@
       </div>
       <div class="modal-body">
         <?=form_open('', array('id' => 'formUser', 'role' => 'form'));?>
-
-            <div class="form-group">
-                <label>Instansi</label>
-                <?php $options = array(
-                    '001' => 'Kementerian Sekretariat Negara',
-                    '002' => 'PT ADHI KARYA',
-                    '003' => 'PT. Indonesia Asahan Alumunium',
-                    '004' => 'PT. Krakatau Steel',
-                    '005' => 'PT Pelabuhan Indonesia (Persero)',
-                    '006' => 'PT. Pembangunan Perumahan (Persero)',
-                    '007' => 'PT. PLN Persero',
-                    '008' => 'PT Rajawali Nusantara Indonesia',
-                    '009' => 'PT Telkom',
-                ); ?>
-                <?=form_dropdown('instansi', $options, '', array('class' => 'form-control', 'id' => 'input-instansi'));?>
-                <div id="error"></div>
-            </div>
             
             <?=get_form_input($model, 'username'); ?>
+            <?=get_form_input($model, 'email'); ?>
             <?=get_form_input($model, 'nama'); ?>
-            <?=get_form_input($model, 'divisi'); ?>
-
-            <!-- Role -->
+            <?//=get_form_input($model, 'divisi'); ?>
             <div class="form-group">
-                <label>Role</label>
-                <?php $options = array(
-                    '1' => 'Administrator',
-                    '2' => 'User',
-                ); ?>
-                <?=form_dropdown('role_id', $options, '', array('class' => 'form-control', 'id' => 'input-role_id'));?>
+                <label>Pangkat</label>
+                <input type="text" name="divisi" value="" class="form-control" id="input-divisi">
                 <div id="error"></div>
             </div>
-            
-            <?=get_form_input($model, 'email'); ?>
+            <?//=get_form_input($model, 'nohape'); ?>
+            <div class="form-group">
+                <label>NIP</label>
+                <input type="text" name="nohape" value="" class="form-control" id="input-nohape">
+                <div id="error"></div>
+            </div>
 
-            <?=get_form_input($model, 'nohape'); ?>
-
+            <?=form_hidden('role_id', '5'); ?>
             <?=form_hidden('id', ''); ?>
 
         <?=form_close();?>
