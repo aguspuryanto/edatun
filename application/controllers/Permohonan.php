@@ -113,4 +113,29 @@ class Permohonan extends CI_Controller {
 		
 		$this->template->views('page/permohonan/tun', $data);
 	}
+
+	// Update
+	public function konsiliasi() {
+		$data['title'] = "Konsiliasi";
+		$data['model'] = $this->M_permohonan;
+		$data['listData'] = $this->M_permohonan->select_all();		
+		
+		$this->template->views('page/permohonan/konsiliasi', $data);
+	}
+
+	public function mediasi() {
+		$data['title'] = "Mediasi";
+		$data['model'] = $this->M_permohonan;
+		$data['listData'] = $this->M_permohonan->select_all();		
+		
+		$this->template->views('page/permohonan/mediasi', $data);
+	}
+
+	public function fasilitasi() {
+		$data['title'] = "Fasilitasi";
+		$data['model'] = $this->M_permohonan;
+		$data['listData'] = $this->M_permohonan->select_all();		
+		
+		$this->template->views('page/permohonan/fasilitasi', $data);
+	}
 }
