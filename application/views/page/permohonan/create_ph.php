@@ -12,7 +12,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <!-- <label><?=form_label($model->rules()[2]['label']); ?></label> -->
-                                <label>Pilih mitra</label>
+                                <label>Pilih Pemohon</label>
                                 <?php $options = array(
                                     '' => 'Pilih salah satu',
                                     '047' => 'adminadhikarya - PT ADHI KARYA',
@@ -24,7 +24,8 @@
                                     '041' => 'Admin PT PP - PT. Pembangunan Perumahan (Persero)',
                                     '040' => 'Administratorxx - PT. PLN Persero',
                                 ); ?>
-                                <?=form_dropdown('instansi', $options, '', array('class' => 'form-control', 'id' => 'input-instansi'));?>
+                                <!-- <?=form_dropdown('instansi', $options, '', array('class' => 'form-control', 'id' => 'input-instansi'));?> -->
+                                <?=get_form_input($model, 'instansi'); ?>
                                 <div id="error"></div>
                             </div>
                         </div>
@@ -57,7 +58,11 @@
                     <?=get_form_input($model, 'subject'); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
-                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
                     <?=form_hidden('status', '1'); ?>
 
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
