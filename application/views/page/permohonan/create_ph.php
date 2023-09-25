@@ -35,11 +35,9 @@
                                 <label>Pilih jenis layanan</label>
                                 <?php $options = array(
                                     '' => 'Pilih salah satu',
-                                    'LO' => 'Legal Opinion',
-                                    'LA' => 'Legal Audit',
-                                    'LA' => 'Legal Asistance',
-                                    'PH' => 'Pelayanan Hukum',
-                                    'THL' => 'Tindakan Hukum Lain',
+                                    'FAS' => 'Fasilitasi',
+                                    'MED' => 'Mediasi',
+                                    'KON' => 'Konsiliasi',
                                 ); ?>
                                 <?=form_dropdown('kategori', $options, '', array('class' => 'form-control', 'id' => 'input-kategori'));?>
                                 <div id="error"></div>
