@@ -1,3 +1,15 @@
+<?php $options = array(
+    '001' => 'Kementerian Sekretariat Negara',
+    '002' => 'PT ADHI KARYA',
+    '003' => 'PT. Indonesia Asahan Alumunium',
+    '004' => 'PT. Krakatau Steel',
+    '005' => 'PT Pelabuhan Indonesia (Persero)',
+    '006' => 'PT. Pembangunan Perumahan (Persero)',
+    '007' => 'PT. PLN Persero',
+    '008' => 'PT Rajawali Nusantara Indonesia',
+    '009' => 'PT Telkom',
+); ?>
+
 <!-- Content Row -->
 <div class="row">
     <div class="col-lg-12 mb-4">
@@ -26,7 +38,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary"><?=@$title; ?></h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -39,15 +51,20 @@
                         if($listData) : 
                             $id=1;
                             foreach($listData as $row) {
+                                $instansi = @$options[$row->instansi] ?: null;
+                                $kategori = ($row->kategori=='OL') ? 'Online (Zoom Meeting)' : 'Offline';
                                 echo '<tr>
                                     <td>'.$id.'</td>
-                                    <td>'.$row->instansi.'</td>
+                                    <td>'.$instansi.'</td>
                                     <td>'.$row->subject.'</td>
-                                    <td>'.$row->kategori.'</td>
-                                    <td>'.$row->tgl_permohonan.'</td>
+                                    <td>'.$kategori.'</td>
+                                    <td>'.date('d-m-Y', strtotime($row->tgl_permohonan)).'</td>
                                     <td>'.$row->lokasi.'</td>
                                     <td>'.$row->agenda.'</td>
-                                    <td>#</td>
+                                    <td><div class="btn-group" role="group">
+                                        <button type="button" data-id="'.$row->id.'" class="btn btn-secondary btnEdit" data-toggle="modal" data-target="#myModalMeeting">Edit</button>
+                                        <button type="button" data-id="'.$row->id.'" class="btn btn-danger btnRemove">Hapus</button>
+                                    </div></td>
                                 </tr>';
                                 $id++;
                             }
@@ -78,17 +95,6 @@
 
             <div class="form-group">
                 <label>Instansi</label>
-                <?php $options = array(
-                    '001' => 'Kementerian Sekretariat Negara',
-                    '002' => 'PT ADHI KARYA',
-                    '003' => 'PT. Indonesia Asahan Alumunium',
-                    '004' => 'PT. Krakatau Steel',
-                    '005' => 'PT Pelabuhan Indonesia (Persero)',
-                    '006' => 'PT. Pembangunan Perumahan (Persero)',
-                    '007' => 'PT. PLN Persero',
-                    '008' => 'PT Rajawali Nusantara Indonesia',
-                    '009' => 'PT Telkom',
-                ); ?>
                 <?=form_dropdown('instansi', $options, '', array('class' => 'form-control', 'id' => 'input-instansi'));?>
                 <div id="error"></div>
             </div>
@@ -133,6 +139,8 @@
 
 <?php
 $Urladd = base_url('meeting/create');
+$Urldetail = base_url('meeting/view');
+$Urlremove = base_url('meeting/remove');
 ?>
 
 <script type="text/javascript">
@@ -141,6 +149,8 @@ $( document ).ready(function() {
     $(".datepicker").datepicker({
       format:'dd/mm/yyyy',
     }).datepicker("setDate",'now');
+
+    var table = $('#dataTable').DataTable();
 
     $('button#formMeeting').on('click', function (e) {
         e.preventDefault();
@@ -151,14 +161,14 @@ $( document ).ready(function() {
             data: $('form#formMeeting').serialize(),
             dataType: "json",
             beforeSend : function(xhr, opts){
-              // $('#form-submit').text('Loading...').prop("disabled", true);
+              $('button#formMeeting').text('Loading...').prop("disabled", true);
             },
             success: function(data){
                 console.log(data, "data");
                 if(data.success == true){
-                    // setTimeout(function(){
-                    //     window.location.reload();
-                    // }, 3000);
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 3000);
                 } else {
                     $.each(data, function(key, value) {
                         $('#input-' + key).addClass('is-invalid');
@@ -172,6 +182,49 @@ $( document ).ready(function() {
     $('#form input').on('keyup', function () { 
         $(this).removeClass('is-invalid').addClass('is-valid');
         $(this).parents('.form-group').find('#error').html(" ");
+    });
+
+    $(document).on('click', '.btnEdit', function (e) {
+        e.preventDefault();
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+
+        $('#formMeeting input[name=id]').val(dataId);
+
+        let promise = new Promise(function(resolve, reject) {
+            // resolve(dataId);
+        });
+
+        $.get("<?=$Urldetail;?>/" + dataId, function(data, status){
+            console.log(data, "data");
+            $.each(data.data, function(key, value) {
+                if(key == 'kategori') {
+                    $('#kategori').val(value).change();
+                } else if(key == 'tgl_permohonan') {
+                    var newValue = new Date(value);
+                    var formattedDate = [newValue.getDate(), newValue.getMonth() + 1, newValue.getFullYear()].join('/');
+                    $('#input-' + key).val(formattedDate).change();
+                } else {
+                    $('#input-' + key).val(value);
+                }
+            });
+
+            // $('#form input[name=kegiatan]').val(data.data.kegiatan);
+        });
+    });
+
+    $(document).on('click', '.btnRemove', function (e) {
+        e.preventDefault();
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+
+        if (confirm("Apakah anda yakin ingin menghapus data ini?")==true){
+            // $(this).closest("tr").remove();
+            table.row( $(this).parents('tr') ).remove().draw();
+            $.post("<?=$Urlremove;?>/", {id: dataId}, function(result){
+                console.log(result, "_result");
+            });
+        };
     });
 
 });

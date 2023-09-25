@@ -15,7 +15,7 @@ class Meeting extends CI_Controller {
 	{
 		$data['title'] = "Permohonan Rapat";
 		$data['model'] = $this->M_meeting;
-		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		
 		$this->template->views('page/meeting/index', $data);
 	}
@@ -24,10 +24,45 @@ class Meeting extends CI_Controller {
 	{
 		$data['title'] = "Permohonan Rapat";
 		$data['model'] = $this->M_meeting;
-		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listData'] = $this->M_meeting->select_all();	
+		$data['ctrl'] = $this; 
 		
 		$this->template->views('page/meeting/jadwal', $data);
+	}
+
+	public function view($id) {
+		// $data['userdata'] 	= $this->userdata;
+		$data['data'] = $this->M_meeting->select_all(['id' => $id]);
+		// $data['data'][0]['tgl_permohonan'] = date('d/m/Y', strtotime($data['data'][0]['tgl_permohonan']));
+
+		$json = array();
+		if($data['data']) {
+			$json = array('success' => true, 'data' => $data['data'][0]);
+		} else {
+			$json = array('success' => false, 'data' => []);
+		}
+
+		$this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($json));
+	}
+
+	public function remove() {
+		$json = array();
+		$model = $this->M_meeting;
+
+		if($this->input->post('id')) {
+			$id = $this->input->post('id');
+			$model->delete($id);
+
+			$this->session->set_flashdata('success', 'Berhasil terhapus');
+			$json = array('success' => true, 'message' => 'Berhasil terhapus');
+		}
+
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
 	}
 
 	public function create() {
@@ -45,11 +80,13 @@ class Meeting extends CI_Controller {
 				));
 			}
 		} else {
+			$datePermohonan = DateTime::createFromFormat('d/m/Y', $this->input->post('tgl_permohonan'));
+			// echo $datePermohonan->format('Y-m-d');
 			$data = array(
 				'instansi' => $this->input->post('instansi'),
 				'subject' => $this->input->post('subject'),
 				'kategori' => $this->input->post('kategori'),
-				'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
+				'tgl_permohonan' => $datePermohonan->format('Y-m-d'), //date('Y-m-d', strtotime($datePermohonan)),
 				'lokasi' => $this->input->post('lokasi'),
 				'agenda' => $this->input->post('agenda'),
 			);

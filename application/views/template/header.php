@@ -21,6 +21,7 @@
 
 	<!-- Custom css -->
     <link href="<?=base_url('assets/');?>vendor/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?=base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.css">
     
 	<?php echo @$_loadcss; ?>
 </head>
