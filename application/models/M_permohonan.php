@@ -7,7 +7,7 @@ class M_permohonan extends CI_Model {
     public function rules()
     {
         return [
-            ['field' => 'instansi', 'label' => 'Instansi', 'rules' => 'required'],
+            ['field' => 'instansi', 'label' => 'Pilih Pemohon', 'rules' => 'required'],
             ['field' => 'tgl_permohonan', 'label' => 'Tanggal','rules' => 'required'],
             ['field' => 'no_registrasi', 'label' => 'No Surat Permohonan','rules' => 'required'],
             ['field' => 'subject', 'label' => 'Subject Permohonan','rules' => 'required'],
