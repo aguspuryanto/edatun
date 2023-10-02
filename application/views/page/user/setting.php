@@ -53,10 +53,18 @@
 <?php
 $Urladd = base_url('user/setting');
 $Urlpicture = base_url('user/picture');
-?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+$loadcss = <<<EOF
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+EOF;
+
+$loadjs = <<<EOF
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+EOF;
+
+$this->load->vars('_loadcss', $loadcss);
+$this->load->vars('_loadjs', $loadjs);
+?>
 
 <script type="text/javascript">
 <?php if($this->session->flashdata('success')){ ?>
