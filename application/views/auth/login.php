@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-primary" style="background-image: url('<?= base_url('assets/img/202210051412-main.jpg'); ?>">
 
 	<div class="container">
 
