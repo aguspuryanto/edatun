@@ -17,17 +17,30 @@
 
 	<!-- Custom styles for this template-->
 	<link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
+	<style>
+		.bg-gradient-primary {
+			background-image: url(<?= base_url('assets/img/202210051412-main.jpg'); ?>);
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			height: 260px;
+		}
+		.ftco-section {
+			padding: 10em 0;
+		}
+	</style>
 
 </head>
 
-<body class="bg-gradient-primary" style="background-image: url('<?= base_url('assets/img/202210051412-main.jpg'); ?>">
+<body class="bg-gradient-primary">
 
+	<section class="ftco-section">
 	<div class="container">
 
 		<!-- Outer Row -->
 		<div class="row justify-content-center">
 
-			<div class="col-xl-10 col-lg-12 col-md-9">
+			<div class="col-xl-10 col-lg-12 col-md-9 text-center mb-5">
 
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
@@ -77,6 +90,7 @@
 		</div>
 
 	</div>
+	</section>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
