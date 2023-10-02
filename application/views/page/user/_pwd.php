@@ -8,7 +8,6 @@
                             <?=get_form_input($model, 'password', array('value' => '')); ?>
                         </div>
                         <div class="col-md-6">
-                            <?//=get_form_input($model, 'password', array('value' => '')); ?>
                             <div class="form-group">
                                 <label>Konfirmasi Password</label>
                                 <input type="text" name="repassword" value="" class="form-control" id="input-repassword">
@@ -18,6 +17,7 @@
                     </div>
 
                     <?=form_hidden('id', $dataUser->id); ?>
+                    <?=form_hidden('type', 'pwd'); ?>
 
                     <button type="submit" class="btn btn-primary" id="formPwd">Simpan</button>
 

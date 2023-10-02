@@ -38,30 +38,39 @@ class User extends CI_Controller {
 
 		$_POST = $this->input->post();
 		if($_POST) {
+			// echo json_encode($this->session->userdata('dataUser')['username']);
 			// echo json_encode($_POST); die();
 			$this->load->library('form_validation');
 			$model = $this->M_user;
+			if($_POST['type'] == 'pwd') {
+				// $model->username = $this->session->userdata('dataUser')['username'];
+			}
 
 			$json = array();
 			$this->form_validation->set_rules($model->rules());	
 			$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
 	
-			if (!$this->form_validation->run()) {			
+			if ($_POST['type'] != 'pwd' && !$this->form_validation->run()) {			
 				foreach($model->rules() as $key => $val) {
 					$json = array_merge($json, array(
 						$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
 					));
 				}
 			} else {
-				$data = array(
-					'instansi' => $this->input->post('instansi'),
-					'username' => $this->input->post('username'),
-					'nama' => $this->input->post('nama'),
-					'divisi' => $this->input->post('divisi'),
-					'role_id' => $this->input->post('role_id'),
-					'email' => $this->input->post('email'),
-					'nohape' => $this->input->post('nohape'),
-				);
+				if($_POST['type'] == 'pwd') {
+					$data = array('password' => md5($this->input->post('password')));
+				} else {
+
+					$data = array(
+						'instansi' => $this->input->post('instansi'),
+						'username' => $this->input->post('username'),
+						'nama' => $this->input->post('nama'),
+						'divisi' => $this->input->post('divisi'),
+						'role_id' => $this->input->post('role_id'),
+						'email' => $this->input->post('email'),
+						'nohape' => $this->input->post('nohape'),
+					);
+				}
 				
 				if($this->input->post('id')) {
 					$id = $this->input->post('id');

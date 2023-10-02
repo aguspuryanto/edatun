@@ -55,6 +55,21 @@ $Urladd = base_url('user/setting');
 $Urlpicture = base_url('user/picture');
 ?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+<script type="text/javascript">
+<?php if($this->session->flashdata('success')){ ?>
+    toastr.success("<?php echo $this->session->flashdata('success'); ?>");
+<?php }else if($this->session->flashdata('error')){  ?>
+    toastr.error("<?php echo $this->session->flashdata('error'); ?>");
+<?php }else if($this->session->flashdata('warning')){  ?>
+    toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
+<?php }else if($this->session->flashdata('info')){  ?>
+    toastr.info("<?php echo $this->session->flashdata('info'); ?>");
+<?php } ?>
+</script>
+
 <script type="text/javascript">
 $( document ).ready(function() {
 
@@ -129,6 +144,34 @@ $( document ).ready(function() {
                     }, 1000);
                 } else {
                     $('#formError').html(data.message);
+                }
+            }
+        });
+    });
+    
+    $('button#formPwd').on('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "<?=$Urladd;?>", 
+            data: $('form#formPwd').serialize(),
+            dataType: "json",
+            beforeSend : function(xhr, opts){
+              $(this).text('Loading...').prop("disabled", true);
+            },
+            success: function(data){
+                console.log(data, "data");
+                if(data.success == true){
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 3000);
+                    // $('<div class="alert alert-success">' + data.message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"<span aria-hidden="true">&times;</span></button></div>').insertBefore('#formUser');
+                } else {
+                    $.each(data, function(key, value) {
+                        $('#input-' + key).addClass('is-invalid');
+                        $('#input-' + key).parents('.form-group').find('#error').html(value);
+                    });
                 }
             }
         });
