@@ -195,17 +195,14 @@ class Permohonan extends CI_Controller {
 		$this->template->views('page/permohonan/konsiliasi', $data);
 	}
 
-	public function download($filename = null) {
+	public function dokumen($filename = null) {
 		// load download helder
 		$this->load->helper('download');
 
 		// read file contents
-		// $data['data'] = $this->M_inkracth->select_by_id($id);
-		// $filename = $data['data']->dokumen;
-		echo $filename;
-
-		// $data = @file_get_contents(base_url('/uploads/'.$filename));
+		$data = @file_get_contents(base_url('/uploads/'.$filename));
 		// if($data) force_download($filename, $data);
+		if($data) force_download($filename, null);
 
 	}
 }

@@ -44,12 +44,12 @@
                         if($listData) : 
                             $id=1;
                             foreach($listData as $row) {
-                                $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/download/' . $row->dokumen).'" class="btn btn-link btn-block">Dokumen</a>' : '#';
+                                $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $row->dokumen).'" class="btn btn-link btn-block">Dokumen</a>' : '#';
                                 echo '<tr>
                                     <td>'.$id.'</td>
                                     <td>'.$row->pemohon.'</td>
                                     <td>'.$row->termohon.'</td>
-                                    <td>'.$row->tgl_permohonan.'</td>
+                                    <td>'.date('d-m-Y', strtotime($row->tgl_permohonan)).'</td>
                                     <td>'.$row->no_registrasi.'</td>
                                     <td>'.$row->subject.'</td>
                                     <td>'.$row->kasus_posisi.'</td>
