@@ -95,7 +95,7 @@ $( document ).ready(function() {
         // }
 
         var formData = new FormData();
-        var fileInput = $('#input-dokumen[]')[0].files[0];
+        var fileInput = $('#input-dokumen[]')[0];
         $.each(fileInput.files, function(k,file){
             formData.append('files[]', file);
         });
