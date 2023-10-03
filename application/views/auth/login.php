@@ -26,7 +26,7 @@
 			height: 260px;
 		}
 		.ftco-section {
-			padding: 10em 0;
+			padding: 7em 0;
 		}
 	</style>
 
