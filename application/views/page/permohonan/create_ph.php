@@ -91,8 +91,9 @@ $( document ).ready(function() {
         // var files = $('#input-dokumen[]')[0].files[0];
         var totalfiles = document.getElementById('input-dokumen[]').files.length;
         for (var index = 0; index < totalfiles; index++) {            
-            // fd.append('file',files);
-            fd.append("dokumen[]", document.getElementById('input-dokumen[]').files[index]);
+            var files = $('#input-dokumen[]')[0].files[index];
+            fd.append('file',files);
+            // fd.append("input-dokumen[]", document.getElementById('input-dokumen[]').files[index]);
         }
 
         if(files?.length){
