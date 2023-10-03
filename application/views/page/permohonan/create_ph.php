@@ -41,7 +41,10 @@
                                 <?=form_dropdown('kategori', $options, '', array('class' => 'form-control', 'id' => 'input-kategori'));?>
                                 <div id="error"></div>
                             </div> -->
-                            <?=get_form_input($model, 'no_registrasi'); ?>
+                            <div class="form-group">
+                                <label>Termohon</label>
+                                <?= form_input('termohon', '', array('class' => 'form-control', 'id' => 'input-termohon')); ?>
+                            </div>
                         </div>
                     </div>
 
@@ -57,10 +60,10 @@
                     <?=get_form_input($model, 'subject'); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
-                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
-                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
-                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
-                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
                     <?=form_hidden('status', '1'); ?>
 
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
@@ -85,8 +88,12 @@ $( document ).ready(function() {
         e.preventDefault();
 
         var fd = new FormData();
-        var files = $('#input-dokumen')[0].files[0];
-        fd.append('file',files);
+        // var files = $('#input-dokumen[]')[0].files[0];
+        var totalfiles = document.getElementById('input-dokumen[]').files.length;
+        for (var index = 0; index < totalfiles; index++) {            
+            // fd.append('file',files);
+            fd.append("dokumen[]", document.getElementById('input-dokumen[]').files[index]);
+        }
 
         if(files?.length){
             alert("Please select a file.");

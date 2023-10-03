@@ -28,11 +28,14 @@ class Permohonan extends CI_Controller {
 
 	public function create_ph() {
 		$data['title'] = "Form Permohonan";
+		if(isset($_GET['type'])) $data['title'] .= " - " . $_GET['type'];
+		
 		$data['model'] = $this->M_permohonan;
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		
 		$_POST = $this->input->post();
 		if($_POST) {
-			// echo json_encode($_POST); die();
+			echo json_encode($_POST); die();
 			$this->load->library('form_validation');
 			$model = $this->M_permohonan;
 
