@@ -61,6 +61,10 @@
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=form_hidden('status', '1'); ?>
 
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
                     <button type="reset" class="btn btn-default">Reset</button>
@@ -83,24 +87,11 @@ $( document ).ready(function() {
     $('form#form').submit(function (e) {
         e.preventDefault();
 
-        // var fd = new FormData();
-        // var files = $('#input-dokumen[]')[0].files[0];
-        // fd.append('file',files);
+        var fd = new FormData();
+        var files = $('#input-dokumen')[0].files[0];
+        fd.append('file',files);
 
-        // var totalfiles = $('#input-dokumen[]')[0].files.length;
-        // for (var index = 0; index < totalfiles; index++) {            
-            // var files = $('#input-dokumen[]')[0].files[index];
-            // fd.append('file',files);
-            // fd.append("input-dokumen[]", document.getElementById('input-dokumen[]').files[index]);
-        // }
-
-        var formData = new FormData();
-        var fileInput = $('#input-dokumen[]')[0];
-        $.each(fileInput.files, function(k,file){
-            formData.append('files[]', file);
-        });
-
-        if(fileInput?.length){
+        if(files?.length){
             alert("Please select a file.");
             // return;
         }
