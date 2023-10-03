@@ -37,13 +37,14 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <?=get_header_table_custom($model, ['jenis_permohonan', 'dokumen']);?>
+                            <?=get_header_table_custom($model, ['jenis_permohonan']);?>
                         </thead>
                         <tbody>
                         <?php
                         if($listData) : 
                             $id=1;
                             foreach($listData as $row) {
+                                $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/download/' . $row->dokumen).'" class="btn btn-link btn-block">Dokumen</a>' : '#';
                                 echo '<tr>
                                     <td>'.$id.'</td>
                                     <td>'.$row->pemohon.'</td>
@@ -52,6 +53,7 @@
                                     <td>'.$row->no_registrasi.'</td>
                                     <td>'.$row->subject.'</td>
                                     <td>'.$row->kasus_posisi.'</td>
+                                    <td>'.$dokUrl.'</td>
                                     <td>'.$row->status.'</td>
                                     <td><div class="btn-group" role="group">
                                         <a href="' . base_url('permohonan/edit_ph?type=Konsiliasi&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>

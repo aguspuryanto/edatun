@@ -29,6 +29,8 @@
 
                     <?=get_form_input($model, 'subject'); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
+
+                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
                     
                     <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
                     <?=form_hidden('status', '1'); ?>
@@ -54,14 +56,14 @@ $( document ).ready(function() {
     $('form#form').submit(function (e) {
         e.preventDefault();
 
-        // var fd = new FormData();
-        // var files = $('#input-dokumen')[0].files[0];
-        // fd.append('file',files);
+        var form_data = new FormData(document.getElementById("form"));
+        var files = $('#input-dokumen')[0].files[0];
+        form_data.append('file',files);
 
-        // if(files?.length){
-        //     alert("Please select a file.");
-        //     // return;
-        // }
+        if(files?.length){
+            alert("Please select a file.");
+            // return;
+        }
 
         // var form_data = new FormData();
         // var ins = document.getElementById('multiFiles').files.length;
@@ -72,11 +74,11 @@ $( document ).ready(function() {
         $.ajax({
             type: "POST",
             url: "<?=site_url('permohonan/create');?>", 
-            data: $("#form").serialize(),
-            // data: form_data,
-            // processData: false,
-            // contentType: false,
-            // cache: false,
+            // data: $("#form").serialize(),
+            data: form_data,
+            processData: false,
+            contentType: false,
+            cache: false,
             dataType: "json",  
             success: function(data){
                 console.log(data, "data");
@@ -85,10 +87,14 @@ $( document ).ready(function() {
                         window.location.reload();
                     }, 3000);
                 } else {
-                    $.each(data, function(key, value) {
-                        $('#input-' + key).addClass('is-invalid');
-                        $('#input-' + key).parents('.form-group').find('#error').html(value);
-                    });
+                    if(data.success == false) {
+                        alert(data.message);
+                    } else {
+                        $.each(data, function(key, value) {
+                            $('#input-' + key).addClass('is-invalid');
+                            $('#input-' + key).parents('.form-group').find('#error').html(value);
+                        });
+                    }
                 }
             }
         });

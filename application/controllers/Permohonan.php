@@ -85,25 +85,32 @@ class Permohonan extends CI_Controller {
 				'status' => $this->input->post('status'),
 			);
 
-			// if (!$this->upload->do_upload('dokumen')) {
-			// 	$nextStep = false;
-			// 	$json = array(
-			// 		'success' => false,
-			// 		'message' => $this->upload->display_errors()
-			// 	);
-			// }
-			// else {
-			// 	//upload file
-			// 	$upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
-			// 	$dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
+			if (!$this->upload->do_upload('dokumen')) {
+				$nextStep = false;
+				$json = array(
+					'success' => false,
+					'message' => $this->upload->display_errors()
+				);
+			}
+			else {
+				//upload file
+				$upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+				$dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
 
-			// 	$data = array_merge($data, array(
-			// 		'dokumen' => $dokumen,
-			// 	));
-			// }
+				$data = array_merge($data, array(
+					'dokumen' => $dokumen,
+				));
+			}
 
-			if($nextStep) {
-				$model->save($data);
+			if($nextStep) {			
+
+				if($this->input->post('id')) {
+					$id = $this->input->post('id');
+					$model->update($id, $data);				
+				} else {
+					$model->save($data);
+				}
+
 				$this->session->set_flashdata('success', 'Berhasil disimpan');
 				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
 			}
@@ -131,7 +138,7 @@ class Permohonan extends CI_Controller {
 		$data['title'] = "Konsiliasi";
 		$data['model'] = $this->M_permohonan;
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
-		$data['listData'] = $this->M_permohonan->select_all();		
+		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Konsiliasi']);		
 		
 		$this->template->views('page/permohonan/konsiliasi', $data);
 	}
@@ -174,17 +181,31 @@ class Permohonan extends CI_Controller {
 		$data['title'] = "Mediasi";
 		$data['model'] = $this->M_permohonan;
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
-		$data['listData'] = $this->M_permohonan->select_all();		
+		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Mediasi']);		
 		
-		$this->template->views('page/permohonan/mediasi', $data);
+		$this->template->views('page/permohonan/konsiliasi', $data);
 	}
 
 	public function fasilitasi() {
 		$data['title'] = "Fasilitasi";
 		$data['model'] = $this->M_permohonan;
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
-		$data['listData'] = $this->M_permohonan->select_all();		
+		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Fasilitasi']);		
 		
-		$this->template->views('page/permohonan/fasilitasi', $data);
+		$this->template->views('page/permohonan/konsiliasi', $data);
+	}
+
+	public function download($filename = null) {
+		// load download helder
+		$this->load->helper('download');
+
+		// read file contents
+		// $data['data'] = $this->M_inkracth->select_by_id($id);
+		// $filename = $data['data']->dokumen;
+		echo $filename;
+
+		// $data = @file_get_contents(base_url('/uploads/'.$filename));
+		// if($data) force_download($filename, $data);
+
 	}
 }
