@@ -12,7 +12,7 @@
                     <div class="col mr-2">
                         <h6 class="mb-4">Apa itu <?=@$title; ?>?</h6>
                         <p class="text-xs font-weight-bold mb-4"><?=@$title; ?> adalah Jasa Hukum yang diberikan oleh Jaksa Pengacara Negara Kepada Negara atau Pemerintah, dalam bentuk Pendapat Hukum (Legal/Opinion/LO) dan/atau Pendampingan Hukum (Legal Asistance/LA) di Bidang Perdata dan Tata Usaha Negara dan/atau Audit Hukum (Legal Audit) di Bidang Perdata.</p>
-                        <a href="create_ph" class="btn btn-primary btn-icon-split btn-lg">
+                        <a href="create_ph?type=<?=@$title; ?>" class="btn btn-primary btn-icon-split btn-lg">
                             <span class="icon text-white-50">
                                 <i class="fas fa-arrow-right"></i>
                             </span>

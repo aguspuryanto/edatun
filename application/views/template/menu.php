@@ -12,7 +12,7 @@
                         <a class="collapse-item" href="<?=base_url('permohonan/tun');?>">Tata Usaha Negara</a> -->
                         <a class="collapse-item" href="<?=base_url('permohonan/konsiliasi');?>">Konsiliasi</a>
                         <a class="collapse-item" href="<?=base_url('permohonan/mediasi');?>">Mediasi</a>
-                        <a class="collapse-item" href="<?=base_url('permohonan/fasilitasi');?>">Fasitasi</a>
+                        <a class="collapse-item" href="<?=base_url('permohonan/fasilitasi');?>">Fasilitasi</a>
                     </div>
                 </div>
             </li>

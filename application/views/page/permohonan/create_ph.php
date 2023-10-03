@@ -30,8 +30,7 @@
                         </div>
                             
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <!-- <label><?=form_label($model->rules()[2]['label']); ?></label> -->
+                            <!-- <div class="form-group">
                                 <label>Pilih jenis layanan</label>
                                 <?php $options = array(
                                     '' => 'Pilih salah satu',
@@ -41,7 +40,8 @@
                                 ); ?>
                                 <?=form_dropdown('kategori', $options, '', array('class' => 'form-control', 'id' => 'input-kategori'));?>
                                 <div id="error"></div>
-                            </div>
+                            </div> -->
+                            <?=get_form_input($model, 'no_registrasi'); ?>
                         </div>
                     </div>
 
