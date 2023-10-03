@@ -42,7 +42,7 @@ class User extends CI_Controller {
 			// echo json_encode($_POST); die();
 			$this->load->library('form_validation');
 			$model = $this->M_user;
-			if($_POST['type'] == 'pwd') {
+			if(isset($_POST['type']) && $_POST['type'] == 'pwd') {
 				// $model->username = $this->session->userdata('dataUser')['username'];
 			}
 
@@ -57,7 +57,7 @@ class User extends CI_Controller {
 					));
 				}
 			} else {
-				if($_POST['type'] == 'pwd') {
+				if(isset($_POST['type']) && $_POST['type'] == 'pwd') {
 					$data = array('password' => md5($this->input->post('password')));
 				} else {
 
