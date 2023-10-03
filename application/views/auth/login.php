@@ -19,7 +19,7 @@
 	<link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 	<style>
 		.bg-gradient-primary {
-			background-image: url(<?= base_url('assets/img/202210051412-main.jpg'); ?>);
+			background-image: url(<?= base_url('assets/img/gedung.jpeg'); ?>);
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center center;
