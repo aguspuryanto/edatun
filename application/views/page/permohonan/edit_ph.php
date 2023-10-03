@@ -10,25 +10,25 @@
                 <?=form_open('', array('id' => 'form', 'role' => 'form'));?>
                     <div class="row">
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'pemohon'); ?>
+                            <?=get_form_input($model, 'pemohon', array('value' => $dataEdit->pemohon)); ?>
                         </div>
                             
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'termohon'); ?>
+                            <?=get_form_input($model, 'termohon', array('value' => $dataEdit->termohon)); ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'no_registrasi'); ?>
+                            <?=get_form_input($model, 'no_registrasi', array('value' => $dataEdit->no_registrasi)); ?>
                         </div>
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'tgl_permohonan', array('class' => 'form-control datepicker', 'id' => 'input-tgl_permohonan')); ?>
+                            <?=get_form_input($model, 'tgl_permohonan', array('value' => $dataEdit->tgl_permohonan, 'class' => 'form-control datepicker', 'id' => 'input-tgl_permohonan')); ?>
                         </div>
                     </div>
 
-                    <?=get_form_input($model, 'subject'); ?>
-                    <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
+                    <?=get_form_input($model, 'subject', array('value' => $dataEdit->subject)); ?>
+                    <?=get_form_input($model, 'kasus_posisi', array('value' => $dataEdit->kasus_posisi, 'type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
                     
                     <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
                     <?=form_hidden('status', '1'); ?>

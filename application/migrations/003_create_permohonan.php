@@ -10,7 +10,15 @@ class Migration_create_permohonan extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'instansi' => array(
+            'pemohon' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
+            'termohon' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ),
+            'jenis_permohonan' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
@@ -22,10 +30,6 @@ class Migration_create_permohonan extends CI_Migration {
                 'constraint' => '255'
             ),
             'subject' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255'
-            ),
-            'kategori' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),

@@ -32,78 +32,86 @@ class Permohonan extends CI_Controller {
 		
 		$data['model'] = $this->M_permohonan;
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+
+		$this->template->views('page/permohonan/create_ph', $data);
+	}
+
+	public function edit_ph() {
+		$data['title'] = "Form Permohonan";
+		if(isset($_GET['type'])) $data['title'] .= " - " . $_GET['type'];
 		
-		$_POST = $this->input->post();
-		if($_POST) {
-			echo json_encode($_POST); die();
-			$this->load->library('form_validation');
-			$model = $this->M_permohonan;
+		$data['model'] = $this->M_permohonan;
+		$data['dataEdit'] = $this->M_permohonan->selectId($_GET['row_id']);
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 
-			if (!file_exists('./uploads')) {
-				mkdir('./uploads', 0777, true);
-			}
+		$this->template->views('page/permohonan/edit_ph', $data);
+	}
 
-			$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
-			$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
-			$config['encrypt_name'] = TRUE; //enkripsi file name upload
-			
-			$this->load->library('upload',$config); //call library upload 
+	public function create() {		
+		$this->load->library('form_validation');
+		$model = $this->M_permohonan;
 
-			$json = array();
-			$this->form_validation->set_rules($model->rules());	
-			$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
-	
-			if (!$this->form_validation->run()) {			
-				foreach($model->rules() as $key => $val) {
-					$json = array_merge($json, array(
-						$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
-					));
-				}
-			} else {
-
-				$nextStep = true;
-				$data = array(
-					'instansi' => $this->input->post('instansi'),
-					'kategori' => $this->input->post('kategori'),
-					'no_registrasi' => $this->input->post('no_registrasi'),
-					'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
-					'subject' => $this->input->post('subject'),
-					'kasus_posisi' => $this->input->post('kasus_posisi'),
-					'status' => $this->input->post('status'),
-				);
-
-				if (!$this->upload->do_upload('dokumen')) {
-					$nextStep = false;
-					$json = array(
-						'success' => false,
-						'message' => $this->upload->display_errors()
-					);
-				}
-				else {
-					//upload file
-					$upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
-					$dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
-	
-					$data = array_merge($data, array(
-						'dokumen' => $dokumen,
-					));
-				}
-	
-				if($nextStep) {
-					$model->save($data);
-					$this->session->set_flashdata('success', 'Berhasil disimpan');
-					$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
-				}
-			}
-	
-			$this->output
-			->set_content_type('application/json')
-			->set_output(json_encode($json));
+		if (!file_exists('./uploads')) {
+			mkdir('./uploads', 0777, true);
 		}
-		else {
 
-			$this->template->views('page/permohonan/create_ph', $data);		
+		$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
+		$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
+		$config['encrypt_name'] = TRUE; //enkripsi file name upload
+		
+		$this->load->library('upload',$config); //call library upload 
+
+		$json = array();
+		$this->form_validation->set_rules($model->rules());	
+		$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
+
+		if (!$this->form_validation->run()) {			
+			foreach($model->rules() as $key => $val) {
+				$json = array_merge($json, array(
+					$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
+				));
+			}
+		} else {
+
+			$nextStep = true;
+			$data = array(
+				'pemohon' => $this->input->post('pemohon'),
+				'termohon' => $this->input->post('termohon'),
+				'jenis_permohonan' => $this->input->post('jenis_permohonan'),
+				'no_registrasi' => $this->input->post('no_registrasi'),
+				'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
+				'subject' => $this->input->post('subject'),
+				'kasus_posisi' => $this->input->post('kasus_posisi'),
+				'status' => $this->input->post('status'),
+			);
+
+			// if (!$this->upload->do_upload('dokumen')) {
+			// 	$nextStep = false;
+			// 	$json = array(
+			// 		'success' => false,
+			// 		'message' => $this->upload->display_errors()
+			// 	);
+			// }
+			// else {
+			// 	//upload file
+			// 	$upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+			// 	$dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
+
+			// 	$data = array_merge($data, array(
+			// 		'dokumen' => $dokumen,
+			// 	));
+			// }
+
+			if($nextStep) {
+				$model->save($data);
+				$this->session->set_flashdata('success', 'Berhasil disimpan');
+				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+			}
 		}
+
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
 	}
 
 	public function perdata() {
@@ -126,6 +134,40 @@ class Permohonan extends CI_Controller {
 		$data['listData'] = $this->M_permohonan->select_all();		
 		
 		$this->template->views('page/permohonan/konsiliasi', $data);
+	}
+
+	public function view_konsiliasi($id) {
+		// $data['userdata'] 	= $this->userdata;
+		$data['data'] = $this->M_permohonan->select_all(['id' => $id]);
+		// $data['data'][0]['tgl_permohonan'] = date('d/m/Y', strtotime($data['data'][0]['tgl_permohonan']));
+
+		$json = array();
+		if($data['data']) {
+			$json = array('success' => true, 'data' => $data['data'][0]);
+		} else {
+			$json = array('success' => false, 'data' => []);
+		}
+
+		$this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($json));
+	}
+
+	public function remove_konsiliasi() {
+		$json = array();
+		$model = $this->M_permohonan;
+
+		if($this->input->post('id')) {
+			$id = $this->input->post('id');
+			$model->delete($id);
+
+			$this->session->set_flashdata('success', 'Berhasil terhapus');
+			$json = array('success' => true, 'message' => 'Berhasil terhapus');
+		}
+
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
 	}
 
 	public function mediasi() {
