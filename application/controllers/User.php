@@ -50,7 +50,7 @@ class User extends CI_Controller {
 			$this->form_validation->set_rules($model->rules());	
 			$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
 	
-			if ($_POST['type'] != 'pwd' && !$this->form_validation->run()) {			
+			if (isset($_POST['type']) && $_POST['type'] != 'pwd' && !$this->form_validation->run()) {			
 				foreach($model->rules() as $key => $val) {
 					$json = array_merge($json, array(
 						$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
