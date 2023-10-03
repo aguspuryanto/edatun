@@ -23,7 +23,6 @@
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center center;
-			height: 260px;
 		}
 		.ftco-section {
 			padding: 7em 0;
