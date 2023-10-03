@@ -30,7 +30,37 @@
                     <?=get_form_input($model, 'subject'); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
-                    <?=get_form_input($model, 'dokumen', array('type' => 'file')); ?>
+                    <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <?= form_input(array(
+                            'type'  => 'file',
+                            'name'  => 'dokumen[]',
+                            'id'    => 'input-dokumen',
+                            // 'value' => 'john@example.com',
+                            'class' => 'form-control'
+                        )); ?>
+                    </div>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <?= form_input(array(
+                            'type'  => 'file',
+                            'name'  => 'dokumen[]',
+                            'id'    => 'input-dokumen',
+                            // 'value' => 'john@example.com',
+                            'class' => 'form-control'
+                        )); ?>
+                    </div>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <?= form_input(array(
+                            'type'  => 'file',
+                            'name'  => 'dokumen[]',
+                            'id'    => 'input-dokumen',
+                            // 'value' => 'john@example.com',
+                            'class' => 'form-control'
+                        )); ?>
+                    </div>
                     
                     <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
                     <?=form_hidden('status', '1'); ?>
