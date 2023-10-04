@@ -11,7 +11,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <h6 class="mb-4">Apa itu <?=@$title; ?>?</h6>
-                        <p class="text-xs font-weight-bold mb-4"><?=@$desc; ?></p>
+                        <p class="font-weight-bold mb-4"><?=@$desc; ?></p>
                         <a href="create_ph?type=<?=@$title; ?>" class="btn btn-primary btn-icon-split btn-lg">
                             <span class="icon text-white-50">
                                 <i class="fas fa-arrow-right"></i>
