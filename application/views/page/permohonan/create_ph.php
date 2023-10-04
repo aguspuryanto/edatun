@@ -37,7 +37,6 @@
                             'type'  => 'file',
                             'name'  => 'dokumen[]',
                             'id'    => 'input-dokumen',
-                            // 'value' => 'john@example.com',
                             'class' => 'form-control'
                         )); ?>
                     </div>
@@ -47,7 +46,6 @@
                             'type'  => 'file',
                             'name'  => 'dokumen[]',
                             'id'    => 'input-dokumen',
-                            // 'value' => 'john@example.com',
                             'class' => 'form-control'
                         )); ?>
                     </div>
@@ -57,7 +55,6 @@
                             'type'  => 'file',
                             'name'  => 'dokumen[]',
                             'id'    => 'input-dokumen',
-                            // 'value' => 'john@example.com',
                             'class' => 'form-control'
                         )); ?>
                     </div>
@@ -113,7 +110,8 @@ $( document ).ready(function() {
                     // alert(data.message);
                     toastr.success(data.message);
                     setTimeout(function(){
-                        window.location.reload();
+                        // window.location.reload();
+                        window.location = '<?=site_url('permohonan/' . strtolower($title));?>';
                     }, 3000);
                 } else {
                     if(data.success == false) {
