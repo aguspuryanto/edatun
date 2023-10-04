@@ -227,13 +227,13 @@ class Permohonan extends CI_Controller {
 		$data = @file_get_contents(base_url('/uploads/'.$filename));
 		if($data) {
 			$ext = pathinfo($filename, PATHINFO_EXTENSION);
-			if($ext == "pdf") {
-				header("content-type: application/pdf");
-				readfile('./uploads/' . $filename);
-				// force_download($filename, null);
-			} else {
+			// if($ext == "pdf") {
+			// 	header("content-type: application/pdf");
+			// 	readfile('./uploads/' . $filename);
+			// 	// force_download($filename, null);
+			// } else {
 				force_download($filename, $data);
-			}
+			// }
 		}
 
 	}
