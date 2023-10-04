@@ -31,32 +31,16 @@
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
-                    <div class="form-group">
-                        <label>Dokumen</label>
-                        <?= form_input(array(
-                            'type'  => 'file',
-                            'name'  => 'dokumen[]',
-                            'id'    => 'input-dokumen',
-                            'class' => 'form-control'
-                        )); ?>
-                    </div>
-                    <div class="form-group">
-                        <label>Dokumen</label>
-                        <?= form_input(array(
-                            'type'  => 'file',
-                            'name'  => 'dokumen[]',
-                            'id'    => 'input-dokumen',
-                            'class' => 'form-control'
-                        )); ?>
-                    </div>
-                    <div class="form-group">
-                        <label>Dokumen</label>
-                        <?= form_input(array(
-                            'type'  => 'file',
-                            'name'  => 'dokumen[]',
-                            'id'    => 'input-dokumen',
-                            'class' => 'form-control'
-                        )); ?>
+                    <div class="row">
+                        <div id="dokumen" class="form-group">
+                            <label>Dokumen</label>
+                            <?= form_input(array(
+                                'type'  => 'file',
+                                'name'  => 'dokumen[]',
+                                'id'    => 'input-dokumen',
+                                'class' => 'form-control'
+                            )); ?>
+                        </div>
                     </div>
                     
                     <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
