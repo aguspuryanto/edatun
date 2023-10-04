@@ -49,10 +49,10 @@
                                 $isArray = json_decode($row->dokumen, true); //explode(",", $row->dokumen);                                
                                 if(is_array($isArray)) {
                                     foreach($isArray as $key => $dok) {
-                                        $dokUrl .= '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $dok).'" class="btn btn-link btn-block">Dokumen ' . ($key+1) . '</a>';
+                                        $dokUrl .= '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $dok).'">Dokumen ' . ($key+1) . '</a>';
                                     }
                                 } else {
-                                    $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $row->dokumen).'" class="btn btn-link btn-block">Dokumen</a>' : '#';
+                                    $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $row->dokumen).'">Dokumen</a>' : '#';
                                 }
 
                                 echo '<tr>
