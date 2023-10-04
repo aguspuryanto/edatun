@@ -40,17 +40,9 @@ class Permohonan extends CI_Controller {
 		$data['title'] = "Form Permohonan";
 		if(isset($_GET['type'])) $data['title'] .= " - " . $_GET['type'];
 		
-<<<<<<< HEAD
-		$_POST = $this->input->post();
-		// echo json_encode($_POST); die();
-		if($_POST) {
-			$this->load->library('form_validation');
-			$model = $this->M_permohonan;
-=======
 		$data['model'] = $this->M_permohonan;
 		$data['dataEdit'] = $this->M_permohonan->selectId($_GET['row_id']);
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
->>>>>>> bd2672dc7a5ecaa0369a61a7aadebb8b9fbd97d1
 
 		$this->template->views('page/permohonan/edit_ph', $data);
 	}
