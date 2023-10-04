@@ -229,8 +229,8 @@ class Permohonan extends CI_Controller {
 			$ext = pathinfo($filename, PATHINFO_EXTENSION);
 			if($ext == "pdf") {
 				header("content-type: application/pdf");
-				// readfile($data);
-				force_download($filename, null);
+				readfile('./uploads/' . $filename);
+				// force_download($filename, null);
 			} else {
 				force_download($filename, $data);
 			}
