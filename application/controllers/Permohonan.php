@@ -57,8 +57,8 @@ class Permohonan extends CI_Controller {
 
 		$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
 		$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
-		$config['encrypt_name'] = FALSE; //enkripsi file name upload
-		$config['remove_spaces'] = TRUE;
+		$config['encrypt_name'] = TRUE; //enkripsi file name upload
+		// $config['remove_spaces'] = TRUE;
 		
 		$this->load->library('upload',$config); //call library upload 
 
