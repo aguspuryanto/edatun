@@ -41,6 +41,7 @@
                                 'class' => 'form-control'
                             )); ?>
                         </div>
+                        <button type="button" class="btn btn-info addDokumen">Tambah Dokumen</button>
                     </div>
                     
                     <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
@@ -114,6 +115,10 @@ $( document ).ready(function() {
     $('#form input').on('keyup', function () { 
         $(this).removeClass('is-invalid').addClass('is-valid');
         $(this).parents('.form-group').find('#error').html(" ");
+    });
+
+    $('button.addDokumen').click(function(){
+        $('div#dokumen').clone().insertAfter('div#dokumen');
     });
 });
 </script>
