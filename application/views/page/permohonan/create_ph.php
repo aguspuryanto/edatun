@@ -108,9 +108,9 @@ $( document ).ready(function() {
                 console.log(data, "data");
                 if(data.success == true){
                     alert(data.message);
-                    setTimeout(function(){
-                        window.location.reload();
-                    }, 3000);
+                    // setTimeout(function(){
+                    //     window.location.reload();
+                    // }, 3000);
                 } else {
                     if(data.success == false) {
                         alert(data.message);
