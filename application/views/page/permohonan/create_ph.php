@@ -31,8 +31,11 @@
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
+                    <button type="button" class="btn btn-info addDokumen float-right">Tambah Dokumen</button>
+                    <div class="clearfix"></div>
+
                     <div class="row">
-                        <div id="dokumen" class="form-group">
+                        <div id="dokumen" class="col-md-4 form-group">
                             <label>Dokumen</label>
                             <?= form_input(array(
                                 'type'  => 'file',
@@ -41,12 +44,11 @@
                                 'class' => 'form-control'
                             )); ?>
                         </div>
-                        <button type="button" class="btn btn-info addDokumen">Tambah Dokumen</button>
                     </div>
                     
                     <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
                     <?=form_hidden('status', '1'); ?>
-
+                    <hr>
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
                     <button type="reset" class="btn btn-default">Reset</button>
 
@@ -117,8 +119,10 @@ $( document ).ready(function() {
         $(this).parents('.form-group').find('#error').html(" ");
     });
 
+    var cloneCount = 1;
     $('button.addDokumen').click(function(){
-        $('div#dokumen').clone().insertAfter('div#dokumen');
+        $("div#dokumen").clone().attr('id', 'dokumen'+ cloneCount++).insertAfter('[id^=dokumen]:last');
+        $("[id^=dokumen]:last").find("label").html('Dokumen ' + cloneCount++);
     });
 });
 </script>
