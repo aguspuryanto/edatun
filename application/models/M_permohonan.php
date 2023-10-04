@@ -8,7 +8,7 @@ class M_permohonan extends CI_Model {
     {
         return [
             ['field' => 'pemohon', 'label' => 'Pihak Ke-1', 'rules' => 'required'],
-            ['field' => 'termohon', 'label' => 'Pihak Ke-2'],
+            ['field' => 'termohon', 'label' => 'Pihak Ke-2', 'rules' => 'required'],
             ['field' => 'tgl_permohonan', 'label' => 'Tanggal','rules' => 'required'],
             ['field' => 'no_registrasi', 'label' => 'No Surat Permohonan','rules' => 'required'],
             ['field' => 'subject', 'label' => 'Isi Permohonan','rules' => 'required'],
