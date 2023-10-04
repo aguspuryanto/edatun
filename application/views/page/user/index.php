@@ -5,28 +5,6 @@
 
 <!-- Content Row -->
 <div class="row">
-    <!-- <div class="col-lg-12 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <h6 class="mb-4">Daftar user pada instansi Anda</h6>
-                        <p class="text-xs font-weight-bold mb-4">Tambahkan user pada instansi Anda sesuai dengan kebutuhan.</p>
-                        <a href="#" class="btn btn-primary btn-icon-split btn-lg" data-toggle="modal" data-target="#myModalUser">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-arrow-right"></i>
-                            </span>
-                            <span class="text">User Baru</span>
-                        </a>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <div class="col-lg-12">
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
