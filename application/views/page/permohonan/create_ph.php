@@ -121,8 +121,9 @@ $( document ).ready(function() {
 
     var cloneCount = 1;
     $('button.addDokumen').click(function(){
-        $("div#dokumen").clone().attr('id', 'dokumen'+ cloneCount++).insertAfter('[id^=dokumen]:last');
-        $("[id^=dokumen]:last").find("label").html('Dokumen ' + cloneCount++);
+        var id = cloneCount++;
+        $("div#dokumen").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');
+        $("[id^=dokumen]:last").find("label").html('Dokumen ' + id);
     });
 });
 </script>
