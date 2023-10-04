@@ -7,11 +7,11 @@ class M_permohonan extends CI_Model {
     public function rules()
     {
         return [
-            ['field' => 'instansi', 'label' => 'Pihak Ke-1', 'rules' => 'required'],
+            ['field' => 'pemohon', 'label' => 'Pihak Ke-1', 'rules' => 'required'],
+            ['field' => 'termohon', 'label' => 'Pihak Ke-2'],
             ['field' => 'tgl_permohonan', 'label' => 'Tanggal','rules' => 'required'],
             ['field' => 'no_registrasi', 'label' => 'No Surat Permohonan','rules' => 'required'],
             ['field' => 'subject', 'label' => 'Isi Permohonan','rules' => 'required'],
-            ['field' => 'kategori', 'label' => 'Kategori', 'rules' => 'required'],
             ['field' => 'kasus_posisi', 'label' => 'Kasus Posisi','rules' => 'required'],
             ['field' => 'dokumen', 'label' => 'Dokumen'],
             ['field' => 'status', 'label' => 'Status'],
@@ -52,6 +52,12 @@ class M_permohonan extends CI_Model {
 
         $data = $this->db->get($this->table_name);
         return $data->result();
+    }
+
+    public function selectId($id) {
+        $this->db->where('id', $id);
+        $data = $this->db->get($this->table_name);
+        return $data->row();
     }
 
     public function total_rows() {

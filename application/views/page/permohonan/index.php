@@ -37,16 +37,6 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <!-- <tr>
-                                <th>No</th>
-                                <th>Instansi</th>
-                                <th>Tanggal</th>
-                                <th>No Registrasi</th>
-                                <th>Subject Permohonan</th>
-                                <th>Kategori</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr> -->
                             <?=get_header_table_custom($model, array('kasus_posisi', 'dokumen'));?>
                         </thead>
                         <tbody>

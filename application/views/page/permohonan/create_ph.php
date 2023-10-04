@@ -7,44 +7,14 @@
                 <h6 class="m-0 font-weight-bold text-primary"><?=@$title; ?></h6>
             </div>
             <div class="card-body">
-                <?=form_open_multipart('permohonan/create_ph', array('id' => 'form', 'role' => 'form'));?>
+                <?=form_open('', array('id' => 'form', 'role' => 'form'));?>
                     <div class="row">
                         <div class="col-md-6">
-                            <!-- <div class="form-group">
-                                <label>Pilih Pemohon</label>
-                                <?php $options = array(
-                                    '' => 'Pilih salah satu',
-                                    '047' => 'adminadhikarya - PT ADHI KARYA',
-                                    '046' => 'Admin Inalum - PT. Indonesia Asahan Alumunium',
-                                    '045' => 'admin ptks - PT. Krakatau Steel',
-                                    '044' => 'Tonny Suhartono Zainuddin - PT. Krakatau Steel',
-                                    '043' => 'divisi keuangan - PT. Krakatau Steel',
-                                    '042' => 'adminpelindo - PT Pelabuhan Indonesia (Persero)',
-                                    '041' => 'Admin PT PP - PT. Pembangunan Perumahan (Persero)',
-                                    '040' => 'Administratorxx - PT. PLN Persero',
-                                ); ?>
-                                <?=form_dropdown('instansi', $options, '', array('class' => 'form-control', 'id' => 'input-instansi'));?>
-                                <div id="error"></div>
-                            </div> -->
-                            <?=get_form_input($model, 'instansi'); ?>
+                            <?=get_form_input($model, 'pemohon'); ?>
                         </div>
                             
                         <div class="col-md-6">
-                            <!-- <div class="form-group">
-                                <label>Pilih jenis layanan</label>
-                                <?php $options = array(
-                                    '' => 'Pilih salah satu',
-                                    'FAS' => 'Fasilitasi',
-                                    'MED' => 'Mediasi',
-                                    'KON' => 'Konsiliasi',
-                                ); ?>
-                                <?=form_dropdown('kategori', $options, '', array('class' => 'form-control', 'id' => 'input-kategori'));?>
-                                <div id="error"></div>
-                            </div> -->
-                            <div class="form-group">
-                                <label>Termohon</label>
-                                <?= form_input('termohon', '', array('class' => 'form-control', 'id' => 'input-termohon')); ?>
-                            </div>
+                            <?=get_form_input($model, 'termohon'); ?>
                         </div>
                     </div>
 
@@ -60,11 +30,39 @@
                     <?=get_form_input($model, 'subject'); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
-                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
-                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
-                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
-                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <?= form_input(array(
+                            'type'  => 'file',
+                            'name'  => 'dokumen[]',
+                            'id'    => 'input-dokumen',
+                            // 'value' => 'john@example.com',
+                            'class' => 'form-control'
+                        )); ?>
+                    </div>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <?= form_input(array(
+                            'type'  => 'file',
+                            'name'  => 'dokumen[]',
+                            'id'    => 'input-dokumen',
+                            // 'value' => 'john@example.com',
+                            'class' => 'form-control'
+                        )); ?>
+                    </div>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <?= form_input(array(
+                            'type'  => 'file',
+                            'name'  => 'dokumen[]',
+                            'id'    => 'input-dokumen',
+                            // 'value' => 'john@example.com',
+                            'class' => 'form-control'
+                        )); ?>
+                    </div>
                     
+                    <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
                     <?=form_hidden('status', '1'); ?>
 
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
@@ -88,18 +86,24 @@ $( document ).ready(function() {
     $('form#form').submit(function (e) {
         e.preventDefault();
 
-        var fd = new FormData();
-        var files = $('#input-dokumen[]')[0].files[0];
-        fd.append('file',files);
+        var form_data = new FormData(document.getElementById("form"));
+        var files = $('#input-dokumen')[0].files[0];
+        form_data.append('file',files);
 
         if(files?.length){
             alert("Please select a file.");
             // return;
         }
 
+        // var form_data = new FormData();
+        // var ins = document.getElementById('multiFiles').files.length;
+        // for (var x = 0; x < ins; x++) {
+        //     form_data.append("dokumen[]", document.getElementById('multiFiles').files[x]);
+        // }
+
         $.ajax({
             type: "POST",
-            url: "<?=site_url('permohonan/create_ph');?>", 
+            url: "<?=site_url('permohonan/create');?>", 
             // data: $("#form").serialize(),
             data: fd,
             processData: false,
@@ -109,14 +113,18 @@ $( document ).ready(function() {
             success: function(data){
                 console.log(data, "data");
                 if(data.success == true){
-                    // setTimeout(function(){
-                    //     window.location.reload();
-                    // }, 3000);
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 3000);
                 } else {
-                    $.each(data, function(key, value) {
-                        $('#input-' + key).addClass('is-invalid');
-                        $('#input-' + key).parents('.form-group').find('#error').html(value);
-                    });
+                    if(data.success == false) {
+                        alert(data.message);
+                    } else {
+                        $.each(data, function(key, value) {
+                            $('#input-' + key).addClass('is-invalid');
+                            $('#input-' + key).parents('.form-group').find('#error').html(value);
+                        });
+                    }
                 }
             }
         });
