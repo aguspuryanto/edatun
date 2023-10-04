@@ -51,7 +51,7 @@
                                     foreach($isArray as $key => $dok) {
                                         $doklink[] = '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $dok).'">Dokumen ' . ($key+1) . '</a> ';
                                     }
-                                    $dokUrl = implode(', ', $doklink);
+                                    $dokUrl = rtrim(implode(', ', $doklink), ',');
                                 } else {
                                     $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $row->dokumen).'">Dokumen</a>' : '#';
                                 }
