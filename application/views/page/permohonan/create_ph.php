@@ -107,6 +107,7 @@ $( document ).ready(function() {
             success: function(data){
                 console.log(data, "data");
                 if(data.success == true){
+                    alert(data.message);
                     setTimeout(function(){
                         window.location.reload();
                     }, 3000);
