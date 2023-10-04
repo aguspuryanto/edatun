@@ -60,12 +60,11 @@
                     <?=get_form_input($model, 'subject'); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
-                    <!-- <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
                     <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
                     <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
-                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?> -->
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
+                    <?=get_form_input($model, 'dokumen[]', array('type' => 'file')); ?>
                     
-                    <input type="file" id="multiFiles" class="form-control" name="dokumen[]" multiple="multiple"/>
                     <?=form_hidden('status', '1'); ?>
 
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
@@ -89,26 +88,20 @@ $( document ).ready(function() {
     $('form#form').submit(function (e) {
         e.preventDefault();
 
-        // var fd = new FormData();
-        // var files = $('#input-dokumen')[0].files[0];
-        // fd.append('file',files);
+        var fd = new FormData();
+        var files = $('#input-dokumen[]')[0].files[0];
+        fd.append('file',files);
 
-        // if(files?.length){
-        //     alert("Please select a file.");
-        //     // return;
-        // }
-
-        var form_data = new FormData();
-        var ins = document.getElementById('multiFiles').files.length;
-        for (var x = 0; x < ins; x++) {
-            form_data.append("dokumen[]", document.getElementById('multiFiles').files[x]);
+        if(files?.length){
+            alert("Please select a file.");
+            // return;
         }
 
         $.ajax({
             type: "POST",
             url: "<?=site_url('permohonan/create_ph');?>", 
             // data: $("#form").serialize(),
-            data: form_data,
+            data: fd,
             processData: false,
             contentType: false,
             cache: false,

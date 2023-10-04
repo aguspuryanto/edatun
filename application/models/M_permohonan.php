@@ -10,7 +10,7 @@ class M_permohonan extends CI_Model {
             ['field' => 'instansi', 'label' => 'Pemohon', 'rules' => 'required'],
             ['field' => 'tgl_permohonan', 'label' => 'Tanggal','rules' => 'required'],
             ['field' => 'no_registrasi', 'label' => 'No Surat Permohonan','rules' => 'required'],
-            ['field' => 'subject', 'label' => 'Subject Permohonan','rules' => 'required'],
+            ['field' => 'subject', 'label' => 'Isi Permohonan','rules' => 'required'],
             ['field' => 'kategori', 'label' => 'Kategori', 'rules' => 'required'],
             ['field' => 'kasus_posisi', 'label' => 'Kasus Posisi','rules' => 'required'],
             ['field' => 'dokumen', 'label' => 'Dokumen'],
