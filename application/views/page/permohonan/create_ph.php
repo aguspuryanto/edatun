@@ -92,20 +92,14 @@ $( document ).ready(function() {
 
         if(files?.length){
             alert("Please select a file.");
-            // return;
+            return;
         }
-
-        // var form_data = new FormData();
-        // var ins = document.getElementById('multiFiles').files.length;
-        // for (var x = 0; x < ins; x++) {
-        //     form_data.append("dokumen[]", document.getElementById('multiFiles').files[x]);
-        // }
 
         $.ajax({
             type: "POST",
             url: "<?=site_url('permohonan/create');?>", 
             // data: $("#form").serialize(),
-            data: fd,
+            data: form_data,
             processData: false,
             contentType: false,
             cache: false,
