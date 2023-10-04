@@ -103,7 +103,10 @@ $( document ).ready(function() {
             processData: false,
             contentType: false,
             cache: false,
-            dataType: "json",  
+            dataType: "json",
+            beforeSend : function(xhr, opts){
+                $('button#form-submit').text('Loading...').prop("disabled", true);
+            },
             success: function(data){
                 console.log(data, "data");
                 if(data.success == true){
