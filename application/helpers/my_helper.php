@@ -62,7 +62,7 @@ function get_header_table_custom($model, $field=[], $extra="") {
         $header_tag .= '<th>' . $val['label'] . '</th>';
     }
     
-    $header_tag .= ($extra) ? $extra : '<th>#</th>';    
+    $header_tag .= ($extra) ? $extra : '<th>Aksi</th>';    
     $header_tag .= '</tr>';
 
     return $header_tag;
