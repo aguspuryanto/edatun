@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class M_meeting extends CI_Model {
-    public $table_name = "epak_meeting";
+class M_chatrooms extends CI_Model {
+    public $table_name = "epak_chatrooms";
 
     public function rules()
     {
