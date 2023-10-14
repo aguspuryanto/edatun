@@ -408,13 +408,15 @@ button, input, optgroup, select, textarea {
     <div class="modal-content xposition-absolute bottom-0">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Chat</h5>
-        <button type="button" class="btn btn-primary btn-sm">Let's Chat App</button>
+        <!-- <button type="button" class="btn btn-primary btn-sm">Let's Chat App</button> -->
         <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button> -->
       </div>
       <div class="modal-body" style="position: relative; height: 420px">
         <div class="card card-bordered">
+            <?=form_hidden('type', $title); ?>
+            <?=form_hidden('row_id', ''); ?>
             <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
                 <!-- <div class="media media-chat">
                   <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
@@ -537,11 +539,14 @@ $( document ).ready(function() {
         e.preventDefault();
         var dataId = $(this).attr("data-id");
         console.log(dataId, '_dataId');
+
+        $('#exampleModal').find('input[name=row_id]').val(dataId);
+
         update_chats();
     });
 
-    $(document).on('shown.bs.modal', '.btnChat', function (e) {
-        console.log($(e.relatedTarget));
+    $(document).on('shown.bs.modal', '#exampleModal', function (e) {
+        console.log($(e.relatedTarget.id));
         // update_chats();
     });
 
@@ -550,12 +555,13 @@ $( document ).ready(function() {
         var textmsg = $('input.publisher-input').val();
         console.log(textmsg, '_textmsg');
 
-        var chatData = {
+        var chatdata = {
             textmsg: textmsg,
-            type: 'Konsiliasi',
-            row_id: '1',
+            // type: 'Konsiliasi',
+            sender_id: '<?= $this->session->userdata('id') ?>',
+            row_id: $('#exampleModal').find('input[name=row_id]').val(),
         }
-        sendChat(textmsg, function (e){
+        sendChat(chatdata, function (e){
             // console.log(data, '_data');
             $('input.publisher-input').val('');
             update_chats();
@@ -568,15 +574,16 @@ $( document ).ready(function() {
         }
     });
     
-    var sendChat = function (message, callback) {
-        var dataId = $('.btnChat').attr("data-id");
+    var sendChat = function (data, callback) {
+        console.log(data, '_data');
         // var guid = getCookie('user_guid');
-        $.getJSON('<?= base_url(); ?>api/api/send_message?message=' + message + '&id=' + dataId, function (data){
+        $.getJSON('<?= base_url(); ?>api/api/send_message?message=' + data.textmsg + '&sender_id=' + data.sender_id + '&id=' + data.row_id, function (data){
             callback(data);
         });
     }
 
     var append_chat_data = function (chat_data) {
+        $("#chat-content").html('');
         chat_data.forEach(function (data) {
             const now = new Date(data.created_at);
             const hoursAndMinutes = now.toLocaleTimeString('en-US', {
@@ -613,14 +620,15 @@ $( document ).ready(function() {
             request_timestamp = parseInt( Date.now() / 1000 - offset );
         }
         
-        var dataId = $('.btnChat').attr("data-id");
-        $.getJSON('<?= base_url(); ?>api/api/get_messages?id=' + dataId, function (data){
+        var sender_id = '<?= $this->session->userdata('id') ?>';
+        var row_id = $('#exampleModal').find('input[name=row_id]').val();
+        $.getJSON('<?= base_url(); ?>api/api/get_messages?sender_id=' + sender_id + '&row_id=' + row_id, function (data){
             append_chat_data(data);	
         });
     }
 
     // setInterval(function (){
     //     update_chats();
-    // }, 4500);
+    // }, 5000);
 });
 </script>

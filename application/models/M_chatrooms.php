@@ -12,22 +12,24 @@ class M_chatrooms extends CI_Model {
         ];
     }
 
-    function add_message($message, $id, $guid="")
+    function add_message($message, $sender_id="", $row_id="")
 	{
 		$data = array(
-			'sender_id'	=> (int) $id,
+			'sender_id'	=> (int) $sender_id,
+			'receiver_id'	=> 0,
 			'msg'	=> (string) $message,
-			// 'guid'		=> (string)	$guid,
+			'row_id'	=> (int) $row_id,
 			// 'created_at'	=> time(),
 		);
 		  
 		$this->db->insert($this->table_name, $data);
 	}
 
-	function get_messages($id)
+	function get_messages($sender_id, $row_id)
 	{
-		$this->db->where('sender_id', $id);
-		$this->db->or_where('receiver_id', $id);
+		$this->db->where('sender_id', $sender_id);
+		// $this->db->or_where('receiver_id', $sender_id);
+        $this->db->where('row_id', $row_id);
 		$this->db->order_by('created_at', 'DESC');
 		$this->db->limit(10); 
 		$query = $this->db->get($this->table_name);
