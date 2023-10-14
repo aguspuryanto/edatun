@@ -577,7 +577,7 @@ $( document ).ready(function() {
     var sendChat = function (data, callback) {
         console.log(data, '_data');
         // var guid = getCookie('user_guid');
-        $.getJSON('<?= base_url('Api'); ?>/api/send_message?message=' + data.textmsg + '&sender_id=' + data.sender_id + '&id=' + data.row_id, function (data){
+        $.getJSON('<?= base_url('Api'); ?>/api/send_message?message=' + data.textmsg + '&sender_id=' + data.sender_id + '&row_id=' + data.row_id, function (data){
             callback(data);
         });
     }
