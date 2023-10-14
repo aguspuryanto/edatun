@@ -577,7 +577,7 @@ $( document ).ready(function() {
     var sendChat = function (data, callback) {
         console.log(data, '_data');
         // var guid = getCookie('user_guid');
-        $.getJSON('<?= base_url(); ?>api/api/send_message?message=' + data.textmsg + '&sender_id=' + data.sender_id + '&id=' + data.row_id, function (data){
+        $.getJSON('<?= base_url('Api'); ?>/api/send_message?message=' + data.textmsg + '&sender_id=' + data.sender_id + '&id=' + data.row_id, function (data){
             callback(data);
         });
     }
@@ -622,7 +622,7 @@ $( document ).ready(function() {
         
         var sender_id = '<?= $this->session->userdata('id') ?>';
         var row_id = $('#exampleModal').find('input[name=row_id]').val();
-        $.getJSON('<?= base_url(); ?>api/api/get_messages?sender_id=' + sender_id + '&row_id=' + row_id, function (data){
+        $.getJSON('<?= base_url('Api'); ?>/api/get_messages?sender_id=' + sender_id + '&row_id=' + row_id, function (data){
             append_chat_data(data);	
         });
     }
