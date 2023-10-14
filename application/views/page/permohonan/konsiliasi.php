@@ -219,6 +219,10 @@ h4.card-title {
     color: #fff;
 }
 
+.media-chat.media-chat-reverse .media-body p.meta {
+    color: #9b9b9b;
+}
+
 .media-chat .media-body p {
     position: relative;
     padding: 6px 8px;
@@ -382,7 +386,7 @@ button, input, optgroup, select, textarea {
                                     <td><div class="btn-group" role="group">
                                         <a href="' . base_url('permohonan/edit_ph?type=Konsiliasi&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>
                                         <button type="button" data-id="'.$row->id.'" class="btn btn-danger btnRemove">Hapus</button>
-                                        <button type="button" data-id="'.$row->id.'" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                                        <button type="button" data-id="'.$row->id.'" class="btn btn-info btnChat" data-toggle="modal" data-target="#exampleModal">Chat</button>
                                     </div></td>
                                 </tr>';
                                 $id++;
@@ -411,8 +415,8 @@ button, input, optgroup, select, textarea {
       </div>
       <div class="modal-body" style="position: relative; height: 420px">
         <div class="card card-bordered">
-              <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-                <div class="media media-chat">
+            <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+                <!-- <div class="media media-chat">
                   <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
                   <div class="media-body">
                     <p>Hi</p>
@@ -479,23 +483,20 @@ button, input, optgroup, select, textarea {
                     <p>Okay then see you on sunday!!</p>
                     <p class="meta"><time datetime="2018">00:12</time></p>
                   </div>
-                </div>
+                </div> -->
 
               <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
 
-             </div>
+            </div>
       </div>
       <div class="modal-footer" style="display: block; padding:0em;">
-        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         <div class="publisher bt-1 border-light">
-            <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
             <input class="publisher-input" type="text" placeholder="Write something">
-            <span class="publisher-btn file-group">
+            <!-- <span class="publisher-btn file-group">
                 <i class="fa fa-paperclip file-browser"></i>
                 <input type="file">
             </span>
-            <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a>
+            <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a> -->
             <a class="publisher-btn text-info" href="#" data-abc="true"><i class="fa fa-paper-plane"></i></a>
         </div>
       </div>
@@ -532,5 +533,94 @@ $( document ).ready(function() {
         };
     });
 
+    $(document).on('click', '.btnChat', function (e){
+        e.preventDefault();
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+        update_chats();
+    });
+
+    $(document).on('shown.bs.modal', '.btnChat', function (e) {
+        console.log($(e.relatedTarget));
+        // update_chats();
+    });
+
+    $(document).on('click', 'a.publisher-btn', function (e){
+        e.preventDefault();
+        var textmsg = $('input.publisher-input').val();
+        console.log(textmsg, '_textmsg');
+
+        var chatData = {
+            textmsg: textmsg,
+            type: 'Konsiliasi',
+            row_id: '1',
+        }
+        sendChat(textmsg, function (e){
+            // console.log(data, '_data');
+            $('input.publisher-input').val('');
+            update_chats();
+        });
+    });
+    
+    $('input.publisher-input').keyup(function (e) {
+        if (e.which == 13) {
+            $('a.publisher-btn').trigger('click');
+        }
+    });
+    
+    var sendChat = function (message, callback) {
+        var dataId = $('.btnChat').attr("data-id");
+        // var guid = getCookie('user_guid');
+        $.getJSON('<?= base_url(); ?>api/api/send_message?message=' + message + '&id=' + dataId, function (data){
+            callback(data);
+        });
+    }
+
+    var append_chat_data = function (chat_data) {
+        chat_data.forEach(function (data) {
+            const now = new Date(data.created_at);
+            const hoursAndMinutes = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+
+            var is_me = '<?= $this->session->userdata('id') ?>';
+            if(data.sender_id == is_me){
+                var html = '<div class="media media-chat media-chat-reverse">' +
+                    '<div class="media-body" data-jam="' + now.getHours() + '">' +
+                    '<p>' + data.msg + '</p>' +
+                    '<p class="meta"><time datetime="' + now.getFullYear() + '">' + hoursAndMinutes + '</time></p>' +
+                    '</div>' +
+                '</div>';
+            } else {
+                var html = '<div class="media media-chat">' +
+                    '<img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">' +
+                    '<div class="media-body" data-jam="' + now.getHours() + '">' +
+                    '<p>' + data.msg + '</p>' +
+                    '<p class="meta"><time datetime="' + now.getFullYear() + '">' + hoursAndMinutes + '</time></p>' +
+                    '</div>' +
+                '</div>';
+            }
+
+            $("#chat-content").html($("#chat-content").html() + html);
+            $('#chat-content').scrollTop($('#chat-content')[0].scrollHeight);
+        });
+    }
+
+    var update_chats = function () {
+        if(typeof(request_timestamp) == 'undefined' || request_timestamp == 0){
+            var offset = 60*15; // 15min
+            request_timestamp = parseInt( Date.now() / 1000 - offset );
+        }
+        
+        var dataId = $('.btnChat').attr("data-id");
+        $.getJSON('<?= base_url(); ?>api/api/get_messages?id=' + dataId, function (data){
+            append_chat_data(data);	
+        });
+    }
+
+    // setInterval(function (){
+    //     update_chats();
+    // }, 4500);
 });
 </script>

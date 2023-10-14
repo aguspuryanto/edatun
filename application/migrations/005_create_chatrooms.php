@@ -10,14 +10,23 @@ class Migration_create_chatrooms extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'userid' => array(
+            'sender_id' => array(
                 'type' => 'INT',
-                'constraint' => '20'
+                'constraint' => '11'
+            ),
+            'receiver_id' => array(
+                'type' => 'INT',
+                'constraint' => '11'
+            ),
+            'row_id' => array(
+                'type' => 'INT',
+                'constraint' => '11'
             ),
             'msg' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255'
             ),
+            // 'created_at' => array('type' => 'timestamp'),
             'created_at datetime default current_timestamp'
         ));
         $this->dbforge->add_key('id', TRUE);
