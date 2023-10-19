@@ -96,10 +96,10 @@ $( document ).ready(function() {
                 if(data.success == true){
                     // alert(data.message);
                     toastr.success(data.message);
-                    setTimeout(function(){
+                    // setTimeout(function(){
                         // window.location.reload();
-                        window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
-                    }, 3000);
+                        // window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
+                    // }, 3000);
                 } else {
                     if(data.success == false) {
                         toastr.error(data.message);
