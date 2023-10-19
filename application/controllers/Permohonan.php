@@ -101,7 +101,8 @@ class Permohonan extends CI_Controller {
 				// $data = array_merge($data, array(
 				// 	'dokumen' => $dokumen,
 				// ));
-			
+				
+				$uploadImgData = array();
 				$ImageCount = count($_FILES['dokumen']['name']);
 				for($i = 0; $i < $ImageCount; $i++){
 					$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
