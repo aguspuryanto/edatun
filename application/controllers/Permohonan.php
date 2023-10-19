@@ -101,7 +101,7 @@ class Permohonan extends CI_Controller {
 				// $data = array_merge($data, array(
 				// 	'dokumen' => $dokumen,
 				// ));
-				
+
 				$uploadImgData = array();
 				$ImageCount = count($_FILES['dokumen']['name']);
 				for($i = 0; $i < $ImageCount; $i++){
@@ -135,7 +135,7 @@ class Permohonan extends CI_Controller {
 				}
 
 				$this->session->set_flashdata('success', 'Berhasil disimpan');
-				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'ImageCount' => $ImageCount, 'data' => $data);
 			}
 		}
 
