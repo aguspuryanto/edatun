@@ -35,15 +35,22 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
-                        <div id="dokumen" class="col-md-4 form-group">
-                            <label>Dokumen</label>
-                            <?= form_input(array(
-                                'type'  => 'file',
-                                'name'  => 'dokumen[]',
-                                'id'    => 'input-dokumen',
-                                'class' => 'form-control'
-                            )); ?>
-                        </div>
+                        <?php
+                        $totDok = count(json_decode($dataEdit->dokumen));
+                        for($i = 0; $i < $totDok; $i++){
+                            if(json_decode($dataEdit->dokumen)[$i] == null){
+                                echo '<div id="dokumen" class="col-md-4 form-group">';
+                                echo '<label>Dokumen</label>';
+                                echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                                echo '</div>';
+                            } else {
+                                echo '<div id="dokumen" class="col-md-4 form-group">';
+                                echo '<label>Dokumen</label>';
+                                echo '<p>' . json_decode($dataEdit->dokumen)[$i] . '</p>';
+                                echo '</div>';
+                            }
+                        }
+                        ?>
                     </div>
                     
                     <?=form_hidden('jenis_permohonan', $dataEdit->jenis_permohonan); ?>
