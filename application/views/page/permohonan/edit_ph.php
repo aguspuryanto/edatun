@@ -46,7 +46,7 @@
                             } else {
                                 echo '<div id="dokumen" class="col-md-4 form-group">';
                                 echo '<label>Dokumen</label>';
-                                echo '<p>' . json_decode($dataEdit->dokumen)[$i] . '</p>';
+                                echo '<p>' . json_decode($dataEdit->dokumen)[$i] . '<a href="#"><span class="glyphicon glyphicon-remove"></span></a></p>';
                                 echo '</div>';
                             }
                         }
