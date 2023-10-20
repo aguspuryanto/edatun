@@ -10,32 +10,32 @@
                 <?=form_open('', array('id' => 'form', 'role' => 'form'));?>
                     <div class="row">
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'pemohon'); ?>
+                            <?=get_form_input($model, 'pemohon', array('value' => ($dataEdit->pemohon) ?? '')); ?>
                         </div>
                             
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'termohon'); ?>
+                            <?=get_form_input($model, 'termohon', array('value' => ($dataEdit->termohon) ?? '')); ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'no_registrasi'); ?>
+                            <?=get_form_input($model, 'no_registrasi', array('value' => ($dataEdit->no_registrasi) ?? '')); ?>
                         </div>
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'tgl_permohonan', array('class' => 'form-control datepicker', 'id' => 'input-tgl_permohonan')); ?>
+                            <?=get_form_input($model, 'tgl_permohonan', array('value' => ($dataEdit->tgl_permohonan) ?? '', 'class' => 'form-control datepicker', 'id' => 'input-tgl_permohonan')); ?>
                         </div>
                     </div>
 
-                    <?=get_form_input($model, 'subject'); ?>
-                    <?=get_form_input($model, 'kasus_posisi', array('type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
+                    <?=get_form_input($model, 'subject', array('value' => ($dataEdit->pemohon) ?? '')); ?>
+                    <?=get_form_input($model, 'kasus_posisi', array('value' => ($dataEdit->kasus_posisi) ?? '', 'type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
                     <button type="button" class="btn btn-info addDokumen float-right">Tambah Dokumen</button>
                     <div class="clearfix"></div>
 
                     <div class="row">
-                        <div id="dokumen" class="col-md-4 form-group">
+                        <!-- <div id="dokumen" class="col-md-4 form-group">
                             <label>Dokumen</label>
                             <?= form_input(array(
                                 'type'  => 'file',
@@ -43,11 +43,40 @@
                                 'id'    => 'input-dokumen',
                                 'class' => 'form-control'
                             )); ?>
-                        </div>
+                        </div> -->
+                        <?php
+                        if(isset($dataEdit)) {
+                            // echo json_encode($dataEdit);
+                            $totDok = count((array)json_decode($dataEdit->dokumen));
+                            if($totDok > 0) {
+                                for($i = 0; $i < $totDok; $i++){
+                                    $title = 'Dokumen ' . ($i+1);
+                                    if(json_decode($dataEdit->dokumen)[$i] != null){
+                                        echo '<div id="dokumen" class="col-md-4 form-group">';
+                                        echo '<label>'.$title.'</label>';
+                                        echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
+                                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                                        echo '</div>';
+                                    }
+                                }
+                            } else {
+                                echo '<div id="dokumen" class="col-md-4 form-group">';
+                                echo '<label>Dokumen</label>';
+                                echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                                echo '</div>';
+                            }
+                        } else {
+                            echo '<div id="dokumen" class="col-md-4 form-group">';
+                            echo '<label>Dokumen</label>';
+                            echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                            echo '</div>';
+                        }
+                        ?>
                     </div>
                     
-                    <?=form_hidden('jenis_permohonan', $_GET['type']); ?>
-                    <?=form_hidden('status', '1'); ?>
+                    <?=form_hidden('jenis_permohonan', ($dataEdit->jenis_permohonan) ?? $_GET['type']); ?>
+                    <?=form_hidden('status', ($dataEdit->status) ?? '1'); ?>
+                    <?=form_hidden('id', ($dataEdit->id) ?? $_GET['row_id']); ?>
                     <hr>
                     <button type="submit" class="btn btn-primary" id="form-submit">Submit Permohonan</button>
                     <button type="reset" class="btn btn-default">Reset</button>
@@ -93,6 +122,7 @@ $( document ).ready(function() {
             },
             success: function(data){
                 console.log(data, "data");
+                $('button#form-submit').text('Submit Permohonan').prop("disabled", false);
                 if(data.success == true){
                     // alert(data.message);
                     toastr.success(data.message);
@@ -110,6 +140,9 @@ $( document ).ready(function() {
                         });
                     }
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $('button#form-submit').text('Submit Permohonan').prop("disabled", false);
             }
         });
     });
@@ -124,6 +157,18 @@ $( document ).ready(function() {
         var id = cloneCount++;
         $("div#dokumen").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');
         $("[id^=dokumen]:last").find("label").html('Dokumen ' + id);
+    });
+
+    $(document).on('click', '#removeDokumen', function (e) {
+        e.preventDefault();
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+        if(dataId == 0){
+            // $(this).parents('#dokumen').remove();
+        } else {
+            // $(this).parents('#dokumen' + dataId).remove();
+        }
+        $(this).parents('div.form-control').remove();
     });
 });
 </script>

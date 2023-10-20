@@ -44,28 +44,17 @@ class Permohonan extends CI_Controller {
 		$data['dataEdit'] = $this->M_permohonan->selectId($_GET['row_id']);
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 
-		$this->template->views('page/permohonan/edit_ph', $data);
+		$this->template->views('page/permohonan/create_ph', $data);
 	}
 
 	public function create() {		
 		$this->load->library('form_validation');
+
 		$model = $this->M_permohonan;
-
-		if (!file_exists('./uploads')) {
-			mkdir('./uploads', 0777, true);
-		}
-
-		$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
-		$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
-		$config['encrypt_name'] = TRUE; //enkripsi file name upload
-		// $config['remove_spaces'] = TRUE;
-		
-		$this->load->library('upload',$config); //call library upload 
-
-		$json = array();
 		$this->form_validation->set_rules($model->rules());	
 		$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
 
+		$json = array();
 		if (!$this->form_validation->run()) {			
 			foreach($model->rules() as $key => $val) {
 				$json = array_merge($json, array(
@@ -73,6 +62,17 @@ class Permohonan extends CI_Controller {
 				));
 			}
 		} else {
+
+			if (!file_exists('./uploads')) {
+				mkdir('./uploads', 0777, true);
+			}
+	
+			$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
+			$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
+			$config['encrypt_name'] = TRUE; //enkripsi file name upload
+			// $config['remove_spaces'] = TRUE;
+			
+			$this->load->library('upload',$config); //call library upload 
 
 			$nextStep = true;
 			$data = array(
@@ -86,47 +86,27 @@ class Permohonan extends CI_Controller {
 				'status' => $this->input->post('status'),
 			);
 
-			// if (!$this->upload->do_upload('dokumen')) {
-			// 	$nextStep = false;
-			// 	$json = array(
-			// 		'success' => false,
-			// 		'message' => $this->upload->display_errors()
-			// 	);
-			// }
-			// else {
-				//upload file
-				// $upload = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
-				// $dokumen = $upload['upload_data']['file_name']; //set file name ke variable image
+			$uploadImgData = array();
+			$ImageCount = count($_FILES['dokumen']['name']);
+			for($i = 0; $i < $ImageCount; $i++){
+				$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
+				$_FILES['file']['type']       = $_FILES['dokumen']['type'][$i];
+				$_FILES['file']['tmp_name']   = $_FILES['dokumen']['tmp_name'][$i];
+				$_FILES['file']['error']      = $_FILES['dokumen']['error'][$i];
+				$_FILES['file']['size']       = $_FILES['dokumen']['size'][$i];
 
-				// $data = array_merge($data, array(
-				// 	'dokumen' => $dokumen,
-				// ));
-
-				$uploadImgData = array();
-				// var_dump($_FILES);
-				// if($_FILES['dokumen']['name'][0] != "") {
-					$ImageCount = count($_FILES['dokumen']['name']);
-					for($i = 0; $i < $ImageCount; $i++){
-						$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
-						$_FILES['file']['type']       = $_FILES['dokumen']['type'][$i];
-						$_FILES['file']['tmp_name']   = $_FILES['dokumen']['tmp_name'][$i];
-						$_FILES['file']['error']      = $_FILES['dokumen']['error'][$i];
-						$_FILES['file']['size']       = $_FILES['dokumen']['size'][$i];
-
-						// Upload file to server
-						if($this->upload->do_upload('file')){
-							// Uploaded file data
-							$imageData = $this->upload->data();
-							$uploadImgData[] = $imageData['file_name'];	
-						}
-					}
-				// }
-				
-				if(!empty($uploadImgData)){
-					$data = array_merge($data, array('dokumen' => json_encode($uploadImgData)));
-					// echo json_encode($data);
+				// Upload file to server
+				if($this->upload->do_upload('file')){
+					// Uploaded file data
+					$imageData = $this->upload->data();
+					$uploadImgData[] = $imageData['file_name'];	
 				}
-			// }
+			}
+			
+			if(!empty($uploadImgData)){
+				$data = array_merge($data, array('dokumen' => json_encode($uploadImgData)));
+				// echo json_encode($data);
+			}
 
 			if($nextStep) {			
 

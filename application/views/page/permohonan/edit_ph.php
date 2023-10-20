@@ -36,10 +36,10 @@
 
                     <div class="row">
                         <?php
-                        echo '<div id="dokumen" class="col-md-4 form-group">';
-                        echo '<label>Dokumen</label>';
-                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
-                        echo '</div>';
+                        // echo '<div id="dokumen" class="col-md-4 form-group">';
+                        // echo '<label>Dokumen</label>';
+                        // echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                        // echo '</div>';
 
                         $totDok = count(json_decode($dataEdit->dokumen));
                         for($i = 0; $i < $totDok; $i++){
@@ -48,6 +48,7 @@
                                 echo '<div id="dokumen" class="col-md-4 form-group">';
                                 echo '<label>'.$title.'</label>';
                                 echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
+                                echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
                                 echo '</div>';
                             }
                         }
@@ -138,10 +139,11 @@ $( document ).ready(function() {
         var dataId = $(this).attr("data-id");
         console.log(dataId, '_dataId');
         if(dataId == 0){
-            $(this).parents('#dokumen').remove();
+            // $(this).parents('#dokumen').remove();
         } else {
-            $(this).parents('#dokumen' + dataId).remove();
+            // $(this).parents('#dokumen' + dataId).remove();
         }
+        $(this).parents('div.form-control').remove();
     });
 });
 </script>
