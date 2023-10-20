@@ -96,10 +96,9 @@ $( document ).ready(function() {
                 if(data.success == true){
                     // alert(data.message);
                     toastr.success(data.message);
-                    // setTimeout(function(){
-                    //     // window.location.reload();
-                    //     window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
-                    // }, 3000);
+                    setTimeout(function(){
+                        window.location = '<?=site_url('permohonan/' . strtolower($title));?>';
+                    }, 3000);
                 } else {
                     if(data.success == false) {
                         toastr.error(data.message);
