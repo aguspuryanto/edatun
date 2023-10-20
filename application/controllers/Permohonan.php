@@ -211,7 +211,7 @@ class Permohonan extends CI_Controller {
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Mediasi']);		
 		
-		$this->template->views('page/permohonan/konsiliasi', $data);
+		$this->template->views('page/permohonan/mediasi', $data);
 	}
 
 	public function fasilitasi() {
@@ -221,7 +221,7 @@ class Permohonan extends CI_Controller {
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Fasilitasi']);		
 		
-		$this->template->views('page/permohonan/konsiliasi', $data);
+		$this->template->views('page/permohonan/fasilitasi', $data);
 	}
 
 	public function dokumen($filename = null) {
