@@ -41,53 +41,31 @@ class Permohonan extends CI_Controller {
 		if(isset($_GET['type'])) $data['title'] .= " - " . $_GET['type'];
 		
 		$data['model'] = $this->M_permohonan;
-		$data['dataEdit'] = $this->M_permohonan->selectId($_GET['row_id']);
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['dataEdit'] = $this->M_permohonan->selectId($_GET['row_id']);
+		// echo json_encode($data['dataEdit']);
 
-		$this->template->views('page/permohonan/create_ph', $data);
+		$this->template->views('page/permohonan/edit_ph', $data);
 	}
 
 	public function create() {		
 		$this->load->library('form_validation');
 
-		$model = $this->M_permohonan;
-		$this->form_validation->set_rules($model->rules());	
-		$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
+		if (!file_exists('./uploads')) {
+			mkdir('./uploads', 0777, true);
+		}
 
-		$json = array();
-		if (!$this->form_validation->run()) {			
-			foreach($model->rules() as $key => $val) {
-				$json = array_merge($json, array(
-					$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
-				));
-			}
-		} else {
+		$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
+		$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
+		$config['encrypt_name'] = TRUE; //enkripsi file name upload
+		// $config['remove_spaces'] = TRUE;
+		
+		$this->load->library('upload',$config); //call library upload 
 
-			if (!file_exists('./uploads')) {
-				mkdir('./uploads', 0777, true);
-			}
-	
-			$config['upload_path']= FCPATH . "/uploads"; //path folder file upload
-			$config['allowed_types']='pdf|doc|docx|gif|jpg|png'; //type file yang boleh di upload
-			$config['encrypt_name'] = TRUE; //enkripsi file name upload
-			// $config['remove_spaces'] = TRUE;
-			
-			$this->load->library('upload',$config); //call library upload 
-
-			$nextStep = true;
-			$data = array(
-				'pemohon' => $this->input->post('pemohon'),
-				'termohon' => $this->input->post('termohon'),
-				'jenis_permohonan' => $this->input->post('jenis_permohonan'),
-				'no_registrasi' => $this->input->post('no_registrasi'),
-				'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
-				'subject' => $this->input->post('subject'),
-				'kasus_posisi' => $this->input->post('kasus_posisi'),
-				'status' => $this->input->post('status'),
-			);
-
-			$uploadImgData = array();
-			$ImageCount = count($_FILES['dokumen']['name']);
+		$uploadImgData = array();
+		// echo var_dump($_FILES);
+		if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) {
+			$ImageCount = count((array)$_FILES['dokumen']['name']);
 			for($i = 0; $i < $ImageCount; $i++){
 				$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
 				$_FILES['file']['type']       = $_FILES['dokumen']['type'][$i];
@@ -102,6 +80,32 @@ class Permohonan extends CI_Controller {
 					$uploadImgData[] = $imageData['file_name'];	
 				}
 			}
+		}
+
+		$model = $this->M_permohonan;
+		$this->form_validation->set_rules($model->rules());	
+		$this->form_validation->set_message('required', 'Mohon lengkapi {field}!');
+
+		$json = array();
+		if (!$this->form_validation->run()) {			
+			foreach($model->rules() as $key => $val) {
+				$json = array_merge($json, array(
+					$val['field'] => form_error($val['field'], '<p class="mt-3 text-danger">', '</p>')
+				));
+			}
+		} else {
+
+			$nextStep = true;
+			$data = array(
+				'pemohon' => $this->input->post('pemohon'),
+				'termohon' => $this->input->post('termohon'),
+				'jenis_permohonan' => $this->input->post('jenis_permohonan'),
+				'no_registrasi' => $this->input->post('no_registrasi'),
+				'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
+				'subject' => $this->input->post('subject'),
+				'kasus_posisi' => $this->input->post('kasus_posisi'),
+				'status' => $this->input->post('status'),
+			);
 			
 			if(!empty($uploadImgData)){
 				$data = array_merge($data, array('dokumen' => json_encode($uploadImgData)));
@@ -118,7 +122,7 @@ class Permohonan extends CI_Controller {
 				}
 
 				$this->session->set_flashdata('success', 'Berhasil disimpan');
-				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'ImageCount' => $ImageCount, 'data' => $data);
+				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
 			}
 		}
 
