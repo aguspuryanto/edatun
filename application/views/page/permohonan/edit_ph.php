@@ -36,17 +36,18 @@
 
                     <div class="row">
                         <?php
+                        echo '<div id="dokumen" class="col-md-4 form-group">';
+                        echo '<label>Dokumen</label>';
+                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                        echo '</div>';
+
                         $totDok = count(json_decode($dataEdit->dokumen));
                         for($i = 0; $i < $totDok; $i++){
-                            if(json_decode($dataEdit->dokumen)[$i] == null){
+                            $title = 'Dokumen ' . ($i+1);
+                            if(json_decode($dataEdit->dokumen)[$i] != null){
                                 echo '<div id="dokumen" class="col-md-4 form-group">';
-                                echo '<label>Dokumen</label>';
-                                echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
-                                echo '</div>';
-                            } else {
-                                echo '<div id="dokumen" class="col-md-4 form-group">';
-                                echo '<label>Dokumen</label>';
-                                echo '<p>' . json_decode($dataEdit->dokumen)[$i] . '<a href="#"><span class="glyphicon glyphicon-remove"></span></a></p>';
+                                echo '<label>'.$title.'</label>';
+                                echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
                                 echo '</div>';
                             }
                         }
@@ -128,8 +129,19 @@ $( document ).ready(function() {
     var cloneCount = 1;
     $('button.addDokumen').click(function(){
         var id = cloneCount++;
-        $("div#dokumen").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');
+        $("[id^=dokumen]:first").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');
         $("[id^=dokumen]:last").find("label").html('Dokumen ' + id);
+    });
+
+    $(document).on('click', '#removeDokumen', function (e) {
+        e.preventDefault();
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+        if(dataId == 0){
+            $(this).parents('#dokumen').remove();
+        } else {
+            $(this).parents('#dokumen' + dataId).remove();
+        }
     });
 });
 </script>
