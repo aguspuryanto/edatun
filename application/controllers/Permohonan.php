@@ -103,21 +103,24 @@ class Permohonan extends CI_Controller {
 				// ));
 
 				$uploadImgData = array();
-				$ImageCount = count($_FILES['dokumen']['name']);
-				for($i = 0; $i < $ImageCount; $i++){
-					$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
-					$_FILES['file']['type']       = $_FILES['dokumen']['type'][$i];
-					$_FILES['file']['tmp_name']   = $_FILES['dokumen']['tmp_name'][$i];
-					$_FILES['file']['error']      = $_FILES['dokumen']['error'][$i];
-					$_FILES['file']['size']       = $_FILES['dokumen']['size'][$i];
+				// var_dump($_FILES);
+				// if($_FILES['dokumen']['name'][0] != "") {
+					$ImageCount = count($_FILES['dokumen']['name']);
+					for($i = 0; $i < $ImageCount; $i++){
+						$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
+						$_FILES['file']['type']       = $_FILES['dokumen']['type'][$i];
+						$_FILES['file']['tmp_name']   = $_FILES['dokumen']['tmp_name'][$i];
+						$_FILES['file']['error']      = $_FILES['dokumen']['error'][$i];
+						$_FILES['file']['size']       = $_FILES['dokumen']['size'][$i];
 
-					// Upload file to server
-					if($this->upload->do_upload('file')){
-						// Uploaded file data
-						$imageData = $this->upload->data();
-						$uploadImgData[] = $imageData['file_name'];	
+						// Upload file to server
+						if($this->upload->do_upload('file')){
+							// Uploaded file data
+							$imageData = $this->upload->data();
+							$uploadImgData[] = $imageData['file_name'];	
+						}
 					}
-				}
+				// }
 				
 				if(!empty($uploadImgData)){
 					$data = array_merge($data, array('dokumen' => json_encode($uploadImgData)));

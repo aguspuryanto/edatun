@@ -30,7 +30,21 @@
                     <?=get_form_input($model, 'subject', array('value' => $dataEdit->subject)); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('value' => $dataEdit->kasus_posisi, 'type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
-                    <?=get_form_input($model, 'dokumen', array('value' => $dataEdit->dokumen, 'type' => 'file')); ?>
+                    <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
+                    <button type="button" class="btn btn-info addDokumen float-right">Tambah Dokumen</button>
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                        <div id="dokumen" class="col-md-4 form-group">
+                            <label>Dokumen</label>
+                            <?= form_input(array(
+                                'type'  => 'file',
+                                'name'  => 'dokumen[]',
+                                'id'    => 'input-dokumen',
+                                'class' => 'form-control'
+                            )); ?>
+                        </div>
+                    </div>
                     
                     <?=form_hidden('jenis_permohonan', $dataEdit->jenis_permohonan); ?>
                     <?=form_hidden('status', $dataEdit->status); ?>
@@ -56,13 +70,13 @@ $( document ).ready(function() {
     $('form#form').submit(function (e) {
         e.preventDefault();
 
-        var form_data = new FormData($("form#form")[0]);
+        var form_data = new FormData(document.getElementById("form"));
         var files = $('#input-dokumen')[0].files[0];
         form_data.append('file',files);
 
         if(files?.length){
             alert("Please select a file.");
-            // return;
+            return;
         }
 
         $.ajax({
@@ -73,41 +87,64 @@ $( document ).ready(function() {
             processData: false,
             contentType: false,
             cache: false,
-            dataType: "json",  
+            dataType: "json",
+            beforeSend : function(xhr, opts){
+                $('button#form-submit').text('Loading...').prop("disabled", true);
+            },
             success: function(data){
                 console.log(data, "data");
                 if(data.success == true){
+                    // alert(data.message);
+                    toastr.success(data.message);
                     // setTimeout(function(){
-                    //     window.location.reload();
+                    //     // window.location.reload();
+                    //     window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
                     // }, 3000);
                 } else {
-                    $.each(data, function(key, value) {
-                        $('#input-' + key).addClass('is-invalid');
-                        $('#input-' + key).parents('.form-group').find('#error').html(value);
-                    });
+                    if(data.success == false) {
+                        toastr.error(data.message);
+                    } else {
+                        $.each(data, function(key, value) {
+                            $('#input-' + key).addClass('is-invalid');
+                            $('#input-' + key).parents('.form-group').find('#error').html(value);
+                        });
+                    }
                 }
             }
         });
-
-        return;
     });
 
     $('#form input').on('keyup', function () { 
         $(this).removeClass('is-invalid').addClass('is-valid');
         $(this).parents('.form-group').find('#error').html(" ");
     });
+
+    var cloneCount = 1;
+    $('button.addDokumen').click(function(){
+        var id = cloneCount++;
+        $("div#dokumen").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');
+        $("[id^=dokumen]:last").find("label").html('Dokumen ' + id);
+    });
 });
 </script>
 
 <?php
+// $loadcss = <<<EOF
+// <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+// EOF;
+
+// $loadjs = <<<EOF
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+// EOF;
+
 $loadcss = <<<EOF
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 EOF;
 
 $loadjs = <<<EOF
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 EOF;
 
-// $this->load->vars('_loadcss', $loadcss);
-// $this->load->vars('_loadjs', $loadjs);
+$this->load->vars('_loadcss', $loadcss);
+$this->load->vars('_loadjs', $loadjs);
 ?>
