@@ -384,7 +384,7 @@ button, input, optgroup, select, textarea {
                                     <td>'.$row->kasus_posisi.'</td>
                                     <td>'.$dokUrl.'</td>
                                     <td><div class="btn-group" role="group">
-                                        <a href="' . base_url('permohonan/edit_ph?type=Konsiliasi&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>
+                                        <a href="' . base_url('permohonan/edit_ph?type='.$title.'&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>
                                         <button type="button" data-id="'.$row->id.'" class="btn btn-danger btnRemove">Hapus</button>
                                         <button type="button" data-id="'.$row->id.'" class="btn btn-info btnChat" data-toggle="modal" data-target="#exampleModal">Chat</button>
                                     </div></td>
