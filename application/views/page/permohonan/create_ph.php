@@ -93,6 +93,7 @@ $( document ).ready(function() {
             },
             success: function(data){
                 console.log(data, "data");
+                $('button#form-submit').text('Submit Permohonan').prop("disabled", false);
                 if(data.success == true){
                     // alert(data.message);
                     toastr.success(data.message);
@@ -110,6 +111,9 @@ $( document ).ready(function() {
                         });
                     }
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $('button#form-submit').text('Submit Permohonan').prop("disabled", false);
             }
         });
     });
