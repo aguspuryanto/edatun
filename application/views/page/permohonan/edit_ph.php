@@ -129,7 +129,7 @@ $( document ).ready(function() {
                     toastr.success(data.message);
                     setTimeout(function(){
                         // window.location.reload();
-                        window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
+                        // window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
                     }, 3000);
                 } else {
                     if(data.success == false) {

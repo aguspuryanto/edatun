@@ -63,9 +63,12 @@ class Permohonan extends CI_Controller {
 		$this->load->library('upload',$config); //call library upload 
 
 		$uploadImgData = array();
-		// echo var_dump($_FILES);
-		if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) {
+		// echo $_FILES['dokumen'];
+		// echo var_dump($_FILES['dokumen']["error"]); die();
+
+		if (isset($_FILES['dokumen'])) {
 			$ImageCount = count((array)$_FILES['dokumen']['name']);
+			// echo ($ImageCount);
 			for($i = 0; $i < $ImageCount; $i++){
 				$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
 				$_FILES['file']['type']       = $_FILES['dokumen']['type'][$i];
@@ -74,13 +77,17 @@ class Permohonan extends CI_Controller {
 				$_FILES['file']['size']       = $_FILES['dokumen']['size'][$i];
 
 				// Upload file to server
-				if($this->upload->do_upload('file')){
+				if(!$this->upload->do_upload('file')){
+					// print_r($this->upload->display_errors());
+					$errors = $this->upload->display_errors();
+				} else {
 					// Uploaded file data
 					$imageData = $this->upload->data();
 					$uploadImgData[] = $imageData['file_name'];	
 				}
 			}
 		}
+		// echo json_encode($uploadImgData); die();
 
 		$model = $this->M_permohonan;
 		$this->form_validation->set_rules($model->rules());	
@@ -122,7 +129,11 @@ class Permohonan extends CI_Controller {
 				}
 
 				$this->session->set_flashdata('success', 'Berhasil disimpan');
-				$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+				$json = array(
+					'success' => ($errors) ? false : true,
+					'message' => ($errors) ? $errors : 'Berhasil disimpan',
+					'data' => $data
+				);
 			}
 		}
 
