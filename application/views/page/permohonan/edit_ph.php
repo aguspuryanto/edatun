@@ -46,7 +46,7 @@
                                         echo '<div id="dokumen" class="col-md-4 form-group">';
                                         echo '<label>'.$title.'</label>';
                                         echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-times"></span></a></div>';
-                                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                                        // echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
                                         echo '</div>';
                                     }
                                 }
@@ -155,12 +155,13 @@ $( document ).ready(function() {
         e.preventDefault();
         var dataId = $(this).attr("data-id");
         console.log(dataId, '_dataId');
-        if(dataId == 0){
-            // $(this).parents('#dokumen').remove();
-        } else {
-            // $(this).parents('#dokumen' + dataId).remove();
-        }
         $(this).parents('div.form-control').remove();
+
+        if(dataId == 0){
+            $('<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">').insertAfter('#dokumen label');
+        } else {
+            $('<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">').insertAfter('#dokumen' + dataId + ' label');
+        }
     });
 });
 </script>
