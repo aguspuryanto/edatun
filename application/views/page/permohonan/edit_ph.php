@@ -35,15 +35,6 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
-                        <!-- <div id="dokumen" class="col-md-4 form-group">
-                            <label>Dokumen</label>
-                            <?= form_input(array(
-                                'type'  => 'file',
-                                'name'  => 'dokumen[]',
-                                'id'    => 'input-dokumen',
-                                'class' => 'form-control'
-                            )); ?>
-                        </div> -->
                         <?php
                         if(isset($dataEdit)) {
                             // echo json_encode($dataEdit);
@@ -54,7 +45,7 @@
                                     if(json_decode($dataEdit->dokumen)[$i] != null){
                                         echo '<div id="dokumen" class="col-md-4 form-group">';
                                         echo '<label>'.$title.'</label>';
-                                        echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
+                                        echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-times"></span></a></div>';
                                         echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
                                         echo '</div>';
                                     }
