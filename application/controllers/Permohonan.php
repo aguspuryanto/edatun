@@ -62,6 +62,7 @@ class Permohonan extends CI_Controller {
 		
 		$this->load->library('upload',$config); //call library upload 
 
+		$errors = array();
 		$uploadImgData = array();
 		// echo $_FILES['dokumen'];
 		// echo var_dump($_FILES['dokumen']["error"]); die();
@@ -128,7 +129,7 @@ class Permohonan extends CI_Controller {
 					$model->save($data);
 				}
 
-				$this->session->set_flashdata('success', 'Berhasil disimpan');
+				$this->session->set_flashdata(($errors) ? 'error' : 'success', ($errors) ? $errors : 'Berhasil disimpan');
 				$json = array(
 					'success' => ($errors) ? false : true,
 					'message' => ($errors) ? $errors : 'Berhasil disimpan',
