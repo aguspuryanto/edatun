@@ -378,7 +378,7 @@ button, input, optgroup, select, textarea {
                                     <td>'.$id.'</td>
                                     <td>'.$row->pemohon.'</td>
                                     <td>'.$row->termohon.'</td>
-                                    <td>'.date('d-m-Y', strtotime($row->tgl_permohonan)).'</td>
+                                    <td>'.date('d/m/Y', strtotime($row->tgl_permohonan)).'</td>
                                     <td>'.$row->no_registrasi.'</td>
                                     <td>'.$row->subject.'</td>
                                     <td>'.$row->kasus_posisi.'</td>
