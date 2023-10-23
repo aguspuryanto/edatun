@@ -54,7 +54,7 @@
                                     if(json_decode($dataEdit->dokumen)[$i] != null){
                                         echo '<div id="dokumen" class="col-md-4 form-group">';
                                         echo '<label>'.$title.'</label>';
-                                        echo '<div class="form-control"><a href="' . base_url('permohonan/dokumen/' . json_decode($dataEdit->dokumen)[$i]) . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
+                                        echo '<div class="form-control"><a target="_blank" href="' . base_url('permohonan/dokumen/' . json_decode($dataEdit->dokumen)[$i]) . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
                                         echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
                                         echo '</div>';
                                     }
