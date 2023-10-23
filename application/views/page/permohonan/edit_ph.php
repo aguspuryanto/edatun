@@ -23,7 +23,7 @@
                             <?=get_form_input($model, 'no_registrasi', array('value' => ($dataEdit->no_registrasi) ?? '')); ?>
                         </div>
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'tgl_permohonan', array('value' => ($dataEdit->tgl_permohonan) ?? '', 'class' => 'form-control datepicker', 'id' => 'input-tgl_permohonan')); ?>
+                            <?=get_form_input($model, 'tgl_permohonan', array('value' => ($dataEdit->tgl_permohonan) ? date('d/m/Y', strtotime($dataEdit->tgl_permohonan)) : '', 'class' => 'form-control datepicker', 'id' => 'input-tgl_permohonan')); ?>
                         </div>
                     </div>
 
@@ -35,6 +35,15 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
+                        <!-- <div id="dokumen" class="col-md-4 form-group">
+                            <label>Dokumen</label>
+                            <?= form_input(array(
+                                'type'  => 'file',
+                                'name'  => 'dokumen[]',
+                                'id'    => 'input-dokumen',
+                                'class' => 'form-control'
+                            )); ?>
+                        </div> -->
                         <?php
                         if(isset($dataEdit)) {
                             // echo json_encode($dataEdit);
@@ -45,8 +54,8 @@
                                     if(json_decode($dataEdit->dokumen)[$i] != null){
                                         echo '<div id="dokumen" class="col-md-4 form-group">';
                                         echo '<label>'.$title.'</label>';
-                                        echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-times"></span></a></div>';
-                                        // echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                                        echo '<div class="form-control"><a href="' . json_decode($dataEdit->dokumen)[$i] . '">'.$title.'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
+                                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
                                         echo '</div>';
                                     }
                                 }
@@ -155,13 +164,12 @@ $( document ).ready(function() {
         e.preventDefault();
         var dataId = $(this).attr("data-id");
         console.log(dataId, '_dataId');
-        $(this).parents('div.form-control').remove();
-
         if(dataId == 0){
-            $('<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">').insertAfter('#dokumen label');
+            // $(this).parents('#dokumen').remove();
         } else {
-            $('<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">').insertAfter('#dokumen' + dataId + ' label');
+            // $(this).parents('#dokumen' + dataId).remove();
         }
+        $(this).parents('div.form-control').remove();
     });
 });
 </script>
