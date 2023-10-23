@@ -89,10 +89,10 @@
 
 <script type="text/javascript">
 $( document ).ready(function() {
-    // $.fn.datepicker.defaults.format = "dd/mm/yyyy";
-    $(".datepicker").datepicker({
-      format:'dd/mm/yyyy',
-    }).datepicker("setDate",'now');
+    $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+    // $(".datepicker").datepicker({
+    //   format:'dd/mm/yyyy',
+    // }).datepicker("setDate",'now');
     $('#error').html(" ");
 
     // $('form#form-submit').on('click', function (e) {
