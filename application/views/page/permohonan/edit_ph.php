@@ -95,19 +95,44 @@ $( document ).ready(function() {
     // }).datepicker("setDate",'now');
     $('#error').html(" ");
 
+    const fileInput = document.querySelector("#input-dokumen");
+    fileInput.addEventListener("change", event => {
+        const files = event.target.files;
+        console.log(files[0], '_files');
+        // uploadFile(files[0]);
+    });
+
+    const uploadFile = file => {
+        console.log("Uploading file...");
+        const API_ENDPOINT = "https://file.io";
+        const request = new XMLHttpRequest();
+        const formData = new FormData();
+
+        request.open("POST", API_ENDPOINT, true);
+        request.onreadystatechange = () => {
+            if (request.readyState === 4 && request.status === 200) {
+            console.log(request.responseText);
+            }
+        };
+        formData.append("file", file);
+        request.send(formData);
+    };
+
+
     // $('form#form-submit').on('click', function (e) {
     $('form#form').submit(function (e) {
         e.preventDefault();
 
-        var form_data = new FormData(document.getElementById("form"));
-        var files = $('#input-dokumen')[0].files[0];
-        form_data.append('file',files);
-        console.log(form_data, '_form_data');
-
-        if(files?.length){
+        // var files = $('#input-dokumen')[0].files[0];
+        var filedata = document.getElementsByName("dokumen")
+        if(filedata.files?.length){
             alert("Please select a file.");
             return;
         }
+
+        var form_data = new FormData(document.getElementById("form"));
+        // form_data.append('file',files);
+        console.log(form_data, '_form_data');
 
         $.ajax({
             type: "POST",
