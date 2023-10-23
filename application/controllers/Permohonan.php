@@ -67,9 +67,7 @@ class Permohonan extends CI_Controller {
 		// echo var_dump($_FILES['dokumen']); die();
 		// echo var_dump($_FILES['dokumen']["error"]); die();
 
-		if(empty($_FILES['dokumen']['name'][0])){
-			// 
-		} else {
+		if(!empty($_FILES['dokumen']['name'][0])){
 			$ImageCount = count((array)$_FILES['dokumen']['name']);
 			// echo ($ImageCount);
 			for($i = 0; $i < $ImageCount; $i++){
