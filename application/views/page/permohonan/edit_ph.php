@@ -27,7 +27,7 @@
                         </div>
                     </div>
 
-                    <?=get_form_input($model, 'subject', array('value' => ($dataEdit->pemohon) ?? '')); ?>
+                    <?=get_form_input($model, 'subject', array('value' => ($dataEdit->subject) ?? '')); ?>
                     <?=get_form_input($model, 'kasus_posisi', array('value' => ($dataEdit->kasus_posisi) ?? '', 'type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
