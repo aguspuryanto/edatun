@@ -133,7 +133,7 @@ class Permohonan extends CI_Controller {
 
 				if($this->input->post('id')) {
 					$id = $this->input->post('id');
-					// $model->update($id, $data);
+					$model->update($id, $data);
 				} else {
 					$model->save($data);
 				}
