@@ -238,16 +238,25 @@ class Permohonan extends CI_Controller {
 
 	}
 
-	public function remove_dokumen() {$json = array();
+	public function remove_dokumen() {
+		$json = array();
 		$model = $this->M_permohonan;
 
 		if($this->input->post('row_id')) {
 			$id = $this->input->post('row_id');
-			$data = $this->M_permohonan->select_all(['id' => $id]);
+			$arrData = $this->M_permohonan->select_all(['id' => $id]);
+			if($arrData) {
+				$arrDok = json_decode($arrData[0]->dokumen);
+				$key = $this->input->post('id');
+				unset($arrDok[$key]);
+				$arrData[0]->dokumen = json_encode($arrDok);
+			}
+			
+			// $model->update($id, $arrData);
 			// $model->delete($id);
 
 			$this->session->set_flashdata('success', 'Berhasil terhapus');
-			$json = array('success' => true, 'message' => 'Berhasil terhapus', 'data' => json_encode($data[0]->dokumen));
+			$json = array('success' => true, 'message' => 'Berhasil terhapus', 'data' => ($arrData));
 		}
 
 		$this->output
