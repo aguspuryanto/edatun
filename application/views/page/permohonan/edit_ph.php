@@ -55,7 +55,7 @@
                                         echo '<div id="dokumen" class="col-md-4 form-group">';
                                         echo '<label>'.$title.'</label>';
                                         echo '<div class="form-control"><a target="_blank" href="' . base_url('permohonan/dokumen/' . json_decode($dataEdit->dokumen)[$i]) . '">'.json_decode($dataEdit->dokumen)[$i].'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
-                                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control d-none">';
                                         echo '</div>';
                                     }
                                 }
@@ -118,27 +118,28 @@ $( document ).ready(function() {
         request.send(formData);
     };
 
-
+    var row_id = '<?=($dataEdit->id) ?? isset($_GET['row_id']); ?>';
+    console.log(row_id, '_row_id');
     // $('form#form-submit').on('click', function (e) {
     $('form#form').submit(function (e) {
         e.preventDefault();
 
-        // var files = $('#input-dokumen')[0].files[0];
-        var filedata = document.getElementsByName("dokumen")
-        if(filedata.files?.length){
+        var filedata = document.getElementById("input-dokumen").files[0];
+        console.log(filedata, '_filedata');
+        if(filedata?.files?.length){
             alert("Please select a file.");
             return;
         }
 
-        var form_data = new FormData(document.getElementById("form"));
+        var formData = new FormData(document.getElementById("form"));
         // form_data.append('file',files);
-        console.log(form_data, '_form_data');
+        // console.log(formData, '_form_data');
 
         $.ajax({
             type: "POST",
             url: "<?=site_url('permohonan/create');?>", 
             // data: $("#form").serialize(),
-            data: form_data,
+            data: formData,
             processData: false,
             contentType: false,
             cache: false,
@@ -181,7 +182,9 @@ $( document ).ready(function() {
     var cloneCount = 1;
     $('button.addDokumen').click(function(){
         var id = cloneCount++;
-        $("div#dokumen").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');
+        $("div#dokumen").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');        
+        $("[id^=dokumen]:last").find('#input-dokumen').removeClass('d-none');
+        $("[id^=dokumen]:last").find('div.form-control').remove();
         $("[id^=dokumen]:last").find("label").html('Dokumen ' + id);
     });
 
@@ -189,11 +192,17 @@ $( document ).ready(function() {
         e.preventDefault();
         var dataId = $(this).attr("data-id");
         console.log(dataId, '_dataId');
-        if(dataId == 0){
-            // $(this).parents('#dokumen').remove();
-        } else {
-            // $(this).parents('#dokumen' + dataId).remove();
-        }
+
+        $.ajax({   
+            type: "POST",
+            data : {row_id: row_id, id: dataId},
+            url: "<?=site_url('permohonan/remove_dokumen');?>",   
+            success: function(data){
+                $("#results").html(data);                       
+            }   
+        }); 
+
+        $(this).parents('div.form-control').next('#input-dokumen').removeClass('d-none');
         $(this).parents('div.form-control').remove();
     });
 });

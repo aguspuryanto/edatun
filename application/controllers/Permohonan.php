@@ -237,4 +237,21 @@ class Permohonan extends CI_Controller {
 		}
 
 	}
+
+	public function remove_dokumen() {$json = array();
+		$model = $this->M_permohonan;
+
+		if($this->input->post('row_id')) {
+			$id = $this->input->post('row_id');
+			$data = $this->M_permohonan->select_all(['id' => $id]);
+			// $model->delete($id);
+
+			$this->session->set_flashdata('success', 'Berhasil terhapus');
+			$json = array('success' => true, 'message' => 'Berhasil terhapus', 'data' => json_encode($data[0]->dokumen));
+		}
+
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
+	}
 }
