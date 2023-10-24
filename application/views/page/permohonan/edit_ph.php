@@ -50,7 +50,7 @@
                             $totDok = count((array)json_decode($dataEdit->dokumen));
                             if($totDok > 0) {
                                 for($i = 0; $i < $totDok; $i++){
-                                    $title = 'Dokumen ' . ($i+1);
+                                    $title = 'Dokumen ' . ($i);
                                     if(json_decode($dataEdit->dokumen)[$i] != null){
                                         echo '<div id="dokumen" class="col-md-4 form-group">';
                                         echo '<label>'.$title.'</label>';
@@ -155,7 +155,7 @@ $( document ).ready(function() {
                     toastr.success(data.message);
                     setTimeout(function(){
                         // window.location.reload();
-                        window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
+                        // window.location = '<?=site_url('permohonan/' . strtolower($_GET['type']));?>';
                     }, 3000);
                 } else {
                     if(data.success == false) {

@@ -64,7 +64,7 @@ class Permohonan extends CI_Controller {
 
 		$errors = array();
 		$uploadImgData = array();
-		// echo var_dump($_FILES['dokumen']); die();
+		// echo var_dump($_FILES['dokumen']['name']); die();
 		// echo var_dump($_FILES['dokumen']["error"]); die();
 
 		if(!empty($_FILES['dokumen']['name'][0]) || !empty($_FILES['dokumen']['name'][1]) || !empty($_FILES['dokumen']['name'][2]) || !empty($_FILES['dokumen']['name'][3])){
@@ -78,13 +78,13 @@ class Permohonan extends CI_Controller {
 				$_FILES['file']['size']       = $_FILES['dokumen']['size'][$i];
 
 				// Upload file to server
-				if(!$this->upload->do_upload('file')){
-					// print_r($this->upload->display_errors());
-					$errors = $this->upload->display_errors();
-				} else {
+				if($this->upload->do_upload('file')){
 					// Uploaded file data
 					$imageData = $this->upload->data();
 					$uploadImgData[] = $imageData['file_name'];	
+				} else {
+					// print_r($this->upload->display_errors());
+					// $errors = $this->upload->display_errors();
 				}
 			}
 		}
@@ -116,6 +116,15 @@ class Permohonan extends CI_Controller {
 			);
 			
 			if(!empty($uploadImgData)){
+				// echo json_encode($uploadImgData);
+
+				if($this->input->post('id')) {
+					$id = $this->input->post('id');
+					$arrData = $this->M_permohonan->select_all(['id' => $id]);
+					$uploadImgData[] = trim(str_replace('"',"",$arrData[0]->dokumen), '[]');
+				}
+
+				// echo json_encode($uploadImgData);
 				$data = array_merge($data, array('dokumen' => json_encode($uploadImgData)));
 				// echo json_encode($data);
 			}
@@ -124,7 +133,7 @@ class Permohonan extends CI_Controller {
 
 				if($this->input->post('id')) {
 					$id = $this->input->post('id');
-					$model->update($id, $data);				
+					// $model->update($id, $data);
 				} else {
 					$model->save($data);
 				}
