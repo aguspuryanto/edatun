@@ -68,14 +68,15 @@ class Permohonan extends CI_Controller {
 		// echo var_dump($_FILES['dokumen']["error"]); die();
 
 		if(!empty($_FILES['dokumen']['name'][0]) || !empty($_FILES['dokumen']['name'][1]) || !empty($_FILES['dokumen']['name'][2]) || !empty($_FILES['dokumen']['name'][3])){
-			$ImageCount = count((array)$_FILES['dokumen']['name']);
-			// echo ($ImageCount);
+			$ImageCount = count($_FILES['dokumen']['name']);
+			// echo "ImageCount=" . ($ImageCount);
 			for($i = 0; $i < $ImageCount; $i++){
 				$_FILES['file']['name']       = $_FILES['dokumen']['name'][$i];
 				$_FILES['file']['type']       = $_FILES['dokumen']['type'][$i];
 				$_FILES['file']['tmp_name']   = $_FILES['dokumen']['tmp_name'][$i];
 				$_FILES['file']['error']      = $_FILES['dokumen']['error'][$i];
 				$_FILES['file']['size']       = $_FILES['dokumen']['size'][$i];
+				// echo json_encode($_FILES['file']);
 
 				// Upload file to server
 				if($this->upload->do_upload('file')){
@@ -109,19 +110,27 @@ class Permohonan extends CI_Controller {
 				'termohon' => $this->input->post('termohon'),
 				'jenis_permohonan' => $this->input->post('jenis_permohonan'),
 				'no_registrasi' => $this->input->post('no_registrasi'),
-				'tgl_permohonan' => date('Y-m-d', strtotime($this->input->post('tgl_permohonan'))),
+				'tgl_permohonan' => date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('tgl_permohonan')))),
 				'subject' => $this->input->post('subject'),
 				'kasus_posisi' => $this->input->post('kasus_posisi'),
 				'status' => $this->input->post('status'),
 			);
 			
-			if(!empty($uploadImgData)){
+			if(!empty(json_encode($uploadImgData))){
 				// echo json_encode($uploadImgData);
 
 				if($this->input->post('id')) {
 					$id = $this->input->post('id');
 					$arrData = $this->M_permohonan->select_all(['id' => $id]);
-					$uploadImgData[] = trim(str_replace('"',"",$arrData[0]->dokumen), '[]');
+					// echo json_encode($arrData);
+					$exparrData = explode(",", $arrData[0]->dokumen);
+					if(is_array($exparrData)) {
+						foreach($exparrData as $key => $row) {
+							$uploadImgData[] = trim(str_replace('"',"",$row), '[]');
+						}
+					} else {
+						$uploadImgData[] = trim(str_replace('"',"",$arrData[0]->dokumen), '[]');
+					}
 				}
 
 				// echo json_encode($uploadImgData);
@@ -252,16 +261,26 @@ class Permohonan extends CI_Controller {
 		$model = $this->M_permohonan;
 
 		if($this->input->post('row_id')) {
-			$id = $this->input->post('row_id');
-			$arrData = $this->M_permohonan->select_all(['id' => $id]);
+			$row_id = $this->input->post('row_id');
+			$arrData = $this->M_permohonan->select_all(['id' => $row_id]);
 			if($arrData) {
 				$arrDok = json_decode($arrData[0]->dokumen);
 				$key = $this->input->post('id');
 				unset($arrDok[$key]);
-				$arrData[0]->dokumen = json_encode($arrDok);
+				// $arrData[0]->dokumen = json_encode($arrDok);
+
+				foreach($arrDok as $dok) {
+					$newDokTemp[] = $dok;
+				}
+
+				// $arrData[0]->dokumen = json_encode($newDokTemp);
 			}
 			
-			// $model->update($id, $arrData);
+			// echo json_encode($arrData);
+			// echo json_encode($arrData[0]->dokumen);
+			$model->update($row_id, array('dokumen' => json_encode($newDokTemp)));
+			// $this->db->where('id', $row_id);
+			// $this->db->update('epak_permohonan', array('dokumen' => json_encode($newDokTemp)));
 			// $model->delete($id);
 
 			$this->session->set_flashdata('success', 'Berhasil terhapus');
