@@ -124,15 +124,21 @@ class Permohonan extends CI_Controller {
 					$arrData = $this->M_permohonan->select_all(['id' => $id]);
 					// echo json_encode($arrData);
 					$exparrData = explode(",", $arrData[0]->dokumen);
-					if(is_array($exparrData)) {
+					// echo json_encode($exparrData);
+					if(is_array($exparrData) && !empty($exparrData)) {
+						// echo "is_array";
 						foreach($exparrData as $key => $row) {
-							$uploadImgData[] = trim(str_replace('"',"",$row), '[]');
+							// $uploadImgData[] = trim(str_replace('"',"",$row), '[]');
+							array_push($uploadImgData, trim(str_replace('"',"",$row), '[]'));
 						}
 					} else {
-						$uploadImgData[] = trim(str_replace('"',"",$arrData[0]->dokumen), '[]');
+						// echo "not_array";
+						// $uploadImgData[] = trim(str_replace('"',"",$arrData[0]->dokumen), '[]');
+						array_push($uploadImgData, $arrData[0]->dokumen);
 					}
 				}
 
+				$uploadImgData = array_filter($uploadImgData, 'strlen');
 				// echo json_encode($uploadImgData);
 				$data = array_merge($data, array('dokumen' => json_encode($uploadImgData)));
 				// echo json_encode($data);
@@ -260,31 +266,25 @@ class Permohonan extends CI_Controller {
 		$json = array();
 		$model = $this->M_permohonan;
 
+		$newDokTemp = [];
 		if($this->input->post('row_id')) {
 			$row_id = $this->input->post('row_id');
 			$arrData = $this->M_permohonan->select_all(['id' => $row_id]);
 			if($arrData) {
 				$arrDok = json_decode($arrData[0]->dokumen);
+				// echo $arrDok;
 				$key = $this->input->post('id');
 				unset($arrDok[$key]);
-				// $arrData[0]->dokumen = json_encode($arrDok);
 
 				foreach($arrDok as $dok) {
 					$newDokTemp[] = $dok;
 				}
-
-				// $arrData[0]->dokumen = json_encode($newDokTemp);
 			}
 			
-			// echo json_encode($arrData);
-			// echo json_encode($arrData[0]->dokumen);
 			$model->update($row_id, array('dokumen' => json_encode($newDokTemp)));
-			// $this->db->where('id', $row_id);
-			// $this->db->update('epak_permohonan', array('dokumen' => json_encode($newDokTemp)));
-			// $model->delete($id);
 
 			$this->session->set_flashdata('success', 'Berhasil terhapus');
-			$json = array('success' => true, 'message' => 'Berhasil terhapus', 'data' => ($arrData));
+			$json = array('success' => true, 'message' => 'Berhasil terhapus', 'data' => ($newDokTemp));
 		}
 
 		$this->output

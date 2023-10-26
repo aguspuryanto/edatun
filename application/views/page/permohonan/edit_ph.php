@@ -35,15 +35,6 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
-                        <!-- <div id="dokumen" class="col-md-4 form-group">
-                            <label>Dokumen</label>
-                            <?= form_input(array(
-                                'type'  => 'file',
-                                'name'  => 'dokumen[]',
-                                'id'    => 'input-dokumen',
-                                'class' => 'form-control'
-                            )); ?>
-                        </div> -->
                         <?php
                         if(isset($dataEdit)) {
                             // echo json_encode($dataEdit);
