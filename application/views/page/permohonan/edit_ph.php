@@ -35,40 +35,32 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
-                        <!-- <div id="dokumen" class="col-md-4 form-group">
-                            <label>Dokumen</label>
-                            <?= form_input(array(
-                                'type'  => 'file',
-                                'name'  => 'dokumen[]',
-                                'id'    => 'input-dokumen',
-                                'class' => 'form-control'
-                            )); ?>
-                        </div> -->
                         <?php
                         if(isset($dataEdit)) {
                             // echo json_encode($dataEdit);
                             $totDok = count((array)json_decode($dataEdit->dokumen));
                             if($totDok > 0) {
                                 for($i = 0; $i < $totDok; $i++){
-                                    $title = 'Dokumen ' . ($i+1);
+                                    $idx = ($i!=0) ? $i : '';
+                                    $title = 'Dokumen ' . ($idx);
                                     if(json_decode($dataEdit->dokumen)[$i] != null){
-                                        echo '<div id="dokumen" class="col-md-4 form-group">';
+                                        echo '<div id="dokumen' . $idx .'" class="col-md-4 form-group">';
                                         echo '<label>'.$title.'</label>';
                                         echo '<div class="form-control"><a target="_blank" href="' . base_url('permohonan/dokumen/' . json_decode($dataEdit->dokumen)[$i]) . '">'.json_decode($dataEdit->dokumen)[$i].'</a> <a class="btn btn-danger float-right" href="#" id="removeDokumen" data-id="'.$i.'"><span class="fa fa-trash"></span></a></div>';
-                                        echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control d-none">';
+                                        echo '<input type="file" multiple="" name="dokumen[]" id="input-dokumen" class="form-control d-none">';
                                         echo '</div>';
                                     }
                                 }
                             } else {
                                 echo '<div id="dokumen" class="col-md-4 form-group">';
                                 echo '<label>Dokumen</label>';
-                                echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                                echo '<input type="file" multiple="" name="dokumen[]" id="input-dokumen" class="form-control">';
                                 echo '</div>';
                             }
                         } else {
                             echo '<div id="dokumen" class="col-md-4 form-group">';
                             echo '<label>Dokumen</label>';
-                            echo '<input type="file" name="dokumen[]" id="input-dokumen" class="form-control">';
+                            echo '<input type="file" multiple="" name="dokumen[]" id="input-dokumen" class="form-control">';
                             echo '</div>';
                         }
                         ?>
@@ -89,10 +81,10 @@
 
 <script type="text/javascript">
 $( document ).ready(function() {
-    $.fn.datepicker.defaults.format = "dd/mm/yyyy";
-    // $(".datepicker").datepicker({
-    //   format:'dd/mm/yyyy',
-    // }).datepicker("setDate",'now');
+    // $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+    $(".datepicker").datepicker({
+      format:'dd/mm/yyyy',
+    });
     $('#error').html(" ");
 
     const fileInput = document.querySelector("#input-dokumen");
@@ -179,7 +171,7 @@ $( document ).ready(function() {
         $(this).parents('.form-group').find('#error').html(" ");
     });
 
-    var cloneCount = 1;
+    var cloneCount = $("[id^=dokumen]").length || 1;
     $('button.addDokumen').click(function(){
         var id = cloneCount++;
         $("div#dokumen").clone().attr('id', 'dokumen'+ id).insertAfter('[id^=dokumen]:last');        
