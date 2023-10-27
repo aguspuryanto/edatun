@@ -163,8 +163,11 @@ class User extends CI_Controller {
 			);
 
 			if($this->input->post('role_id') == '5') {
-				$data = array_merge($data, array('password' => md5('123456')));
+				$defaultPwd = md5('123456');
+			} else {
+				$defaultPwd = md5('admin');
 			}
+			$data = array_merge($data, array('password' => $defaultPwd));
 
 			if($this->input->post('id')) {
 				$id = $this->input->post('id');
