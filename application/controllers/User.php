@@ -161,13 +161,14 @@ class User extends CI_Controller {
 				'email' => $this->input->post('email'),
 				'nohape' => $this->input->post('nohape')
 			);
+			
+			$defaultPwd = ($this->input->post('role_id') == '5') ? md5('123456') : md5('admin');
+			$data = array_merge($data, array('password' => $defaultPwd));			
 
-			if($this->input->post('role_id') == '5') {
-				$defaultPwd = md5('123456');
-			} else {
-				$defaultPwd = md5('admin');
-			}
-			$data = array_merge($data, array('password' => $defaultPwd));
+			$otp = random_string('alnum', 6);
+			// add user info and $otp into database
+			// send $otp to user
+			// check the $otp user enter and update user status to actived
 
 			if($this->input->post('id')) {
 				$id = $this->input->post('id');
