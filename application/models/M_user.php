@@ -70,7 +70,7 @@ class M_user extends CI_Model {
 		$this->db->where('password', md5($pass));
 
 		$data = $this->db->get();
-        // print_r($this->db->last_query());
+        print_r($this->db->last_query());
 
 		if ($data->num_rows() == 1) {
 			return $data->row();
