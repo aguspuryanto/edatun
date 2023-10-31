@@ -18,14 +18,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <?//=get_header_table_custom($model, array('instansi', 'username', 'role_id', 'password', 'picture_img'));?>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Pangkat</th>
-                                <th>NIP</th>
-                                <th>#</th>
-                            </tr>
+                            <?=get_header_table_custom($model, array('instansi', 'username', 'role_id', 'email', 'password', 'picture_img'), '<th>Aksi</th>');?>
                         </thead>
                         <tbody>
                         <?php
@@ -38,7 +31,12 @@
                                     <td>'.$row->nama.'</td>
                                     <td>'.$row->divisi.'</td>
                                     <td>'.$row->nohape.'</td>
-                                    <td>#</td>
+                                    <td>
+                                        <div class="btn-group mb-3" role="group">
+                                            <button type="button" data-id="'.$row->id.'" class="btn btn-secondary btnEdit" data-toggle="modal" data-target="#myModalUser">Edit</button>
+                                            <button type="button" data-id="'.$row->id.'" class="btn btn-danger btnRemove">Hapus</button>
+                                        </div>
+                                    </td>
                                 </tr>';
                                 $id++;
                             }
@@ -97,6 +95,8 @@
 
 <?php
 $Urladd = base_url('user/create');
+$Urldetail = base_url('user/detailjpn');
+$Urlremove = base_url('user/removejpn');
 ?>
 
 <script type="text/javascript">
@@ -136,6 +136,47 @@ $( document ).ready(function() {
     $('#form input').on('keyup', function () { 
         $(this).removeClass('is-invalid').addClass('is-valid');
         $(this).parents('.form-group').find('#error').html(" ");
+    });
+
+    $(document).on('click', '.btnEdit', function (e) {
+        e.preventDefault();
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+
+        $.get("<?=$Urldetail;?>/" + dataId, function(data, status){
+            console.log(data, "data");
+            $.each(data.data, function(key, value) {
+                if(key == 'username' || key == 'email') {
+                    $('#input-' + key).val(value).attr('readonly', true);
+                } else {
+                    $('#input-' + key).val(value);
+                }
+
+                // if(key == 'kategori') {
+                //     $('#kategori').val(value).change();
+                // } else if(key == 'tgl_permohonan') {
+                //     var newValue = new Date(value);
+                //     var formattedDate = [newValue.getDate(), newValue.getMonth() + 1, newValue.getFullYear()].join('/');
+                //     $('#input-' + key).val(formattedDate).change();
+                // }
+            });
+
+            // $('#form input[name=id]').val(data.data.kegiatan);
+        });
+    });
+
+    $(document).on('click', '.btnRemove', function (e) {
+        e.preventDefault();
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+
+        if (confirm("Apakah anda yakin ingin menghapus data ini?")==true){
+            // $(this).closest("tr").remove();
+            table.row( $(this).parents('tr') ).remove().draw();
+            $.post("<?=$Urlremove;?>/", {id: dataId}, function(result){
+                console.log(result, "_result");
+            });
+        };
     });
 
 });

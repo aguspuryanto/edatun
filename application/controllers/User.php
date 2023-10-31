@@ -153,7 +153,7 @@ class User extends CI_Controller {
 			}
 		} else {
 			$data = array(
-				'instansi' => $this->input->post('instansi'),
+				'instansi' => ($this->input->post('instansi')) ?? '-',
 				'username' => $this->input->post('username'),
 				'nama' => $this->input->post('nama'),
 				'divisi' => $this->input->post('divisi'),
@@ -165,7 +165,7 @@ class User extends CI_Controller {
 			$defaultPwd = ($this->input->post('role_id') == '5') ? md5('123456') : md5('admin');
 			$data = array_merge($data, array('password' => $defaultPwd));			
 
-			$otp = random_string('alnum', 6);
+			// $otp = random_string('alnum', 6);
 			// add user info and $otp into database
 			// send $otp to user
 			// check the $otp user enter and update user status to actived
@@ -180,6 +180,40 @@ class User extends CI_Controller {
 
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 			$json = array('success' => true, 'message' => 'Berhasil disimpan', 'data' => $data);
+		}
+
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
+	}
+
+	public function detailjpn($id) {
+		$data['data'] = $this->M_user->select_all(['id' => $id]);
+		// $data['data'][0]['tgl_permohonan'] = date('d/m/Y', strtotime($data['data'][0]['tgl_permohonan']));
+
+		$json = array();
+		if($data['data']) {
+			$json = array('success' => true, 'data' => $data['data'][0]);
+		} else {
+			$json = array('success' => false, 'data' => []);
+		}
+
+		$this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($json));		
+	}
+
+	public function removejpn($id) {
+		
+		$json = array();
+		$model = $this->M_user;
+
+		if($this->input->post('id')) {
+			$id = $this->input->post('id');
+			$model->delete($id);
+
+			$this->session->set_flashdata('success', 'Berhasil terhapus');
+			$json = array('success' => true, 'message' => 'Berhasil terhapus');
 		}
 
 		$this->output
