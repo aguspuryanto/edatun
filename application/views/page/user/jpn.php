@@ -144,6 +144,8 @@ $( document ).ready(function() {
         var dataId = $(this).attr("data-id");
         console.log(dataId, '_dataId');
 
+        $('#formUser input[name=id]').val(dataId);
+
         $.get("<?=$Urldetail;?>/" + dataId, function(data, status){
             console.log(data, "data");
             $.each(data.data, function(key, value) {
