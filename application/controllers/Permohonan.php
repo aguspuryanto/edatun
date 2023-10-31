@@ -173,7 +173,7 @@ class Permohonan extends CI_Controller {
 		if($this->input->post('id')) {
 			$id = $this->input->post('id');
 			$model = $this->M_permohonan;
-			// $model->alterTable();
+			$model->alterTable();
 
 			$model->update($id, array(
 				'nama_jaksa' => $this->input->post('nama_jaksa'),

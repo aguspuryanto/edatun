@@ -70,11 +70,16 @@ class M_permohonan extends CI_Model {
     public function alterTable() {
         $this->load->dbforge();
 
-        $fields = array(
-            'nama_jaksa' => array('type' => 'VARCHAR', 'constraint' => '255'),
-            'nip_jaksa' => array('type' => 'VARCHAR', 'constraint' => '255'),
-        );
+        $field_namajaksa = $this->db->field_exists('nama_jaksa', $this->table_name);
+        $field_nipjaksa = $this->db->field_exists('nip_jaksa', $this->table_name);
 
-        $this->dbforge->add_column($this->table_name, $fields);
+        if (!$field_namajaksa && !$field_nipjaksa) {
+            $fields = array(
+                'nama_jaksa' => array('type' => 'VARCHAR', 'constraint' => '255'),
+                'nip_jaksa' => array('type' => 'VARCHAR', 'constraint' => '255'),
+            );
+
+            $this->dbforge->add_column($this->table_name, $fields);
+        }
     }
 }
