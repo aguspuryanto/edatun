@@ -167,6 +167,31 @@ class Permohonan extends CI_Controller {
 		->set_output(json_encode($json));
 	}
 
+	public function add_jaksa() {
+		
+		$json = array();
+		if($this->input->post('id')) {
+			$id = $this->input->post('id');
+			$model = $this->M_permohonan;
+			// $model->alterTable();
+
+			$model->update($id, array(
+				'nama_jaksa' => $this->input->post('nama_jaksa'),
+				'nip_jaksa' => $this->input->post('nip_jaksa')
+			));
+
+			$this->session->set_flashdata('success', 'Berhasil disimpan');
+			$json = array(
+				'success' => true,
+				'message' => 'Berhasil disimpan'
+			);
+		}
+
+		$this->output
+		->set_content_type('application/json')
+		->set_output(json_encode($json));
+	}
+
 	public function perdata() {
 		$data['title'] = "Perdata";
 		
@@ -231,7 +256,8 @@ class Permohonan extends CI_Controller {
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Mediasi']);		
 		
-		$this->template->views('page/permohonan/mediasi', $data);
+		// $this->template->views('page/permohonan/mediasi', $data);
+		$this->template->views('page/permohonan/konsiliasi', $data);
 	}
 
 	public function fasilitasi() {
@@ -241,7 +267,8 @@ class Permohonan extends CI_Controller {
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
 		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Fasilitasi']);		
 		
-		$this->template->views('page/permohonan/fasilitasi', $data);
+		// $this->template->views('page/permohonan/fasilitasi', $data);
+		$this->template->views('page/permohonan/konsiliasi', $data);
 	}
 
 	public function dokumen($filename = null) {

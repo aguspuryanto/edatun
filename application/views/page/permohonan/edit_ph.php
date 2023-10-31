@@ -31,6 +31,7 @@
                     <?=get_form_input($model, 'kasus_posisi', array('value' => ($dataEdit->kasus_posisi) ?? '', 'type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
+                    <button type="button" class="btn btn-info addJaksa float-right" data-toggle="modal" data-target="#exampleModal">Tambah Jaksa</button>
                     <button type="button" class="btn btn-info addDokumen float-right">Tambah Dokumen</button>
                     <div class="clearfix"></div>
 
@@ -77,6 +78,33 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Jaksa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?=form_open('', array('id' => 'formJaksa', 'role' => 'form'));?>
+
+            <?=get_form_input($model, 'nama_jaksa'); ?>
+            <?=get_form_input($model, 'nip_jaksa'); ?>
+
+            <?=form_hidden('id', ($dataEdit->id) ?? isset($_GET['row_id'])); ?>
+        <?=form_close();?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="formJaksa">Tambah Jaksa</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -169,6 +197,23 @@ $( document ).ready(function() {
     $('#form input').on('keyup', function () { 
         $(this).removeClass('is-invalid').addClass('is-valid');
         $(this).parents('.form-group').find('#error').html(" ");
+    });
+
+    $(document).on('click', 'button#formJaksa', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "<?=site_url('permohonan/add_jaksa');?>", 
+            data: $("#formJaksa").serialize(),
+            beforeSend : function(xhr, opts){
+                $('button#formJaksa').text('Loading...').prop("disabled", true);
+            },
+            success: function(data){
+                console.log(data, "data");
+                $('button#formJaksa').text('Tambah Jaksa').prop("disabled", false);
+            }
+        });
     });
 
     var cloneCount = $("[id^=dokumen]").length || 1;

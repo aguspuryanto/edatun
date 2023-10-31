@@ -309,7 +309,7 @@ button, input, optgroup, select, textarea {
     color: #48b0f7 !important;
 }
 
-.modal {
+#exampleModal{
     width: auto;
     height: auto;
     top: auto;
@@ -354,7 +354,7 @@ button, input, optgroup, select, textarea {
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <?=get_header_table_custom($model, ['jenis_permohonan', 'status'], '<th>Aksi</th>');?>
+                            <?=get_header_table_custom($model, ['jenis_permohonan', 'status', 'nip_jaksa'], '<th>Aksi</th>');?>
                         </thead>
                         <tbody>
                         <?php
@@ -383,11 +383,17 @@ button, input, optgroup, select, textarea {
                                     <td>'.$row->subject.'</td>
                                     <td>'.$row->kasus_posisi.'</td>
                                     <td>'.$dokUrl.'</td>
-                                    <td><div class="btn-group" role="group">
-                                        <a href="' . base_url('permohonan/edit_ph?type='.$title.'&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>
-                                        <button type="button" data-id="'.$row->id.'" class="btn btn-danger btnRemove">Hapus</button>
-                                        <button type="button" data-id="'.$row->id.'" class="btn btn-info btnChat" data-toggle="modal" data-target="#exampleModal">Chat</button>
-                                    </div></td>
+                                    <td>'.$row->nama_jaksa.'<br>'.$row->nip_jaksa.'</td>
+                                    <td>
+                                        <div class="btn-group mb-3" role="group">
+                                            <a href="' . base_url('permohonan/edit_ph?type='.$title.'&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>
+                                            <button type="button" data-id="'.$row->id.'" class="btn btn-danger btnRemove">Hapus</button>
+                                            <button type="button" data-id="'.$row->id.'" class="btn btn-info btnChat" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                                        </div>
+                                        <p>
+                                            <button type="button" id="addJaksa" data-id="'.$row->id.'" class="btn btn-info btn-block" data-toggle="modal" data-target="#modalJaksa">Tambah Jaksa</button>
+                                        </p>
+                                    </td>
                                 </tr>';
                                 $id++;
                             }
@@ -403,89 +409,44 @@ button, input, optgroup, select, textarea {
 </div>
 
 <!-- Modal -->
+<div class="modal fade" id="modalJaksa" tabindex="-1" aria-labelledby="modalJaksaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalJaksaLabel">Tambah Jaksa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?=form_open('', array('id' => 'formJaksa', 'role' => 'form'));?>
+
+            <?=get_form_input($model, 'nama_jaksa'); ?>
+            <?=get_form_input($model, 'nip_jaksa'); ?>
+
+            <?=form_hidden('id', ($dataEdit->id) ?? isset($_GET['row_id'])); ?>
+        <?=form_close();?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="formJaksa">Tambah Jaksa</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog xposition-fixed end-0" role="document">
     <div class="modal-content xposition-absolute bottom-0">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Chat</h5>
-        <!-- <button type="button" class="btn btn-primary btn-sm">Let's Chat App</button> -->
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> -->
       </div>
       <div class="modal-body" style="position: relative; height: 420px">
         <div class="card card-bordered">
             <?=form_hidden('type', $title); ?>
             <?=form_hidden('row_id', ''); ?>
             <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-                <!-- <div class="media media-chat">
-                  <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                  <div class="media-body">
-                    <p>Hi</p>
-                    <p>How are you ...???</p>
-                    <p>What are you doing tomorrow?<br> Can we come up a bar?</p>
-                    <p class="meta"><time datetime="2018">23:58</time></p>
-                  </div>
-                </div>
-
-                <div class="media media-meta-day">Today</div>
-
-                <div class="media media-chat media-chat-reverse">
-                  <div class="media-body">
-                    <p>Hiii, I'm good.</p>
-                    <p>How are you doing?</p>
-                    <p>Long time no see! Tomorrow office. will be free on sunday.</p>
-                    <p class="meta"><time datetime="2018">00:06</time></p>
-                  </div>
-                </div>
-
-                <div class="media media-chat">
-                  <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                  <div class="media-body">
-                    <p>Okay</p>
-                    <p>We will go on sunday? </p>
-                    <p class="meta"><time datetime="2018">00:07</time></p>
-                  </div>
-                </div>
-
-                <div class="media media-chat media-chat-reverse">
-                  <div class="media-body">
-                    <p>That's awesome!</p>
-                    <p>I will meet you Sandon Square sharp at 10 AM</p>
-                    <p>Is that okay?</p>
-                    <p class="meta"><time datetime="2018">00:09</time></p>
-                  </div>
-                </div>
-
-                <div class="media media-chat">
-                  <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                  <div class="media-body">
-                    <p>Okay i will meet you on Sandon Square </p>
-                    <p class="meta"><time datetime="2018">00:10</time></p>
-                  </div>
-                </div>
-
-                <div class="media media-chat media-chat-reverse">
-                  <div class="media-body">
-                    <p>Do you have pictures of Matley Marriage?</p>
-                    <p class="meta"><time datetime="2018">00:10</time></p>
-                  </div>
-                </div>
-
-                <div class="media media-chat">
-                  <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                  <div class="media-body">
-                    <p>Sorry I don't have. i changed my phone.</p>
-                    <p class="meta"><time datetime="2018">00:12</time></p>
-                  </div>
-                </div>
-
-                <div class="media media-chat media-chat-reverse">
-                  <div class="media-body">
-                    <p>Okay then see you on sunday!!</p>
-                    <p class="meta"><time datetime="2018">00:12</time></p>
-                  </div>
-                </div> -->
 
               <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
 
@@ -494,11 +455,6 @@ button, input, optgroup, select, textarea {
       <div class="modal-footer" style="display: block; padding:0em;">
         <div class="publisher bt-1 border-light">
             <input class="publisher-input" type="text" placeholder="Write something">
-            <!-- <span class="publisher-btn file-group">
-                <i class="fa fa-paperclip file-browser"></i>
-                <input type="file">
-            </span>
-            <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a> -->
             <a class="publisher-btn text-info" href="#" data-abc="true"><i class="fa fa-paper-plane"></i></a>
         </div>
       </div>
@@ -630,5 +586,53 @@ $( document ).ready(function() {
     // setInterval(function (){
     //     update_chats();
     // }, 5000);
+
+
+    $(document).on('click', 'button#addJaksa', function (e) {
+        var dataId = $(this).attr("data-id");
+        console.log(dataId, '_dataId');
+
+        $('#formJaksa').find('input[name=id]').val(dataId);
+    });
+
+    $(document).on('click', 'button#formJaksa', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "<?=site_url('permohonan/add_jaksa');?>", 
+            data: $("#formJaksa").serialize(),
+            beforeSend : function(xhr, opts){
+                $('button#formJaksa').text('Loading...').prop("disabled", true);
+            },
+            success: function(data){
+                console.log(data, "data");
+                $('button#formJaksa').text('Tambah Jaksa').prop("disabled", false);
+
+                if(data.success == true){
+                    // alert(data.message);
+                    toastr.success(data.message);
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 3000);
+                } else {
+                    toastr.error(data.message);
+                }
+            }
+        });
+    });
 });
 </script>
+
+<?php
+$loadcss = <<<EOF
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+EOF;
+
+$loadjs = <<<EOF
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+EOF;
+
+$this->load->vars('_loadcss', $loadcss);
+$this->load->vars('_loadjs', $loadjs);
+?>

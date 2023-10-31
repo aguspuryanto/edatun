@@ -15,6 +15,8 @@ class M_permohonan extends CI_Model {
             ['field' => 'kasus_posisi', 'label' => 'Kasus Posisi','rules' => 'required'],
             ['field' => 'dokumen', 'label' => 'Dokumen'],
             ['field' => 'status', 'label' => 'Status'],
+            ['field' => 'nama_jaksa', 'label' => 'Nama Jaksa'],
+            ['field' => 'nip_jaksa', 'label' => 'NIP Jaksa'],
         ];
     }
 
@@ -63,5 +65,16 @@ class M_permohonan extends CI_Model {
     public function total_rows() {
         $data = $this->db->get($this->table_name);
         return $data->num_rows();
+    }
+
+    public function alterTable() {
+        $this->load->dbforge();
+
+        $fields = array(
+            'nama_jaksa' => array('type' => 'VARCHAR', 'constraint' => '255'),
+            'nip_jaksa' => array('type' => 'VARCHAR', 'constraint' => '255'),
+        );
+
+        $this->dbforge->add_column($this->table_name, $fields);
     }
 }
