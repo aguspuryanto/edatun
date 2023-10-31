@@ -115,10 +115,11 @@ $( document ).ready(function() {
             data: $('form#formUser').serialize(),
             dataType: "json",
             beforeSend : function(xhr, opts){
-              // $('#form-submit').text('Loading...').prop("disabled", true);
+              $(this).text('Loading...').prop("disabled", true);
             },
             success: function(data){
                 console.log(data, "data");
+                $('#formUser').text('Submit <?=@$title; ?>').prop("disabled", true);
                 if(data.success == true){
                     setTimeout(function(){
                         window.location.reload();
