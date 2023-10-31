@@ -16,7 +16,7 @@
                         </div>
                     </div>
 
-                    <?=form_hidden('id', $dataUser->id); ?>
+                    <?=form_hidden('id', ($dataUser->id) ?? ''); ?>
                     <?=form_hidden('type', 'pwd'); ?>
 
                     <button type="submit" class="btn btn-primary" id="formPwd">Simpan</button>
