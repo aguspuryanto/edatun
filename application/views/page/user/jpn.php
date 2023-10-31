@@ -119,7 +119,7 @@ $( document ).ready(function() {
             },
             success: function(data){
                 console.log(data, "data");
-                $('button#formUser').text('Submit <?=@$title; ?>').prop("disabled", true);
+                $('button#formUser').text('Submit <?=@$title; ?>').prop("disabled", false);
                 if(data.success == true){
                     setTimeout(function(){
                         window.location.reload();
