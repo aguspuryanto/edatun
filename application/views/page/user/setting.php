@@ -6,7 +6,7 @@
 <!-- Content Row -->
 <div class="row">
     <div class="col-lg-4">
-        <?php echo json_encode($dataUser); ?>
+        <?php //echo json_encode($dataUser); ?>
         <div class="card mb-4 mb-xl-0">
             <div class="card-header">Profile Picture</div>
             <div class="card-body text-center">                
