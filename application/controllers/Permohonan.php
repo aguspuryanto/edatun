@@ -9,6 +9,7 @@ class Permohonan extends CI_Controller {
         is_logged_in();
 		$this->load->model('M_user');
 		$this->load->model('M_permohonan');
+		$this->load->model('M_timjpn');
     }
 
 	public function index()
@@ -175,10 +176,10 @@ class Permohonan extends CI_Controller {
 			$model = $this->M_permohonan;
 			$model->alterTable();
 
-			$model->update($id, array(
-				'nama_jaksa' => $this->input->post('nama_jaksa'),
-				'nip_jaksa' => $this->input->post('nip_jaksa')
-			));
+			// $model->update($id, array(
+			// 	'nama_jaksa' => $this->input->post('nama_jaksa'),
+			// 	'nip_jaksa' => $this->input->post('nip_jaksa')
+			// ));
 
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 			$json = array(

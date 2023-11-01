@@ -45,14 +45,18 @@ class Migration_create_permohonan extends CI_Migration {
                 'type' => 'INT',
                 'constraint' => '20'
             ),
-            'nama_jaksa' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255'
+            'id_timjpn' => array(
+                'type' => 'INT',
+                'constraint' => '11'
             ),
-            'nip_jaksa' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255'
-            ),
+            // 'nama_jaksa' => array(
+            //     'type' => 'VARCHAR',
+            //     'constraint' => '255'
+            // ),
+            // 'nip_jaksa' => array(
+            //     'type' => 'VARCHAR',
+            //     'constraint' => '255'
+            // ),
             'created_at datetime default current_timestamp'
         ));
         $this->dbforge->add_key('id', TRUE);
