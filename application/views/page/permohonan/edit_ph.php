@@ -31,7 +31,7 @@
                     <?=get_form_input($model, 'kasus_posisi', array('value' => ($dataEdit->kasus_posisi) ?? '', 'type' => 'textarea', 'rows' => '3', 'cols' => '10')); ?>
 
                     <?php /*echo get_form_input($model, 'dokumen[]', array('type' => 'file', 'multiple' => 'multiple'));*/ ?>
-                    <button type="button" class="btn btn-info addJaksa float-right" data-toggle="modal" data-target="#exampleModal">Tambah Jaksa</button>
+                    <!-- <button type="button" class="btn btn-info addJaksa float-right" data-toggle="modal" data-target="#exampleModal">Tambah Jaksa</button> -->
                     <button type="button" class="btn btn-info addDokumen float-right">Tambah Dokumen</button>
                     <div class="clearfix"></div>
 

@@ -13,8 +13,8 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
 		$data['title'] = "Dashboard";
-		$data['konten'] = "dashboard";
-		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		// $data['konten'] = "dashboard";
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		
 		// $this->load->view('template/layout', $data);
 		$this->template->views('page/dashboard', $data);

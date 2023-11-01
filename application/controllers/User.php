@@ -14,7 +14,7 @@ class User extends CI_Controller {
 	{
 		$data['title'] = "User";
 		$data['model'] = $this->M_user;
-		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listData'] = $this->M_user->select_all();	
 		
 		$this->template->views('page/user/index', $data);
@@ -24,7 +24,7 @@ class User extends CI_Controller {
 	{
 		$data['title'] = "User JPN";
 		$data['model'] = $this->M_user;
-		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listData'] = $this->M_user->select_all(['role_id' => 5]);	
 		
 		$this->template->views('page/user/jpn', $data);
@@ -34,7 +34,7 @@ class User extends CI_Controller {
 	{
 		$data['title'] = "User";
 		$data['model'] = $this->M_user;
-		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('role_id'));
+		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 
 		$_POST = $this->input->post();
 		if($_POST) {

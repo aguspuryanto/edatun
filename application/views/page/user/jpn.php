@@ -115,10 +115,11 @@ $( document ).ready(function() {
             data: $('form#formUser').serialize(),
             dataType: "json",
             beforeSend : function(xhr, opts){
-              // $('#form-submit').text('Loading...').prop("disabled", true);
+              $('button#formUser').text('Loading...').prop("disabled", true);
             },
             success: function(data){
                 console.log(data, "data");
+                $('button#formUser').text('Submit <?=@$title; ?>').prop("disabled", false);
                 if(data.success == true){
                     setTimeout(function(){
                         window.location.reload();
@@ -142,6 +143,8 @@ $( document ).ready(function() {
         e.preventDefault();
         var dataId = $(this).attr("data-id");
         console.log(dataId, '_dataId');
+
+        $('#formUser input[name=id]').val(dataId);
 
         $.get("<?=$Urldetail;?>/" + dataId, function(data, status){
             console.log(data, "data");

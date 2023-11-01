@@ -6,12 +6,13 @@
 <!-- Content Row -->
 <div class="row">
     <div class="col-lg-4">
+        <?php //echo json_encode($dataUser); ?>
         <div class="card mb-4 mb-xl-0">
             <div class="card-header">Profile Picture</div>
             <div class="card-body text-center">                
                 <?=form_open_multipart('', array('id' => 'formProfile', 'role' => 'form'));?>
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="<?=($dataUser->picture_img) ? base_url() . 'uploads/' . $dataUser->picture_img : base_url() . 'assets/img/undraw_profile_1.svg'; ?>" alt="">
+                    <img class="img-account-profile rounded-circle mb-2" src="<?=isset($dataUser->picture_img) ? base_url() . 'uploads/' . $dataUser->picture_img : base_url() . 'assets/img/undraw_profile_1.svg'; ?>" alt="">
                     
                     <div class="form-group">
                         <input type="file" name="picture_img" id="input-picture_img" class="form-control" accept="image/*"/>
@@ -24,7 +25,7 @@
                     <!-- Profile picture upload button-->
                     <button type="submit" class="btn btn-primary" id="form-upload">Upload</button>
 
-                    <?=form_hidden('id', $dataUser->id); ?>
+                    <?=form_hidden('id', ($dataUser->id) ?? ''); ?>
                 
                 <?=form_close();?>
             </div>

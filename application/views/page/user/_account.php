@@ -7,16 +7,16 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'username', array('value' => $dataUser->username)); ?>
+                            <?=get_form_input($model, 'username', array('value' => ($dataUser->username) ?? '')); ?>
                         </div>
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'nama', array('value' => $dataUser->nama)); ?>
+                            <?=get_form_input($model, 'nama', array('value' => ($dataUser->nama) ?? '')); ?>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'divisi', array('value' => $dataUser->divisi)); ?>
+                            <?=get_form_input($model, 'divisi', array('value' => ($dataUser->divisi) ?? '')); ?>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -25,7 +25,7 @@
                                     '1' => 'Administrator',
                                     '2' => 'User',
                                 ); ?>
-                                <?=form_dropdown('role_id', $options, $dataUser->role_id, array('class' => 'form-control', 'id' => 'input-role_id'));?>
+                                <?=form_dropdown('role_id', $options, ($dataUser->role_id)  ?? '', array('class' => 'form-control', 'id' => 'input-role_id'));?>
                                 <div id="error"></div>
                             </div>
                             
@@ -34,14 +34,14 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'email', array('value' => $dataUser->email)); ?>
+                            <?=get_form_input($model, 'email', array('value' => ($dataUser->email) ?? '')); ?>
                         </div>
                         <div class="col-md-6">
-                            <?=get_form_input($model, 'nohape', array('value' => $dataUser->nohape)); ?>
+                            <?=get_form_input($model, 'nohape', array('value' => ($dataUser->nohape) ?? '')); ?>
                         </div>
                     </div>
 
-                    <?=form_hidden('id', $dataUser->id); ?>
+                    <?=form_hidden('id', ($dataUser->id) ?? ''); ?>
 
                     <button type="submit" class="btn btn-primary" id="form-submit">Simpan</button>
 

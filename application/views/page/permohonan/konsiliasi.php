@@ -420,9 +420,26 @@ button, input, optgroup, select, textarea {
       </div>
       <div class="modal-body">
         <?=form_open('', array('id' => 'formJaksa', 'role' => 'form'));?>
+            
+            <?php //echo json_encode($listJpn); ?>
+            <?php if(count($listJpn) > 0) : ?>
+                <div class="form-group">
+                    <label for="id_jaksa">Jaksa</label>
+                    <select name="id_jaksa" id="id_jaksa" class="form-control">
+                        <option value="">-- Pilih Jaksa --</option>
+                        <?php foreach($listJpn as $row) : ?>
+                            <option value="<?=@$row->id; ?>"><?=@$row->nama; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>                
+                <?=form_hidden('nama_jaksa'); ?>
 
-            <?=get_form_input($model, 'nama_jaksa'); ?>
-            <?=get_form_input($model, 'nip_jaksa'); ?>
+            <?php else : ?>
+                <?=get_form_input($model, 'nama_jaksa'); ?>
+
+            <?php endif; ?>
+
+            <?=get_form_input($model, 'nip_jaksa', array('type' => 'number')); ?>
 
             <?=form_hidden('id', ($dataEdit->id) ?? isset($_GET['row_id'])); ?>
         <?=form_close();?>
@@ -466,6 +483,7 @@ button, input, optgroup, select, textarea {
 // $Urladd = base_url('permohonan/create');
 $Urldetail = base_url('permohonan/view_konsiliasi');
 $Urlremove = base_url('permohonan/remove_konsiliasi');
+$Urldetail_jpn = base_url('user/detailjpn');
 ?>
 
 <script type="text/javascript">
@@ -619,6 +637,19 @@ $( document ).ready(function() {
                     toastr.error(data.message);
                 }
             }
+        });
+    });
+
+    $(document).on('change', '#id_jaksa', function (e){
+        e.preventDefault();
+        var dataId = $(this).val();
+        console.log(dataId, '_dataId');
+        
+        $.get("<?=$Urldetail_jpn;?>/" + dataId, function(data, status){
+            console.log(data.data, "data");
+            // callback(data);
+            $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
+            $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
         });
     });
 });
