@@ -15,8 +15,9 @@ class M_permohonan extends CI_Model {
             ['field' => 'kasus_posisi', 'label' => 'Kasus Posisi','rules' => 'required'],
             ['field' => 'dokumen', 'label' => 'Dokumen'],
             ['field' => 'status', 'label' => 'Status'],
-            ['field' => 'nama_jaksa', 'label' => 'Nama Jaksa'],
-            ['field' => 'nip_jaksa', 'label' => 'NIP Jaksa'],
+            // ['field' => 'nama_jaksa', 'label' => 'Nama Jaksa'],
+            // ['field' => 'nip_jaksa', 'label' => 'NIP Jaksa'],
+            ['field' => 'id_timjpn', 'label' => 'Nama Jaksa'],
         ];
     }
 
@@ -40,6 +41,7 @@ class M_permohonan extends CI_Model {
     public function update($id, $data) {
         $this->db->where('id', $id);
         $this->db->update($this->table_name, $data);
+        // print_r($this->db->last_query());
     }
 
     public function delete($id) {

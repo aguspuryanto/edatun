@@ -13,18 +13,25 @@ class M_timjpn extends CI_Model {
     }    
 
     public function save($data) {
-        $this->db->trans_begin();
+        // $this->db->trans_begin();
         $this->db->insert($this->table_name, $data);
-        $this->db->trans_complete();
+        $insert_id = $this->db->insert_id();
+        return  $insert_id;
+
+        // $insert_query = $this->db->insert_string($this->table_name, $data);
+        // $insert_query = str_replace('INSERT INTO','INSERT IGNORE INTO',$insert_query);
+        // $this->db->query($insert_query);
+
+        // $this->db->trans_complete();
         
-        if ($this->db->trans_status() === FALSE){
-            $this->db->trans_rollback();
-            return 0;
-        } else {
-            $this->db->trans_commit();
-            $insert_id = $this->db->insert_id();
-            return  $insert_id;
-        }
+        // if ($this->db->trans_status() === FALSE){
+        //     $this->db->trans_rollback();
+        //     return 0;
+        // } else {
+        //     $this->db->trans_commit();
+            // $insert_id = $this->db->insert_id();
+            // return  $insert_id;
+        // }
     }
 
     public function update($id, $data) {
@@ -41,8 +48,9 @@ class M_timjpn extends CI_Model {
         if($options) {
             $this->db->where($options);
         }
-
-        $data = $this->db->get($this->table_name);
+        $this->db->join('epak_users b', 'b.id = a.user_id');
+        $this->db->select('a.*, b.nama as nama_jaksa, b.nohape as nip_jaksa');
+        $data = $this->db->get($this->table_name . ' a');
         return $data->result();
     }
 

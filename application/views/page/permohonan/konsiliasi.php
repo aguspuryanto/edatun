@@ -445,7 +445,7 @@ button, input, optgroup, select, textarea {
         <?=form_close();?>
 
         <hr>
-        <ul class="list-group">
+        <ul id="listJaksa" class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center"> Jaksa 1 <span class="badge badge-danger badge-pill">x</span></li>
         </ul>
       </div>
@@ -489,6 +489,7 @@ button, input, optgroup, select, textarea {
 $Urldetail = base_url('permohonan/view_konsiliasi');
 $Urlremove = base_url('permohonan/remove_konsiliasi');
 $Urldetail_jpn = base_url('user/detailjpn');
+$Urldetail_timjpn = base_url('timjpn/detailjpn');
 ?>
 
 <script type="text/javascript">
@@ -617,14 +618,12 @@ $( document ).ready(function() {
 
         $('#formJaksa').find('input[name=id]').val(dataId);
         
-        $.get("<?=$Urldetail;?>/" + dataId, function(data, status){
-            console.log(data, "data");
-            // callback(data);
-            // $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
-            // $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
-            // data.forEach(function (row) {
-            //     console.log(row, '_row')
-            // });
+        $.get("<?=$Urldetail_timjpn;?>/" + dataId, function(data, status){
+            // console.log(data, "data");
+            $("ul#listJaksa").html('');
+            $.each(data.data, function(key, row) {
+                $("ul#listJaksa").append('<li class="list-group-item d-flex justify-content-between align-items-center">' + row['nama_jaksa'] + ' <span class="badge badge-danger badge-pill">x</span></li></li>');
+            });
         });
     });
 
@@ -645,9 +644,9 @@ $( document ).ready(function() {
                 if(data.success == true){
                     // alert(data.message);
                     toastr.success(data.message);
-                    setTimeout(function(){
-                        window.location.reload();
-                    }, 3000);
+                    // setTimeout(function(){
+                    //     window.location.reload();
+                    // }, 3000);
                 } else {
                     toastr.error(data.message);
                 }

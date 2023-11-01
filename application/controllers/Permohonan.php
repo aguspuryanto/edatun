@@ -173,13 +173,26 @@ class Permohonan extends CI_Controller {
 		$json = array();
 		if($this->input->post('id')) {
 			$id = $this->input->post('id');
-			$model = $this->M_permohonan;
-			$model->alterTable();
 
-			// $model->update($id, array(
-			// 	'nama_jaksa' => $this->input->post('nama_jaksa'),
-			// 	'nip_jaksa' => $this->input->post('nip_jaksa')
-			// ));
+			$timjpn =  $this->M_timjpn;
+			$last_id = $timjpn->save(array(
+				'permohonan_id' => $this->input->post('id'),
+				'user_id' => $this->input->post('id_jaksa')
+			));
+			// echo $last_id;
+
+			if($last_id) {
+				$model = $this->M_permohonan;
+				$model->alterTable();
+
+				$updatedata = array(
+					'nama_jaksa' => $this->input->post('nama_jaksa'),
+					'nip_jaksa' => $this->input->post('nip_jaksa'),
+					'id_timjpn' => $last_id
+				);
+				// echo json_encode($updatedata);
+				$model->update($id, $updatedata);
+			}
 
 			$this->session->set_flashdata('success', 'Berhasil disimpan');
 			$json = array(
