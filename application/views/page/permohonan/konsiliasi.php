@@ -443,6 +443,11 @@ button, input, optgroup, select, textarea {
 
             <?=form_hidden('id', ($dataEdit->id) ?? isset($_GET['row_id'])); ?>
         <?=form_close();?>
+
+        <hr>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center"> Jaksa 1 <span class="badge badge-danger badge-pill">x</span></li>
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="formJaksa">Tambah Jaksa</button>
@@ -611,6 +616,16 @@ $( document ).ready(function() {
         console.log(dataId, '_dataId');
 
         $('#formJaksa').find('input[name=id]').val(dataId);
+        
+        $.get("<?=$Urldetail;?>/" + dataId, function(data, status){
+            console.log(data, "data");
+            // callback(data);
+            // $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
+            // $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
+            // data.forEach(function (row) {
+            //     console.log(row, '_row')
+            // });
+        });
     });
 
     $(document).on('click', 'button#formJaksa', function (e) {
