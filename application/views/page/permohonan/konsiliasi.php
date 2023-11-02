@@ -354,7 +354,7 @@ button, input, optgroup, select, textarea {
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <?=get_header_table_custom($model, ['jenis_permohonan', 'status', 'nip_jaksa'], '<th>Aksi</th>');?>
+                            <?=get_header_table_custom($model, ['jenis_permohonan', 'status'], '<th>Aksi</th>');?>
                         </thead>
                         <tbody>
                         <?php
@@ -383,7 +383,7 @@ button, input, optgroup, select, textarea {
                                     <td>'.$row->subject.'</td>
                                     <td>'.$row->kasus_posisi.'</td>
                                     <td>'.$dokUrl.'</td>
-                                    <td>'.$row->nama_jaksa.'<br>'.$row->nip_jaksa.'</td>
+                                    <td>--</td>
                                     <td>
                                         <div class="btn-group mb-3" role="group">
                                             <a href="' . base_url('permohonan/edit_ph?type='.$title.'&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>

@@ -190,9 +190,10 @@ class Permohonan extends CI_Controller {
 					// 'nip_jaksa' => $this->input->post('nip_jaksa'),
 					// 'id_timjpn' => $last_id
 				);
-				
+
 				// echo json_encode($updatedata);
-				$model->update($id, $updatedata);
+				$timjpnAll =  $this->M_timjpn->select_all(['permohonan_id' => $id]);
+				$model->update($id, array('id_timjpn' => json_encode($timjpnAll)));
 			}
 
 			$this->session->set_flashdata('success', 'Berhasil disimpan');

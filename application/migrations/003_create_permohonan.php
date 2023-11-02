@@ -46,8 +46,8 @@ class Migration_create_permohonan extends CI_Migration {
                 'constraint' => '20'
             ),
             'id_timjpn' => array(
-                'type' => 'INT',
-                'constraint' => '11'
+                'type' => 'VARCHAR',
+                'constraint' => '255'
             ),
             // 'nama_jaksa' => array(
             //     'type' => 'VARCHAR',
