@@ -188,8 +188,9 @@ class User extends CI_Controller {
 	}
 
 	public function detailjpn($id) {
-		$data['data'] = $this->M_user->select_all(['id' => $id]);
+		$data['data'] = $this->M_user->select_all(['id' => $id], 'nama,nohape');
 		// $data['data'][0]['tgl_permohonan'] = date('d/m/Y', strtotime($data['data'][0]['tgl_permohonan']));
+		// unset($data['data']['password']);
 
 		$json = array();
 		if($data['data']) {

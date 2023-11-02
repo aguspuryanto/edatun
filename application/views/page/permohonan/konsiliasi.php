@@ -625,7 +625,7 @@ $( document ).ready(function() {
             // console.log(data, "data");
             $("ul#listJaksa").html('');
             $.each(data.data, function(key, row) {
-                $("ul#listJaksa").append('<li class="list-group-item d-flex justify-content-between align-items-center">' + row['nama_jaksa'] + ' <span class="badge badge-danger badge-pill badgeRemove" data-id="' + row['id'] + '">x</span></li></li>');
+                $("ul#listJaksa").append('<li class="list-group-item d-flex justify-content-between align-items-center">' + (key+1) + '. ' + row['nama_jaksa'] + '; NIP: ' + row['nip_jaksa'] + ' <span class="badge badge-danger badge-pill badgeRemove" data-id="' + row['id'] + '">x</span></li></li>');
             });
         });
     });
@@ -647,9 +647,10 @@ $( document ).ready(function() {
                 if(data.success == true){
                     // alert(data.message);
                     toastr.success(data.message);
-                    // setTimeout(function(){
-                    //     window.location.reload();
-                    // }, 3000);
+                    setTimeout(function(){
+                        $('#modalJaksa').modal('toggle');
+                        window.location.reload();
+                    }, 3000);
                 } else {
                     toastr.error(data.message);
                 }
@@ -665,8 +666,8 @@ $( document ).ready(function() {
         $.get("<?=$Urldetail_jpn;?>/" + dataId, function(data, status){
             console.log(data.data, "data");
             // callback(data);
-            // $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
-            // $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
+            $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
+            $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
         });
     });
 

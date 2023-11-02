@@ -14,8 +14,15 @@ class M_timjpn extends CI_Model {
 
     public function save($data) {
         // $this->db->trans_begin();
-        $this->db->insert($this->table_name, $data);
-        $insert_id = $this->db->insert_id();
+        // $having = $this->db->query('SELECT `*` FROM '.$this->table_name.' WHERE `permohonan_id` = "'.$data['permohonan_id'].'" AND `user_id` = "'.$data['user_id'].'"')->num_rows();
+        $having = $this->db->get_where($this->table_name, array('permohonan_id' => $data['permohonan_id'], 'user_id' => $data['user_id']))->num_rows();
+        if($having > 0) {
+            $insert_id = 0;
+        } else {
+            $this->db->insert($this->table_name, $data);
+            $insert_id = $this->db->insert_id();
+        }
+
         return  $insert_id;
 
         // $insert_query = $this->db->insert_string($this->table_name, $data);

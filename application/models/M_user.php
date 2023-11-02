@@ -44,11 +44,12 @@ class M_user extends CI_Model {
         $this->db->delete($this->table_name);
     }
 
-    public function select_all($options = "") {
+    public function select_all($options = "", $select="") {
         if($options) {
             $this->db->where($options);
         }
 
+		if($select) $this->db->select($select);
         $data = $this->db->get($this->table_name);
         // print_r($this->db->last_query());
         return $data->result();
