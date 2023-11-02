@@ -186,10 +186,11 @@ class Permohonan extends CI_Controller {
 				$model->alterTable();
 
 				$updatedata = array(
-					'nama_jaksa' => $this->input->post('nama_jaksa'),
-					'nip_jaksa' => $this->input->post('nip_jaksa'),
-					'id_timjpn' => $last_id
+					// 'nama_jaksa' => $this->input->post('nama_jaksa'),
+					// 'nip_jaksa' => $this->input->post('nip_jaksa'),
+					// 'id_timjpn' => $last_id
 				);
+				
 				// echo json_encode($updatedata);
 				$model->update($id, $updatedata);
 			}

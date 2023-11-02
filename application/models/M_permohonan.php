@@ -84,6 +84,14 @@ class M_permohonan extends CI_Model {
         //     $this->dbforge->add_column($this->table_name, $fields);
         // }
 
+        if($this->db->field_exists('nama_jaksa', $this->table_name)) {
+            $this->dbforge->drop_column($this->table_name, 'nama_jaksa');
+        }
+
+        if($this->db->field_exists('nip_jaksa', $this->table_name)) {
+            $this->dbforge->drop_column($this->table_name, 'nip_jaksa');
+        }
+
         if(!$this->db->field_exists('id_timjpn', $this->table_name)) {
             $this->dbforge->add_column($this->table_name, array(
                 'id_timjpn' => array('type' => 'INT','constraint' => 11)

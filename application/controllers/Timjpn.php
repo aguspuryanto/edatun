@@ -22,7 +22,14 @@ class Timjpn extends CI_Controller {
 
 		$json = array();
 		if($data['data']) {
-			$json = array('success' => true, 'data' => $data['data']);
+            $timJpn = array();
+            foreach($data['data'] as $tim) {
+                if (!in_array($tim->nip_jaksa, array_column($timJpn, "nip_jaksa"))) {
+                    array_push($timJpn, array('id' => $tim->id, 'nama_jaksa' => $tim->nama_jaksa, 'nip_jaksa' => $tim->nip_jaksa));
+                }
+            }
+
+			$json = array('success' => true, 'data' => $timJpn);
 		} else {
 			$json = array('success' => false, 'data' => []);
 		}
@@ -32,10 +39,10 @@ class Timjpn extends CI_Controller {
         ->set_output(json_encode($json));	
     }
 
-	public function removejpn($id) {
+	public function removejpn() {
 		
 		$json = array();
-		$model = $this->M_user;
+		$model = $this->M_timjpn;
 
 		if($this->input->post('id')) {
 			$id = $this->input->post('id');

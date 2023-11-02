@@ -488,8 +488,10 @@ button, input, optgroup, select, textarea {
 // $Urladd = base_url('permohonan/create');
 $Urldetail = base_url('permohonan/view_konsiliasi');
 $Urlremove = base_url('permohonan/remove_konsiliasi');
+
 $Urldetail_jpn = base_url('user/detailjpn');
 $Urldetail_timjpn = base_url('timjpn/detailjpn');
+$Urlremove_timjpn = base_url('timjpn/removejpn');
 ?>
 
 <script type="text/javascript">
@@ -622,7 +624,7 @@ $( document ).ready(function() {
             // console.log(data, "data");
             $("ul#listJaksa").html('');
             $.each(data.data, function(key, row) {
-                $("ul#listJaksa").append('<li class="list-group-item d-flex justify-content-between align-items-center">' + row['nama_jaksa'] + ' <span class="badge badge-danger badge-pill">x</span></li></li>');
+                $("ul#listJaksa").append('<li class="list-group-item d-flex justify-content-between align-items-center">' + row['nama_jaksa'] + ' <span class="badge badge-danger badge-pill badgeRemove" data-id="' + row['id'] + '">x</span></li></li>');
             });
         });
     });
@@ -665,6 +667,18 @@ $( document ).ready(function() {
             $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
             $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
         });
+    });
+
+    $(document).on('click', '.badgeRemove', function (e) {
+        e.preventDefault();
+        var dataId = $(this).attr('data-id');
+        console.log(dataId, '_dataId');
+
+        $.post("<?=$Urlremove_timjpn;?>/", {id: dataId}, function(result){
+            console.log(result, "_result");
+        });
+
+        $(this).parent().remove();
     });
 });
 </script>
