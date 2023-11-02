@@ -374,10 +374,10 @@ button, input, optgroup, select, textarea {
                                     $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $row->dokumen).'">Dokumen</a>' : '#';
                                 }
 
-                                $listJpn = $timjpnAll->select_all(['permohonan_id' => $row->id]);
+                                $listJpnRow = $timjpnAll->select_all(['permohonan_id' => $row->id]);
                                 // echo json_encode($listJpn);
                                 $listJpnTim = "<ul class='list-unstyled'>";
-                                foreach($listJpn as $key => $jpn) {
+                                foreach($listJpnRow as $key => $jpn) {
                                     $listJpnTim .= "<li>" . ($key+1) . '. ' . $jpn->nama_jaksa . '</li>';
                                 }
                                 $listJpnTim .= "</ul>";
@@ -665,8 +665,8 @@ $( document ).ready(function() {
         $.get("<?=$Urldetail_jpn;?>/" + dataId, function(data, status){
             console.log(data.data, "data");
             // callback(data);
-            $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
-            $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
+            // $('#formJaksa').find('input[name=nama_jaksa]').val(data.data['nama']);
+            // $('#formJaksa').find('input[name=nip_jaksa]').val(data.data['nohape'].replace(/[^0-9]/,'')).attr('readonly', true);
         });
     });
 

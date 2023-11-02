@@ -229,6 +229,7 @@ class Permohonan extends CI_Controller {
 
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listJpn'] = $this->M_user->select_all(['role_id' => 5]);
+		// echo json_encode($data['listJpn']);
 
 		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Konsiliasi']);
 		
@@ -277,6 +278,7 @@ class Permohonan extends CI_Controller {
 
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listJpn'] = $this->M_user->select_all(['role_id' => 5]);
+		// echo json_encode($data['listJpn']);
 
 		$data['listData'] = $this->M_permohonan->select_all(['jenis_permohonan' => 'Mediasi']);		
 		
@@ -289,7 +291,7 @@ class Permohonan extends CI_Controller {
 		$data['desc'] = "Fasilitasi adalah cara penyelesaian sengketa bidang perdata antar negara atau pemerintah dengan memfasilitasi pertemuan para pihak tanpa terlalu jauh masuk dalam materi permalasahan.";
 		$data['model'] = $this->M_permohonan;
 		$data['timjpnAll'] =  $this->M_timjpn;
-		
+
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listJpn'] = $this->M_user->select_all(['role_id' => 5]);
 		

@@ -50,6 +50,7 @@ class M_user extends CI_Model {
         }
 
         $data = $this->db->get($this->table_name);
+        // print_r($this->db->last_query());
         return $data->result();
     }
 
