@@ -225,6 +225,8 @@ class Permohonan extends CI_Controller {
 		$data['title'] = "Konsiliasi";
 		$data['desc'] = "Konsiliasi adalah cara penyelesaian sengketa melalui proses perundingan (musyawarah) untuk mengidentifikasikan maslaah, menciptakan pilihan-pilihan, memberikan pertimbangan pilihan.";
 		$data['model'] = $this->M_permohonan;
+		$data['timjpnAll'] =  $this->M_timjpn;
+
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listJpn'] = $this->M_user->select_all(['role_id' => 5]);
 
@@ -271,6 +273,8 @@ class Permohonan extends CI_Controller {
 		$data['title'] = "Mediasi";
 		$data['desc'] = "Mediasi adalah cara penyelesaian sengketa melalui proses perundingan (musyawarah) untuk mengidentifikasi permasalahan dan mendorong tercapainya kesepakatan yag dibuat para pihak sendiri.";
 		$data['model'] = $this->M_permohonan;
+		$data['timjpnAll'] =  $this->M_timjpn;
+
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listJpn'] = $this->M_user->select_all(['role_id' => 5]);
 
@@ -284,6 +288,8 @@ class Permohonan extends CI_Controller {
 		$data['title'] = "Fasilitasi";
 		$data['desc'] = "Fasilitasi adalah cara penyelesaian sengketa bidang perdata antar negara atau pemerintah dengan memfasilitasi pertemuan para pihak tanpa terlalu jauh masuk dalam materi permalasahan.";
 		$data['model'] = $this->M_permohonan;
+		$data['timjpnAll'] =  $this->M_timjpn;
+		
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listJpn'] = $this->M_user->select_all(['role_id' => 5]);
 		

@@ -15,8 +15,8 @@ class M_permohonan extends CI_Model {
             ['field' => 'kasus_posisi', 'label' => 'Kasus Posisi','rules' => 'required'],
             ['field' => 'dokumen', 'label' => 'Dokumen'],
             ['field' => 'status', 'label' => 'Status'],
-            // ['field' => 'nama_jaksa', 'label' => 'Nama Jaksa'],
-            // ['field' => 'nip_jaksa', 'label' => 'NIP Jaksa'],
+            ['field' => 'nama_jaksa', 'label' => 'Nama Jaksa'],
+            ['field' => 'nip_jaksa', 'label' => 'NIP Jaksa'],
             ['field' => 'id_timjpn', 'label' => 'Nama Jaksa'],
         ];
     }

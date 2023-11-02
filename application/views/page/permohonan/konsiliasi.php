@@ -354,7 +354,7 @@ button, input, optgroup, select, textarea {
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <?=get_header_table_custom($model, ['jenis_permohonan', 'status'], '<th>Aksi</th>');?>
+                            <?=get_header_table_custom($model, ['jenis_permohonan', 'status', 'nama_jaksa', 'nip_jaksa'], '<th>Aksi</th>');?>
                         </thead>
                         <tbody>
                         <?php
@@ -374,6 +374,14 @@ button, input, optgroup, select, textarea {
                                     $dokUrl = ($row->dokumen) ? '<a target="_blank" href="'.base_url('permohonan/dokumen/' . $row->dokumen).'">Dokumen</a>' : '#';
                                 }
 
+                                $listJpn = $timjpnAll->select_all(['permohonan_id' => $row->id]);
+                                // echo json_encode($listJpn);
+                                $listJpnTim = "<ul class='list-unstyled'>";
+                                foreach($listJpn as $key => $jpn) {
+                                    $listJpnTim .= "<li>" . ($key+1) . '. ' . $jpn->nama_jaksa . '</li>';
+                                }
+                                $listJpnTim .= "</ul>";
+
                                 echo '<tr>
                                     <td>'.$id.'</td>
                                     <td>'.$row->pemohon.'</td>
@@ -383,7 +391,7 @@ button, input, optgroup, select, textarea {
                                     <td>'.$row->subject.'</td>
                                     <td>'.$row->kasus_posisi.'</td>
                                     <td>'.$dokUrl.'</td>
-                                    <td>--</td>
+                                    <td>'.$listJpnTim.'</td>
                                     <td>
                                         <div class="btn-group mb-3" role="group">
                                             <a href="' . base_url('permohonan/edit_ph?type='.$title.'&row_id='.$row->id) . '" data-id="'.$row->id.'" class="btn btn-secondary btnEdit">Edit</a>
@@ -422,22 +430,15 @@ button, input, optgroup, select, textarea {
         <?=form_open('', array('id' => 'formJaksa', 'role' => 'form'));?>
             
             <?php //echo json_encode($listJpn); ?>
-            <?php if(count($listJpn) > 0) : ?>
-                <div class="form-group">
-                    <label for="id_jaksa">Jaksa</label>
-                    <select name="id_jaksa" id="id_jaksa" class="form-control">
-                        <option value="">-- Pilih Jaksa --</option>
-                        <?php foreach($listJpn as $row) : ?>
-                            <option value="<?=@$row->id; ?>"><?=@$row->nama; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>                
-                <?=form_hidden('nama_jaksa'); ?>
-
-            <?php else : ?>
-                <?=get_form_input($model, 'nama_jaksa'); ?>
-
-            <?php endif; ?>
+            <div class="form-group">
+                <label for="id_jaksa">Jaksa</label>
+                <select name="id_jaksa" id="id_jaksa" class="form-control">
+                    <option value="">-- Pilih Jaksa --</option>
+                    <?php foreach($listJpn as $row) : ?>
+                        <option value="<?=@$row->id; ?>"><?=@$row->nama; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
             <?=get_form_input($model, 'nip_jaksa', array('type' => 'number')); ?>
 
