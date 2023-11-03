@@ -22,7 +22,7 @@ class User extends CI_Controller {
 
 	public function jpn()
 	{
-		$data['title'] = "User JPN";
+		$data['title'] = "Data JPN";
 		$data['model'] = $this->M_user;
 		$data['dataUser'] = $this->M_user->selectId($this->session->userdata('id'));
 		$data['listData'] = $this->M_user->select_all(['role_id' => 5]);	
