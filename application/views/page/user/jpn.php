@@ -67,12 +67,13 @@
             <?=get_form_input($model, 'username'); ?>
             <?=get_form_input($model, 'email'); ?>
             <?=get_form_input($model, 'nama'); ?>
-            <?//=get_form_input($model, 'divisi'); ?>
-            <div class="form-group">
+            <?=get_form_input($model, 'divisi'); ?>
+            <!-- <div class="form-group">
                 <label>Pangkat</label>
                 <input type="text" name="divisi" value="" class="form-control" id="input-divisi">
                 <div id="error"></div>
-            </div>
+            </div> -->
+
             <?=get_form_input($model, 'nohape'); ?>
             <!-- <div class="form-group">
                 <label>NIP</label>
