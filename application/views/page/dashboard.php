@@ -15,11 +15,11 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Earnings (Monthly)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        Mediasi</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$dataDashboard->mediasi; ?></div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
                 </div>
             </div>
         </div>
@@ -33,11 +33,11 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        Earnings (Annual)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        Fasilitasi</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$dataDashboard->fasilitasi; ?></div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    <!-- <i class="fas fa-dollar-sign fa-2x text-gray-300"></i> -->
                 </div>
             </div>
         </div>
@@ -50,23 +50,12 @@
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Konsiliasi
                     </div>
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                        </div>
-                        <div class="col">
-                            <div class="progress progress-sm mr-2">
-                                <div class="progress-bar bg-info" role="progressbar"
-                                    style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?=$dataDashboard->konsiliasi; ?></div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    <!-- <i class="fas fa-clipboard-list fa-2x text-gray-300"></i> -->
                 </div>
             </div>
         </div>
@@ -80,11 +69,22 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                        Pending Requests</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                        Total Permohonan</div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?=$dataDashboard->total; ?></div>
+                        </div>
+                        <div class="col">
+                            <div class="progress progress-sm mr-2">
+                                <div class="progress-bar bg-info" role="progressbar"
+                                    style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    <!-- <i class="fas fa-comments fa-2x text-gray-300"></i> -->
                 </div>
             </div>
         </div>
@@ -102,20 +102,20 @@
         <!-- Card Header - Dropdown -->
         <div
             class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Permohonan Overview</h6>
             <div class="dropdown no-arrow">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                     aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-header">Dropdown Header:</div>
                     <a class="dropdown-item" href="#">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- Card Body -->
@@ -139,14 +139,14 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                     aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-header">Dropdown Header:</div>
                     <a class="dropdown-item" href="#">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- Card Body -->
@@ -156,13 +156,13 @@
             </div>
             <div class="mt-4 text-center small">
                 <span class="mr-2">
-                    <i class="fas fa-circle text-primary"></i> Direct
+                    <i class="fas fa-circle text-primary"></i> Mediasi
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-success"></i> Social
+                    <i class="fas fa-circle text-success"></i> Fasilitasi
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-info"></i> Referral
+                    <i class="fas fa-circle text-info"></i> Konsilisiasi
                 </span>
             </div>
         </div>
@@ -171,12 +171,53 @@
 </div>
 
 <?php
-$loadjs = '<!-- Page level plugins -->
-<script src="assets/vendor/chart.js/Chart.min.js"></script>
+$labels = '["Mediasi", "Fasilitasi", "Konsilisiasi"]';
+$data = '["'.$dataDashboard->mediasi.'", "'.$dataDashboard->fasilitasi.'", "'.$dataDashboard->konsiliasi.'"]';
+?>
 
-<!-- Page level custom scripts -->
-<script src="assets/js/demo/chart-area-demo.js"></script>
-<script src="assets/js/demo/chart-pie-demo.js"></script>';
+<script src="assets/vendor/chart.js/Chart.min.js"></script>
+<script type="text/javascript">
+// Set new default font family and font color to mimic Bootstrap's default styling
+Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#858796';
+
+// Pie Chart Example
+var ctx = document.getElementById("myPieChart");
+var myPieChart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: <?=$labels; ?>,
+    datasets: [{
+      data: <?=$data; ?>,
+      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 0,
+  },
+});
+</script>
+
+<?php
+$loadjs = '<!-- Page level custom scripts -->
+<script src="assets/js/demo/chart-area-demo.js"></script>';
 
 $this->load->vars('_loadjs', $loadjs);
+// <script src="assets/js/demo/chart-pie-demo.js"></script>
 ?>

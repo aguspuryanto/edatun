@@ -69,6 +69,11 @@ class M_permohonan extends CI_Model {
         return $data->num_rows();
     }
 
+    public function total_dashboard() {
+        $data = $this->db->query("SELECT COUNT(*) as total, COUNT(case when jenis_permohonan = 'Mediasi' then 1 end) AS mediasi, COUNT(case when jenis_permohonan = 'Konsiliasi' then 1 end) AS konsiliasi, COUNT(case when jenis_permohonan = 'Fasilitasi' then 1 end) AS fasilitasi FROM `epak_permohonan`");
+        return $data->row();
+    }
+
     public function alterTable() {
         $this->load->dbforge();
 
